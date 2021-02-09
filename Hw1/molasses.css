@@ -1,7 +1,6 @@
 
-
 body {
-    font-size: 105%;
+    font-size: 130%;
     line-height: 1.5;
     font-family: sans-serif;
     margin: 48px;
@@ -50,7 +49,7 @@ a{
     list-style-type: none;
     
     padding: 5px 5px 5px 5px;
-    width: 140px;
+    width: 200px;
 
 }
 
@@ -59,9 +58,9 @@ a:hover{
  }
 
 img {
-    border-spacing: 4px;
-    
+    border-spacing: 4px;  
 }
+
 figure{
     border-spacing: 4px;
     border: 1px solid black;
