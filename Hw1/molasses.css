@@ -85,3 +85,47 @@ figure{
     padding: 10px;
     flex: 1;
 }
+
+
+
+.container2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    /* column-gap: 50px;
+    row-gap: 7em;
+    /* grid: repeat(2, 80px) / auto-flow 80px; */
+    /* padding-top: 80px; */
+  }
+  
+.container2 > div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    
+    
+    /* width: 100px;
+    height: 100px; */
+  }
+
+.additional {
+    width: 80%;
+    border: 1px solid black;
+    padding: 8px;  
+    
+/*     
+    position: absolute; */
+
+
+}
+
+.zoom {
+    transition: transform .2s; /* Animation */
+    margin: 0 auto;
+    
+
+  }
+  
+  .zoom:hover {
+    transform: scale(2); /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
+  }
