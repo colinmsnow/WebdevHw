@@ -18,8 +18,28 @@ function positive (arr) { //Shirin
 }
 
 function positiveStr (s) { // Maia
-    throw('not implemented')
+    //TODO: Fix me!!
+    let x = ''
+    let neg = false
+    for (let letter of s){
+        console.log(letter)
     
+        if (letter === '-'){
+            neg = true
+        }
+        console.log(neg)
+        if (letter === ';'){
+            neg = false
+        }
+        console.log(neg)
+        if (letter != ';' && (letter - '0') > 0 && neg == false){
+            if (x.length > 0) {
+                x+= ';' + letter
+            }
+            else x += letter
+        }
+    }
+    return x
 }
 
 function mapStr (s, sep, f) { // Colin Done
@@ -183,13 +203,8 @@ function check_tests(){
     // console.log(new Node(10, new Empty(), new Empty()).fringe())
     // console.log(sample_tree.fringe())
 
-
-    // console.log(mapStr('', ';', (x) => x * x))
-    // console.log(mapStr('1', ';', (x) => x * x))
-    // console.log(mapStr('1;2;3', ';', (x) => x * x))
-    // console.log(mapStr('1|2|3|4|5', '|', (x) => x * x))
-
-
+    console.assert(positiveStr('-1;1;3;-5;7'))
+    console.log(positiveStr('-1;1;3;-5;7'))
 
     // console.assert(new Empty().height() === 0)
     // console.assert(new Node(10, new Empty(), new Empty()).height() === 1)
