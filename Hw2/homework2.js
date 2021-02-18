@@ -142,6 +142,16 @@ class Empty {
     fringe(){
         return []
     }
+    preorder(f){
+        return
+    }
+    map(f){
+        return this
+    }
+    trim()
+    {
+        return new Empty()
+    }
 }
 
 
@@ -175,7 +185,22 @@ class Node {
         return this.left.fringe(items).concat((this.right.fringe(items)))
     }
 
+    preorder(f){
+        
+        this.value = f(this.value)
+        this.left.preorder(f)
+        this.right.preorder(f)
+    }
 
+    map(f){
+        return new Node(f(this.value), this.left.map(f), this.right.map(f))
+    }
+    trim(){
+        if (this.left.isEmpty() && this.right.isEmpty()){
+            return new Empty()
+        }
+        return new Node(this.value, this.left.trim(), this.right.trim())
+    }
 }
 
 // helper functions
@@ -189,9 +214,7 @@ const sample_tree = node(10,
 
 
 
-function preorder(){
 
-}
 
 
 
@@ -235,12 +258,22 @@ function check_tests(){
     // console.log(group([], 'a'))
     // console.log(group(sample, 'b'))
     // console.log(group(sample, 'c'))
+
+    // const test = (v) => { console.log('value = ', v) }
+    // new Empty().preorder(test)
+
+    // new Node(10, new Empty(), new Empty()).preorder(test)
+
+    // sample_tree.preorder(test)
+
+    // console.log(new Empty().map((v) => v * v))
+    // console.log(new Node(10, new Empty(), new Empty()).map((v) => v * v))
+    // console.log(sample_tree.map((v) => v * v))
     
-
-
-
-
-
+    new Empty().trim()
+    console.log(new Node(10, new Empty(), new Empty()).trim())
+    console.log(sample_tree.trim())
+    
 
 }
 
