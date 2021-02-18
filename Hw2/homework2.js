@@ -18,20 +18,15 @@ function positive (arr) { //Shirin
 }
 
 function positiveStr (s) { // Maia
-    //TODO: Fix me!!
     let x = ''
     let neg = false
-    for (let letter of s){
-        console.log(letter)
-    
+    for (let letter of s){  
         if (letter === '-'){
             neg = true
         }
-        console.log(neg)
         if (letter === ';'){
             neg = false
         }
-        console.log(neg)
         if (letter != ';' && (letter - '0') > 0 && neg == false){
             if (x.length > 0) {
                 x+= ';' + letter
@@ -70,8 +65,28 @@ function distinct (objs, field) { // Colin
 }
 
 function sort (objs, field) { // Maia
-    throw('not implemented')
-}
+    //TODO: fix me!!
+    let arr = []
+    for (index in objs.length){
+        console.log(arr)
+        console.debug(arr)
+        // for (){
+        if (objs[index][field]> objs[index+1][field]){
+            arr.push(objs[index])
+            arr.push(objs[index+1])
+            console.log(arr)
+            console.log(objs[index])
+            // objs[index] = objs[index+1]
+            // objs[index + 1] = temp
+
+        // }
+        }
+        console.log(arr)
+        return arr
+        }
+    }
+    
+// }
 
 function sum (objs, field1, field2) { // Maia
     throw('not implemented')
@@ -182,7 +197,8 @@ function check_tests(){
     console.assert(positiveStr('-1;1;3;-5;7'))
     console.log(positiveStr('-1;1;3;-5;7'))
 
-    console.log("testing")
+    console.log(sort(sample, 'a'))
+    
     // console.assert(new Empty().height() === 0)
     // console.assert(new Node(10, new Empty(), new Empty()).height() === 1)
     // console.assert(sample_tree.height() === 4)
