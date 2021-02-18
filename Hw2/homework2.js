@@ -5,8 +5,8 @@
 // Put team members + any remarks in a README file that you submit in your final .zip file
 //
 
-function roundN (n, i) { // Colin
-    throw('not implemented')
+function roundN (n, i) { // Colin Done
+    return Math.round(n / (10**i)) * (10**i)
 }
 
 function range (n, m) { //Shirin
@@ -37,8 +37,10 @@ function positiveStr (s) { // Maia
     return x
 }
 
-function mapStr (s, sep, f) { // Colin
-    throw('not implemented')
+function mapStr (s, sep, f) { // Colin Done
+    let items = s.split(sep)
+    let transformed = items.map(f)
+    return transformed.join(sep)
 }
 
 
@@ -60,8 +62,17 @@ const sample_obj = {
     z: []
 }
 
-function distinct (objs, field) { // Colin
-    throw('not implemented')
+function distinct (objs, field) { // Colin Done
+    const distinct = new Set()
+
+    for (let obj of objs){
+        for (let item in obj){
+            if (item === field){
+                distinct.add(obj[item])
+            }
+        }
+    }
+    return Array.from(distinct)
 }
 
 function sort (objs, field) { // Maia
@@ -92,8 +103,21 @@ function sum (objs, field1, field2) { // Maia
     throw('not implemented')
 }
 
-function group (objs, field) { // Colin
-    throw('not implemented')
+function group (objs, field) { // Colin Done
+    let dict = {}
+    for (let obj of objs){
+        for (let item in obj){
+            if (item === field){
+                if (obj[item] in dict){
+                    dict[obj[item]].push(obj)
+                } 
+                else{
+                    dict[obj[item]] = [obj]
+                }
+            }
+        }
+    }
+    return dict
 }
 
 function expand (obj, field) { // Shirin
@@ -202,6 +226,17 @@ function check_tests(){
     // console.assert(new Empty().height() === 0)
     // console.assert(new Node(10, new Empty(), new Empty()).height() === 1)
     // console.assert(sample_tree.height() === 4)
+    // console.log(distinct([], 'a'))
+    // console.log(distinct(sample, 'a'))
+    // console.log(distinct(sample, 'b'))
+    // console.log(distinct(sample, 'c'))
+
+    // console.log(group(sample, 'a'))
+    // console.log(group([], 'a'))
+    // console.log(group(sample, 'b'))
+    // console.log(group(sample, 'c'))
+    
+
 
 
 
