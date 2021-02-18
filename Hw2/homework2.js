@@ -182,6 +182,7 @@ function check_tests(){
     console.assert(positiveStr('-1;1;3;-5;7'))
     console.log(positiveStr('-1;1;3;-5;7'))
 
+    console.log("testing")
     // console.assert(new Empty().height() === 0)
     // console.assert(new Node(10, new Empty(), new Empty()).height() === 1)
     // console.assert(sample_tree.height() === 4)
