@@ -9,12 +9,27 @@ function roundN (n, i) { // Colin Done
     return Math.round(n / (10**i)) * (10**i)
 }
 
-function range (n, m) { //Shirin
-    throw('not implemented')
+function range (n, m) { // Shirin Done
+    if (n >= m) {
+        return []
+    }
+    let x = []
+    while (n < m) {
+        console.log(n)
+        x.push(n)
+        n+=1
+    }
+    return x
 }
 
-function positive (arr) { //Shirin
-    throw('not implemented')
+function positive (arr) { //Shirin done
+   new_arr = []
+   for (let elem of arr){
+       if (elem >= 0){
+           new_arr.push(elem)
+       }
+   }
+   return new_arr
 }
 
 function positiveStr (s) { // Maia
@@ -120,10 +135,13 @@ function group (objs, field) { // Colin Done
     return dict
 }
 
-function expand (obj, field) { // Shirin
-    throw('not implemented')
+function expand (obj, field) { // Shirin -- doesn't work yet
+    let arr = []
+    for (let elem of clone[field]){
+        arr.push(obj)
+    }
+    return arr
 }
-
 
 
 class Empty {
