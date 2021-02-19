@@ -152,6 +152,9 @@ class Empty {
     {
         return new Empty()
     }
+    toJSON(){
+        return {}
+    }
 }
 
 
@@ -201,7 +204,97 @@ class Node {
         }
         return new Node(this.value, this.left.trim(), this.right.trim())
     }
+    toJSON(){ // done
+
+        if (!this.left.isEmpty() && !this.right.isEmpty()){
+            return {value: this.value, left: this.left.toJSON(), right: this.right.toJSON()}
+        }
+    
+        if (!this.left.isEmpty()){
+            return {value: this.value, left: this.left.toJSON()}
+        }
+    
+        if (!this.right.isEmpty()){
+            return {value: this.value, right: this.right.toJSON()}
+        }
+
+        return {value: this.value}
+    }
 }
+
+function fromJSON(j){ // done
+
+    if ("left" in j && "right" in j){
+        return node(j.value, fromJSON(j.left), fromJSON(j.right))
+    }
+
+    if ("left" in j){
+        return node(j.value, fromJSON(j.left), new Empty())
+    }
+
+    if ("right" in j){
+        return node(j.value, new Empty(), fromJSON(j.right))
+    }
+
+    return node(j.value, new Empty(), new Empty())
+}
+
+
+const sample_arr_1 = [
+    {id: 'a', value: 1, left: 'b', right: 'c'},
+    {id: 'b', value: 2, left: 'd', right: 'e'},
+    {id: 'c', value: 3, left: 'f', right: 'g'},
+    {id: 'd', value: 4, left: 'h'},
+    {id: 'e', value: 5, right: 'i'},
+    {id: 'f', value: 6},
+    {id: 'g', value: 7},
+    {id: 'h', value: 8},
+    {id: 'i', value: 9}
+]
+
+const sample_arr_2 = [
+    {id: 'john', value: 'L'},
+    {id: 'paul', value: 'M'},
+    {id: 'george', value: 'H', left: 'john', right: 'paul'},
+    {id: 'ringo', value: 'S', left: 'george', right: 'george'},
+]
+
+
+function fromArray(arr){ // done
+
+    let nodes = {}
+    const children = new Set()
+
+    // Create a node for each item
+    for (i of arr){
+        // console.log(i.id)
+        current_node = node(i.value, new Empty(), new Empty())
+        nodes[i.id] = current_node
+    }
+
+    for (i of arr){
+        current_node = nodes[i.id]
+        // console.log(i.left)
+        if (i.left in nodes){
+            current_node.left = nodes[i.left]
+            children.add(i.left)
+        }
+        if (i.right in nodes){
+            current_node.right = nodes[i.right]
+            children.add(i.right)
+        }
+        nodes[i.id] = current_node
+    }
+
+    // find head node
+    for (i of arr){
+        if (!(children.has(i.id))){
+            return nodes[i.id]
+        }
+    }
+}
+
+
 
 // helper functions
 const leaf = (v) => new Node(v, new Empty(), new Empty())
@@ -270,9 +363,29 @@ function check_tests(){
     // console.log(new Node(10, new Empty(), new Empty()).map((v) => v * v))
     // console.log(sample_tree.map((v) => v * v))
     
-    new Empty().trim()
-    console.log(new Node(10, new Empty(), new Empty()).trim())
-    console.log(sample_tree.trim())
+    // new Empty().trim()
+    // console.log(new Node(10, new Empty(), new Empty()).trim())
+    // console.log(sample_tree.trim())
+
+
+
+
+
+    // console.log(fromJSON({value: 1}))
+    // console.log(fromJSON({value: 1, left: {value: 2, left: { value: 3}}, right: {value: 4, right: { value: 5}}}))
+
+    // console.log(new Empty().toJSON())
+    // console.log(new Node(10, new Empty(), new Empty()).toJSON())
+    // console.log(sample_tree.toJSON())
+    // console.log(JSON.stringify(sample_tree.toJSON(), null, 2))
+
+
+    // console.log(fromArray(sample_arr_1))
+    // console.log(fromArray(sample_arr_2))
+
+
+
+
     
 
 }
