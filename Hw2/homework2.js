@@ -135,13 +135,37 @@ function group (objs, field) { // Colin Done
     return dict
 }
 
+
+
 function expand (obj, field) { // Shirin -- doesn't work yet
-    let arr = []
-    for (let elem of clone[field]){
-        arr.push(obj)
+    let new_dict = {}
+    let a, rest;
+    [a,...rest] = obj[field]
+    for (key in obj){
+        if (key != field){
+            new_dict[key] = obj[key]
+        }
+        else{
+            new_dict[key] = a
+        }
+    } 
+
+    let second_dict = {}
+    for (key1 in obj){
+        if (key1 != field){
+            second_dict[key1] = obj[key1]
+        }
+        else{
+            second_dict[key1] = rest
+       }
+    } 
+    if (a != obj[field][obj[field].length - 1]) {
+        return [new_dict,expand(second_dict,field)]
     }
-    return arr
-}
+    else{
+        return new_dict
+    }
+}     
 
 
 class Empty {
@@ -352,10 +376,10 @@ function check_tests(){
     // console.log(new Node(10, new Empty(), new Empty()).fringe())
     // console.log(sample_tree.fringe())
 
-    console.assert(positiveStr('-1;1;3;-5;7'))
-    console.log(positiveStr('-1;1;3;-5;7'))
+    //console.assert(positiveStr('-1;1;3;-5;7'))
+    //console.log(positiveStr('-1;1;3;-5;7'))
 
-    console.log(sort(sample, 'a'))
+    //console.log(sort(sample, 'a'))
     
     // console.assert(new Empty().height() === 0)
     // console.assert(new Node(10, new Empty(), new Empty()).height() === 1)
@@ -400,11 +424,7 @@ function check_tests(){
 
     // console.log(fromArray(sample_arr_1))
     // console.log(fromArray(sample_arr_2))
-
-
-
-
-    
+    console.log(expand(sample_obj, 'x'))
 
 }
 
