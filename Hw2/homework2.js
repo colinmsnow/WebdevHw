@@ -137,7 +137,7 @@ function group (objs, field) { // Colin Done
 
 
 
-function expand (obj, field) { // Shirin -- doesn't work yet
+function expand (obj, field) { // Shirin done
     let new_dict = {}
     let a, rest;
     [a,...rest] = obj[field]
@@ -159,11 +159,11 @@ function expand (obj, field) { // Shirin -- doesn't work yet
             second_dict[key1] = rest
        }
     } 
-    if (a != obj[field][obj[field].length - 1]) {
-        return [new_dict,expand(second_dict,field)]
+    if (a != obj[field][obj[field].length]) {
+        return [new_dict, expand(second_dict,field)].flat()
     }
     else{
-        return new_dict
+        return []
     }
 }     
 
@@ -424,7 +424,9 @@ function check_tests(){
 
     // console.log(fromArray(sample_arr_1))
     // console.log(fromArray(sample_arr_2))
-    console.log(expand(sample_obj, 'x'))
+    //console.log(expand(sample_obj, 'x'))
+    //console.log(expand(sample_obj, 'y'))
+    //console.log(expand(sample_obj,'z')) 
 
 }
 
