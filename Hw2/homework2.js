@@ -76,31 +76,34 @@ function distinct (objs, field) { // Colin Done
 }
 
 function sort (objs, field) { // Maia
-    //TODO: fix me!!
-    let arr = []
-    for (index in objs.length){
-        console.log(arr)
-        console.debug(arr)
-        // for (){
-        if (objs[index][field]> objs[index+1][field]){
-            arr.push(objs[index])
-            arr.push(objs[index+1])
-            console.log(arr)
-            console.log(objs[index])
-            // objs[index] = objs[index+1]
-            // objs[index + 1] = temp
-
-        // }
+    var holder = []
+    for (index in objs){
+        holder.push(objs[index])
         }
-        console.log(arr)
-        return arr
-        }
-    }
     
-// }
+    for (let index = 0; index < holder.length - 1; index++){
+        for (let j = 0; j < holder.length - index - 1; j++){
+            if (holder[j][field] > holder[j + 1][field]){
+                let x = holder[j]
+                holder[j] = holder[parseInt(j) + 1] 
+                holder[parseInt(j) + 1] = x 
+            }     
+        }
+    }        
+
+    return holder
+    }
+
 
 function sum (objs, field1, field2) { // Maia
-    throw('not implemented')
+    var holder = []
+    for (index in objs){
+        holder.push(objs[index])
+        let sum = holder[index][field1] + holder[index][field2]
+        holder[index].sum = sum 
+    }
+
+    
 }
 
 function group (objs, field) { // Colin Done
@@ -222,7 +225,8 @@ function check_tests(){
     console.log(positiveStr('-1;1;3;-5;7'))
 
     console.log(sort(sample, 'a'))
-    
+    console.log(sum(sample, 'a', 'c'))
+
     // console.assert(new Empty().height() === 0)
     // console.assert(new Node(10, new Empty(), new Empty()).height() === 1)
     // console.assert(sample_tree.height() === 4)
