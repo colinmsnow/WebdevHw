@@ -9,12 +9,27 @@ function roundN (n, i) { // Colin Done
     return Math.round(n / (10**i)) * (10**i)
 }
 
-function range (n, m) { //Shirin
-    throw('not implemented')
+function range (n, m) { // Shirin Done
+    if (n >= m) {
+        return []
+    }
+    let x = []
+    while (n < m) {
+        console.log(n)
+        x.push(n)
+        n+=1
+    }
+    return x
 }
 
-function positive (arr) { //Shirin
-    throw('not implemented')
+function positive (arr) { //Shirin done
+   new_arr = []
+   for (let elem of arr){
+       if (elem >= 0){
+           new_arr.push(elem)
+       }
+   }
+   return new_arr
 }
 
 function positiveStr (s) { // Maia
@@ -123,10 +138,37 @@ function group (objs, field) { // Colin Done
     return dict
 }
 
-function expand (obj, field) { // Shirin
-    throw('not implemented')
-}
 
+
+function expand (obj, field) { // Shirin done
+    let new_dict = {}
+    let a, rest;
+    [a,...rest] = obj[field]
+    for (key in obj){
+        if (key != field){
+            new_dict[key] = obj[key]
+        }
+        else{
+            new_dict[key] = a
+        }
+    } 
+
+    let second_dict = {}
+    for (key1 in obj){
+        if (key1 != field){
+            second_dict[key1] = obj[key1]
+        }
+        else{
+            second_dict[key1] = rest
+       }
+    } 
+    if (a != obj[field][obj[field].length]) {
+        return [new_dict, expand(second_dict,field)].flat()
+    }
+    else{
+        return []
+    }
+}     
 
 
 class Empty {
@@ -144,6 +186,19 @@ class Empty {
     }
     fringe(){
         return []
+    }
+    preorder(f){
+        return
+    }
+    map(f){
+        return this
+    }
+    trim()
+    {
+        return new Empty()
+    }
+    toJSON(){
+        return {}
     }
 }
 
@@ -178,8 +233,113 @@ class Node {
         return this.left.fringe(items).concat((this.right.fringe(items)))
     }
 
+    preorder(f){
+        
+        this.value = f(this.value)
+        this.left.preorder(f)
+        this.right.preorder(f)
+    }
 
+    map(f){
+        return new Node(f(this.value), this.left.map(f), this.right.map(f))
+    }
+    trim(){
+        if (this.left.isEmpty() && this.right.isEmpty()){
+            return new Empty()
+        }
+        return new Node(this.value, this.left.trim(), this.right.trim())
+    }
+    toJSON(){ // done
+
+        if (!this.left.isEmpty() && !this.right.isEmpty()){
+            return {value: this.value, left: this.left.toJSON(), right: this.right.toJSON()}
+        }
+    
+        if (!this.left.isEmpty()){
+            return {value: this.value, left: this.left.toJSON()}
+        }
+    
+        if (!this.right.isEmpty()){
+            return {value: this.value, right: this.right.toJSON()}
+        }
+
+        return {value: this.value}
+    }
 }
+
+function fromJSON(j){ // done
+
+    if ("left" in j && "right" in j){
+        return node(j.value, fromJSON(j.left), fromJSON(j.right))
+    }
+
+    if ("left" in j){
+        return node(j.value, fromJSON(j.left), new Empty())
+    }
+
+    if ("right" in j){
+        return node(j.value, new Empty(), fromJSON(j.right))
+    }
+
+    return node(j.value, new Empty(), new Empty())
+}
+
+
+const sample_arr_1 = [
+    {id: 'a', value: 1, left: 'b', right: 'c'},
+    {id: 'b', value: 2, left: 'd', right: 'e'},
+    {id: 'c', value: 3, left: 'f', right: 'g'},
+    {id: 'd', value: 4, left: 'h'},
+    {id: 'e', value: 5, right: 'i'},
+    {id: 'f', value: 6},
+    {id: 'g', value: 7},
+    {id: 'h', value: 8},
+    {id: 'i', value: 9}
+]
+
+const sample_arr_2 = [
+    {id: 'john', value: 'L'},
+    {id: 'paul', value: 'M'},
+    {id: 'george', value: 'H', left: 'john', right: 'paul'},
+    {id: 'ringo', value: 'S', left: 'george', right: 'george'},
+]
+
+
+function fromArray(arr){ // done
+
+    let nodes = {}
+    const children = new Set()
+
+    // Create a node for each item
+    for (i of arr){
+        // console.log(i.id)
+        current_node = node(i.value, new Empty(), new Empty())
+        nodes[i.id] = current_node
+    }
+
+    for (i of arr){
+        current_node = nodes[i.id]
+        // console.log(i.left)
+        if (i.left in nodes){
+            current_node.left = nodes[i.left]
+            children.add(i.left)
+        }
+        if (i.right in nodes){
+            current_node.right = nodes[i.right]
+            children.add(i.right)
+        }
+        nodes[i.id] = current_node
+    }
+
+    // find head node
+    for (i of arr){
+        if (!(children.has(i.id))){
+            return nodes[i.id]
+        }
+    }
+}
+
+
 
 // helper functions
 const leaf = (v) => new Node(v, new Empty(), new Empty())
@@ -192,9 +352,7 @@ const sample_tree = node(10,
 
 
 
-function preorder(){
 
-}
 
 
 
@@ -221,12 +379,11 @@ function check_tests(){
     // console.log(new Node(10, new Empty(), new Empty()).fringe())
     // console.log(sample_tree.fringe())
 
-    console.assert(positiveStr('-1;1;3;-5;7'))
-    console.log(positiveStr('-1;1;3;-5;7'))
+    //console.assert(positiveStr('-1;1;3;-5;7'))
+    //console.log(positiveStr('-1;1;3;-5;7'))
 
-    console.log(sort(sample, 'a'))
-    console.log(sum(sample, 'a', 'c'))
-
+    //console.log(sort(sample, 'a'))
+    
     // console.assert(new Empty().height() === 0)
     // console.assert(new Node(10, new Empty(), new Empty()).height() === 1)
     // console.assert(sample_tree.height() === 4)
@@ -239,12 +396,40 @@ function check_tests(){
     // console.log(group([], 'a'))
     // console.log(group(sample, 'b'))
     // console.log(group(sample, 'c'))
+
+    // const test = (v) => { console.log('value = ', v) }
+    // new Empty().preorder(test)
+
+    // new Node(10, new Empty(), new Empty()).preorder(test)
+
+    // sample_tree.preorder(test)
+
+    // console.log(new Empty().map((v) => v * v))
+    // console.log(new Node(10, new Empty(), new Empty()).map((v) => v * v))
+    // console.log(sample_tree.map((v) => v * v))
     
+    // new Empty().trim()
+    // console.log(new Node(10, new Empty(), new Empty()).trim())
+    // console.log(sample_tree.trim())
 
 
 
 
 
+    // console.log(fromJSON({value: 1}))
+    // console.log(fromJSON({value: 1, left: {value: 2, left: { value: 3}}, right: {value: 4, right: { value: 5}}}))
+
+    // console.log(new Empty().toJSON())
+    // console.log(new Node(10, new Empty(), new Empty()).toJSON())
+    // console.log(sample_tree.toJSON())
+    // console.log(JSON.stringify(sample_tree.toJSON(), null, 2))
+
+
+    // console.log(fromArray(sample_arr_1))
+    // console.log(fromArray(sample_arr_2))
+    //console.log(expand(sample_obj, 'x'))
+    //console.log(expand(sample_obj, 'y'))
+    //console.log(expand(sample_obj,'z')) 
 
 }
 
