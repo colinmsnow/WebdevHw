@@ -96,16 +96,26 @@ function table_clicked(a, id){
 
     let mi = document.createElement("input")
     mi.type= "text"
-    mi.value = "default"
+    mi.value = a.innerHTML
     mi.style.position = "absolute"
     mi.style.left = elementrect.left.toString() + 'px'
     mi.style.top = elementrect.top.toString() + 'px'
+    mi.style.width = (elementrect.right - elementrect.left - 7).toString() + 'px'
+    mi.style.height = (elementrect.bottom - elementrect.top - 6).toString() + 'px'
+
+    mi.addEventListener("blur", function(c){updatetable(c, mi, a)})
 
     mytable.appendChild(mi)
 
     console.log("clicked")
     console.log(a)
-    a = mi
+}
+
+function updatetable(c, inputElement, tableElement){
+    console.log(c)
+    tableElement.innerHTML = inputElement.value
+    inputElement.parentNode.removeChild(inputElement);
+
 }
 
 window.onload = init
