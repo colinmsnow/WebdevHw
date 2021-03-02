@@ -1,2 +1,15 @@
 
 /* You can put your CSS styles in here */
+
+table, th, td{
+
+    background-color: #f8f9fa;
+    border: 1px solid black;
+    text-align: left;
+    border-collapse: collapse;
+
+}
+
+th{
+    background-color: #eaecf0;
+}
