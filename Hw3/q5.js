@@ -81,7 +81,6 @@ function is_sorted(rows, col){
 
 function makeEditableTable(id){
     // Make all elements of the table editable on click
-
     let mytable = document.getElementById(id)
 
     for (var r = 0, n = mytable.rows.length; r < n; r++) {
@@ -121,9 +120,45 @@ function updatetable(c, inputElement, tableElement){
     inputElement.parentNode.removeChild(inputElement);
 }
 
+
+function button_clicked(){
+    const buttons = document.getElementById('buttons')
+        buttons.addEventListener('click', evt => {
+            if (evt.target.nodeName === 'BUTTON'){
+                console.log(evt.target.id)
+                the_button = document.getElementById(evt.target.id) // button
+                console.log(the_button)
+                console.log(evt.target.id.replace("button_", ""))
+                the_div = document.getElementById(evt.target.id.replace("button_", "")) // div
+                console.log(the_div)
+            // hide everything of class tab
+            let x = document.getElementsByClassName("tab");
+            for (let elem of x){
+                if (elem.id != the_div.id){
+                    elem.style.display = "None"  
+                } 
+            }
+            // show correct tab
+            the_div.style.display = "block"
+            }
+
+            console.log(buttons.children)      
+        for (let b of buttons.children){
+            console.log("b" + b.toString())
+            if (b.id != the_button.id){
+                b.style.borderColor = "black"  
+            } 
+            else{
+                b.style.borderColor = "blue"
+            }
+        }
+        })
+    }
+
 window.onload = init
 function init(){
-    // makeEditableTable('test-table')
-    // makeTable('test-table-2', ['Name','Age', 'Profession'], [['Alice', 25, 'Software Engineer'], ['Bob', 30, 'Builder'], ['Charlie', 21, 'Painter'], ['Darlene', 32, 'Singer']])
+    makeEditableTable('test-table')
+    makeTable('test-table-3', ['Name','Age', 'Profession'], [['Alice', 25, 'Software Engineer'], ['Bob', 30, 'Builder'], ['Charlie', 21, 'Painter'], ['Darlene', 32, 'Singer']])
     makeSortableTable('test-table-2', ['Name','Age', 'Profession'], [['Alice', 25, 'Software Engineer'], ['Bob', 30, 'Builder'], ['Charlie', 21, 'Painter'], ['Darlene', 32, 'Singer']])
+    button_clicked()
 }
