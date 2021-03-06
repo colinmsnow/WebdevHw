@@ -8,15 +8,74 @@
     <title>Homework 3</title>
 
     <link rel="stylesheet" href="homework3.css">
-    <script src="homework3.js"></script>
+    <script src="q5.js"></script>
 
   </head>
-
   
   <body>
-    <table id="test-table">
-    </table>
+
+    
+    <div id="buttons">
+      <button id = button_make_table >Question 1</button>
+      <button id = button_sortable_table>Question 2</button>
+      <button id = button_filterable_list>Question 3</button>
+      <button id = button_editable_table>Question 5</button>
+    </div>
+
+
+    <div class = "tab" id = "make_table" style = "display: none">
+      <h3> Make Table</h3>
+      <table id = 'test-table-3'></table>
+    </div>
+
+    <div class = "tab" id = "sortable_table" style = "display: none">
+      <h3> Sortable Table</h3>
+      <table id = 'test-table-2'></table>
+
+    </div>
+
+    <div class = "tab" id = "filterable_list" style = "display: none">
+      <h3> Filterable List</h3>
+      <label for="filter-input">Filter:</label>
+      <input id="filter-input" type="text">
+      <div id="filter-list"></div>
+    </div>
+
+    <div class = "tab" id = "editable_table" style = "display: none">
+      <h3> Editable Table</h3> 
+      <table id="test-table">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Age</th>
+                <th>Profession</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Alice</td>
+                <td>25</td>
+                <td>Software Engineer</td>
+              </tr>
+              <tr>
+                <td>Bob</td>
+                <td>30</td>
+                <td>Builder</td>
+              </tr>
+              <tr>
+                <td>Charlie</td>
+                <td>21</td>
+                <td>Painter</td>
+              </tr>
+              <tr>
+                <td>Darlene</td>
+                <td>32</td>
+                <td>Singer</td>
+              </tr>
+            </tbody>
+          </table>
+    </div>
+    
   </body>
   
 </html>
-
