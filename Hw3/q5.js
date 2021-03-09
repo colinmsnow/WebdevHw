@@ -79,6 +79,31 @@ function is_sorted(rows, col){
     return true
 }
 
+function makeFilterableList(filterId, listId, items){
+    // start filtering on input
+    let filter = document.getElementById(filterId)
+    let list = document.getElementById(listId)
+    for(i=0;i<items.length-1;i+=2){
+        list.innerHTML += items[i] + "<br>" + items[i+1] + "<br>";
+    }
+    filter.addEventListener('input', evt => {
+        let newitems = items
+        list.innerHTML = ""
+        for (let str of items){
+            newitems = items.filter(str => (str.includes(filter.value)))
+        }
+        if (newitems.length-1 == 0){
+            list.innerHTML += newitems
+        }
+        else{
+        for(i=0;i<newitems.length-1;i+=2){
+            list.innerHTML += newitems[i] + "<br>" + newitems[i+1]+"<br>";
+        }
+        }
+        })
+}
+
+
 function makeEditableTable(id){
     // Make all elements of the table editable on click
     let mytable = document.getElementById(id)
@@ -157,6 +182,7 @@ function button_clicked(){
 
 window.onload = init
 function init(){
+    makeFilterableList('filter-input', 'filter-list', ['This is the first item', 'This is the second item', 'This is the third item', 'This is the fourth item but also not the first, right?'])
     makeEditableTable('test-table')
     makeTable('test-table-3', ['Name','Age', 'Profession'], [['Alice', 25, 'Software Engineer'], ['Bob', 30, 'Builder'], ['Charlie', 21, 'Painter'], ['Darlene', 32, 'Singer']])
     makeSortableTable('test-table-2', ['Name','Age', 'Profession'], [['Alice', 25, 'Software Engineer'], ['Bob', 30, 'Builder'], ['Charlie', 21, 'Painter'], ['Darlene', 32, 'Singer']])
