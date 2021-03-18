@@ -105,12 +105,22 @@ def get_comments(ID):
 def new_comment(ID):
     pass
 
+@app.route('/<path:path>')
+def catch_all(path):
+    print("PATH IS: " + str(path))
+    return send_from_directory("frontend", path)
+
+# @app.route('/<ID>', methods=['POST']) # post route
+# def new_comment(ID):
+#     pass
+
 
 def persistence():
     # make the stuff persistent
     pass
 
 
+PICTURES, _ = add_image(PICTURES, "Starsinthesky.jpg")
 PICTURES, _ = add_image(PICTURES, "Starsinthesky.jpg")
 print(PICTURES)
 app.run(port=PORT)
