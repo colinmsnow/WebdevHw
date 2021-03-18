@@ -6,6 +6,8 @@ function elt(id) {
 
 
 class Model {
+    /* Model controls storing pictures and reloading pictures when the 
+        state is changed.*/
     constructor() {
         this.pictures = []
         this.pictures_detals = []
@@ -14,22 +16,11 @@ class Model {
         this.addedPictureSubscribers = []
     }
 
-    // helper methods
-    
-    // getPicture() {
-    //     return this.pictures[this.current]
-    // }
 
-    // subscription methods
-    
     subAddedPicture(f) {
         this.addedPictureSubscribers.push(f)
     }
     
-    // subChangedPicture(f) {
-    //     this.changedPictureSubscribers.push(f)
-    // }
-
     // actions
   
     changePicture(v) {
@@ -41,92 +32,67 @@ class Model {
         }
     }
 
-    // @ NEW ACTION
-    
+
     fetchPictures() {
-    this.pictures = []
-    this.pictures_detals = []
-	const pPics = fetch('http://localhost:8080/pictures')
-	const process = (obj) => {
-	    console.log('Received pictures =', obj)
-        // console.log("LENGTH:")
-        // console.log(obj.pictures.length)
-        //     if (obj.pictures.length > 0) {
-        console.log("LISTING PICTURES")
-        for (const p in obj.pictures) { 
-            console.log(p)
+        /* Method that can be called to reload all the pictures based on
+            what is in the backend. Is called when the page loads and each
+            time a picture is added. Should be able to be called again
+            whenever things need updating */
+
+        this.pictures = []
+        this.pictures_detals = []
+        const pPics = fetch('http://localhost:8080/pictures')
+        const process = (obj) => {
+            console.log('Received pictures =', obj)
+            console.log("LISTING PICTURES")
+            for (const p in obj.pictures) { 
+                console.log(p)
+            }
+            for (const p in obj.pictures) { 
+                this.addLocalPicture(p)
+            }
+                
         }
-        for (const p in obj.pictures) { 
-            this.addLocalPicture(p)
+        pPics.then((response) => response.json().then((v) => process(v)))
         }
-                // change picture to the first?
-                // this.changePicture(0)
-            
-	}
-	pPics.then((response) => response.json().then((v) => process(v)))
-    }
 
     // @ NEW METHOD
         
     addLocalPicture(pict) {
+        /* Adds a picture to the list of pictures which is held by the model */
         console.log("ADDING LOCAL PICTURE")
         console.log(pict)
         this.pictures.push(pict)
         this.fetchPicture(pict)
         const idx = this.pictures.length - 1
-        // for (const f of this.addedPictureSubscribers) { 
-            
-        //     f(idx, pict)
-        // }
-        // this.changePicture(idx)
     }
         
 
-
-
-
-
-
-
-
-
-
-    // @ NEW ACTION
     addPicture(pict) {
+        /* adds a picture when told to do so by the new picture controller
+            does it by sending a pist request to the backend with the picture url
+            and then updates the model state when its done and reloads all pictures */
+
         console.log("MODEL GOT PICTURE URL")
-	const pAddPict = fetch('http://localhost:8080/new-picture-url', {
+	    const pAddPict = fetch('http://localhost:8080/new-picture-url', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(pict)
         })
-	pAddPict.then((response) => {
-            // ideally, should do some error checking!
-            // this.addLocalPicture(pict)
+	    pAddPict.then((response) => {
             this.fetchPictures()
         })
     }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     fetchPicture(pic_id){
+        /* Gets more detail about a particular picture
+            such as the image source and comments
+            should be called on an image id out of model.pictures
+            and will save info to the model in picture_detals then
+            call added picture subscribers (dont know if we wnat that)*/
 
         console.log("PIC ID")
         console.log(pic_id)
@@ -147,10 +113,7 @@ class Model {
     
 
     get_picture_info(pict){
-        // console.log("GOT TO PICTURE INFO")
-        // console.log(pict)
-        // console.log(pict_source)
-        // console.log(typeof(pict))
+        /* Helper function called by fetchPicture*/
         this.pictures_detals.push({pict: pict})
 
         console.log(pict)
@@ -164,42 +127,19 @@ class Model {
 }
 
 class PictureView {
+    /* Controls the gallery view of images presented on the main screen
+        adds picture elements to a flexbox 4 across and adds listeners
+        that make them do things when you click on them */
     constructor(m) {
         this.model = m
         this.gallery = document.getElementById("imageGallery")
-
-
-        // this.eltAdded = elt('added')
-	// this.eltUrl = elt('url')
         m.subAddedPicture(() => this.updatePictures())
-        // this.hideAdded()
-        // this.eltUrl.addEventListener('mouseover', () => this.showAdded())
-        // this.eltUrl.addEventListener('mouseout', () => this.hideAdded())
     }
 
-    // changeColorAdded(color) {
-	// this.eltAdded.style.color = color
-    // }
 
-    // hideAdded() { 
-	// this.changeColorAdded('white')
-    // }
-    
-    // showAdded() {
-	// this.changeColorAdded('black')
-    // }
 
     updatePictures(pict) {
-        /* Called when the details of all the pictures are found and loaded
-        
-            */
-        // console.log("GOT TO UPDATE PICTURES")
-
-        // console.log("PICTURES ARE")
-        // console.log(this.model.pictures_detals)
-
-        // Have the picture info, now actually show the pics
-
+        /* Updates the gallery */
         while (this.gallery.firstChild) {
             this.gallery.removeChild(this.gallery.firstChild);
         }
@@ -216,18 +156,13 @@ class PictureView {
             // Here is where it needs to go to another page when you click on it
             image.onclick = function(){console.log("CLICKED AN IMAGE")}
             this.gallery.appendChild(image)
-
         }
-
-
     }
 }
 
 
-
-
-
 class NewPictureController {
+    /* Controls the input url box and button */
     constructor(m) {
         this.model = m
         this.eltButton = elt('create-button')
@@ -244,7 +179,6 @@ class NewPictureController {
     }
 
     clearInputs() {
-	// this.eltNewName.value = ''
 	this.eltNewUrl.value = ''
     }    
 
@@ -260,34 +194,11 @@ class NewPictureController {
 }
 
 
-// class ImageView {
-//     constructor(m) {
-// 	this.model = m
-// 	this.eltName = elt('name')
-// 	this.eltUrl = elt('url')
-// 	m.subChangedPicture(() => this.showPicture())
-//     }
-
-//     showPicture() {
-// 	const pict = this.model.getPicture()
-// 	this.eltName.innerText = pict.name
-// 	this.eltUrl.setAttribute('src', pict.url)
-//     }
-// }
-
-
-
-
-
 function init() {
     const model = new Model()
     const pictureView = new PictureView(model)
-    // const selectC = new SelectionController(model)
     const newPicC = new NewPictureController(model)
-    // const imageV = new ImageView(model)
-    // const addedV = new TimeAddedView(model)
-    // const thumbnailV = new ThumbnailView(model)
-    // @ NEW CALL
+
     model.fetchPictures()
 }
 
