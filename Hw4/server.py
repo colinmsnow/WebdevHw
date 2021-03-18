@@ -82,7 +82,7 @@ def add_picture():
     
     data = request.get_json()
     print("DATA: " + str(data))
-    link = data['url']
+    link = data
     print("LINK: " + str(link))
 
     picID = str(uuid.uuid1()) + ".jpg"
@@ -90,6 +90,7 @@ def add_picture():
 
     PICTURES, new_id = add_image(PICTURES, picID)
     r = requests.get(link)
+    print ("PICTURES: " + str(PICTURES))
 
     with open(IMAGES_FOLDER + "/" + picID, 'wb') as f:
         f.write(r.content)

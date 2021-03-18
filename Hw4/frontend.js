@@ -1,3 +1,7 @@
+function elt(id) {
+    // useful shortcut
+    return document.getElementById(id)
+}
 
 
 
@@ -40,12 +44,18 @@ class Model {
     // @ NEW ACTION
     
     fetchPictures() {
+    this.pictures = []
+    this.pictures_detals = []
 	const pPics = fetch('http://localhost:8080/pictures')
 	const process = (obj) => {
 	    console.log('Received pictures =', obj)
         // console.log("LENGTH:")
         // console.log(obj.pictures.length)
         //     if (obj.pictures.length > 0) {
+        console.log("LISTING PICTURES")
+        for (const p in obj.pictures) { 
+            console.log(p)
+        }
         for (const p in obj.pictures) { 
             this.addLocalPicture(p)
         }
@@ -60,6 +70,7 @@ class Model {
         
     addLocalPicture(pict) {
         console.log("ADDING LOCAL PICTURE")
+        console.log(pict)
         this.pictures.push(pict)
         this.fetchPicture(pict)
         const idx = this.pictures.length - 1
@@ -70,9 +81,20 @@ class Model {
         // this.changePicture(idx)
     }
         
+
+
+
+
+
+
+
+
+
+
     // @ NEW ACTION
     addPicture(pict) {
-	const pAddPict = fetch('http://localhost:8080/add-picture', {
+        console.log("MODEL GOT PICTURE URL")
+	const pAddPict = fetch('http://localhost:8080/new-picture-url', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -81,40 +103,43 @@ class Model {
         })
 	pAddPict.then((response) => {
             // ideally, should do some error checking!
-            this.addLocalPicture(pict)
+            // this.addLocalPicture(pict)
+            this.fetchPictures()
         })
     }
 
-    // arrayBufferToBase64(buffer) {
-    //     var binary = '';
-    //     var bytes = [].slice.call(new Uint8Array(buffer));
-      
-    //     bytes.forEach((b) => binary += String.fromCharCode(b));
-      
-    //     return window.btoa(binary);
-    // }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     fetchPicture(pic_id){
 
-        // base 64 conversion code from https://medium.com/front-end-weekly/fetching-images-with-the-fetch-api-fb8761ed27b2
-        // var options = {
-        //     method: 'GET',
-        //     headers: headers,
-        //     mode: 'cors',
-        //     cache: 'default'
-        //   };
+        console.log("PIC ID")
+        console.log(pic_id)
+
+
 
         const pFetchPict = fetch('http://localhost:8080/picture/' + pic_id)
         pFetchPict.then((response) => { response.json().then((json) => {
-            // response.arrayBuffer().then((buffer) => {
-            //   var base64Flag = 'data:image/jpeg;base64,';
-            //   var imageStr = this.arrayBufferToBase64(buffer);
-          
+
               console.log("HERE")
               console.log(json)
 
               this.get_picture_info(json)
-            // });
           })});
 
     }
@@ -142,6 +167,8 @@ class PictureView {
     constructor(m) {
         this.model = m
         this.gallery = document.getElementById("imageGallery")
+
+
         // this.eltAdded = elt('added')
 	// this.eltUrl = elt('url')
         m.subAddedPicture(() => this.updatePictures())
@@ -173,6 +200,10 @@ class PictureView {
 
         // Have the picture info, now actually show the pics
 
+        while (this.gallery.firstChild) {
+            this.gallery.removeChild(this.gallery.firstChild);
+        }
+
         for (const i of this.model.pictures_detals){
             
             console.log("GOT TO HERE")
@@ -181,6 +212,9 @@ class PictureView {
             console.log(image)
             image.src = "/image/" +  i.pict.picture.source//? maybe
             image.classList.add("item")
+
+            // Here is where it needs to go to another page when you click on it
+            image.onclick = function(){console.log("CLICKED AN IMAGE")}
             this.gallery.appendChild(image)
 
         }
@@ -193,37 +227,37 @@ class PictureView {
 
 
 
-// class NewPictureController {
-//     constructor(m) {
-//         this.model = m
-//         this.eltButton = elt('create-button')
-//         this.eltButton.addEventListener('click', () => this.newPicture())
-//         this.eltNewName = elt('new-name')
-//         this.eltNewUrl = elt('new-url')
-//     }
+class NewPictureController {
+    constructor(m) {
+        this.model = m
+        this.eltButton = elt('create-button')
+        this.eltButton.addEventListener('click', () => this.newPicture())
+        this.eltNewUrl = elt('new-url')
+        // console.log("ELEMENT BUTTON")
+        // console.log(this.eltButton)
+    }
     
-//     getPictureInfo() {
-// 	const name = this.eltNewName.value
-// 	const url = this.eltNewUrl.value
-// 	if (!name || !url) {
-// 	    return false
-// 	}
-// 	return { name: name, url: url, added: Date() }
-//     }
+    getPictureInfo() {
+        const url = this.eltNewUrl.value
+        return url
 
-//     clearInputs() {
-// 	this.eltNewName.value = ''
-// 	this.eltNewUrl.value = ''
-//     }    
+    }
 
-//     newPicture() {
-//         const pict = this.getPictureInfo()
-//         if (pict) {
-//             this.model.addPicture(pict)
-// 	    this.clearInputs()
-//         }
-//     }
-// }
+    clearInputs() {
+	// this.eltNewName.value = ''
+	this.eltNewUrl.value = ''
+    }    
+
+    newPicture() {
+        console.log("NEW PICTURE CLICKED")
+        const pict_url = this.getPictureInfo()
+        console.log(pict_url)
+        if (pict_url) {
+            this.model.addPicture(pict_url)
+	    this.clearInputs()
+        }
+    }
+}
 
 
 // class ImageView {
@@ -249,7 +283,7 @@ function init() {
     const model = new Model()
     const pictureView = new PictureView(model)
     // const selectC = new SelectionController(model)
-    // const newPicC = new NewPictureController(model)
+    const newPicC = new NewPictureController(model)
     // const imageV = new ImageView(model)
     // const addedV = new TimeAddedView(model)
     // const thumbnailV = new ThumbnailView(model)
