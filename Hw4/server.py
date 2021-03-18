@@ -64,10 +64,13 @@ def get_picture(ID):
     print("Pic is: " + str(pic))
     filename = pic["source"]
 
-    try:
-        return send_from_directory(IMAGES_FOLDER, filename=filename, as_attachment=True)
-    except FileNotFoundError:
-        abort(404)
+    result = {'picture': pic}
+    return jsonify(result)
+
+    # try:
+    #     return send_from_directory(IMAGES_FOLDER, filename=filename, as_attachment=True)
+    # except FileNotFoundError:
+    #     abort(404)
 
 
 @app.route('/new-picture-url', methods=['POST']) # works
@@ -105,10 +108,16 @@ def get_comments(ID):
 def new_comment(ID):
     pass
 
+# @app.route('/index.html')
+# def catch_index():
+#     print("GETTING INDEX.HTML")
+#     # print("PATH IS: " + str(path))
+#     return send_from_directory("", "index.html")
+
 @app.route('/<path:path>')
 def catch_all(path):
     print("PATH IS: " + str(path))
-    return send_from_directory("frontend", path)
+    return send_from_directory("", path)
 
 # @app.route('/<ID>', methods=['POST']) # post route
 # def new_comment(ID):

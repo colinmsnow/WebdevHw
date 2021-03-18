@@ -85,14 +85,14 @@ class Model {
         })
     }
 
-    arrayBufferToBase64(buffer) {
-        var binary = '';
-        var bytes = [].slice.call(new Uint8Array(buffer));
+    // arrayBufferToBase64(buffer) {
+    //     var binary = '';
+    //     var bytes = [].slice.call(new Uint8Array(buffer));
       
-        bytes.forEach((b) => binary += String.fromCharCode(b));
+    //     bytes.forEach((b) => binary += String.fromCharCode(b));
       
-        return window.btoa(binary);
-    }
+    //     return window.btoa(binary);
+    // }
 
     fetchPicture(pic_id){
 
@@ -105,27 +105,30 @@ class Model {
         //   };
 
         const pFetchPict = fetch('http://localhost:8080/picture/' + pic_id)
-        pFetchPict.then((response) => {
-            response.arrayBuffer().then((buffer) => {
-              var base64Flag = 'data:image/jpeg;base64,';
-              var imageStr = this.arrayBufferToBase64(buffer);
+        pFetchPict.then((response) => { response.json().then((json) => {
+            // response.arrayBuffer().then((buffer) => {
+            //   var base64Flag = 'data:image/jpeg;base64,';
+            //   var imageStr = this.arrayBufferToBase64(buffer);
           
-            //   console.log("HERE")
-            //   console.log( base64Flag + imageStr)
-              this.get_picture_info(response, base64Flag + imageStr)
-            });
-          });
+              console.log("HERE")
+              console.log(json)
+
+              this.get_picture_info(json)
+            // });
+          })});
 
     }
 
     
 
-    get_picture_info(pict, pict_source){
+    get_picture_info(pict){
         // console.log("GOT TO PICTURE INFO")
         // console.log(pict)
         // console.log(pict_source)
         // console.log(typeof(pict))
-        this.pictures_detals.push({pict: pict_source})
+        this.pictures_detals.push({pict: pict})
+
+        console.log(pict)
 
         for (const f of this.addedPictureSubscribers) { 
             
@@ -171,11 +174,12 @@ class PictureView {
         // Have the picture info, now actually show the pics
 
         for (const i of this.model.pictures_detals){
-            // console.log("GOT TO HERE")
-            // Iterate through pictures
-            // console.log(i)
+            
+            console.log("GOT TO HERE")
+            console.log(i.pict.picture.source)
             const image = document.createElement('img')
-            image.innerHTML = i.pict //? maybe
+            console.log(image)
+            image.src = "/image/" +  i.pict.picture.source//? maybe
             image.classList.add("item")
             this.gallery.appendChild(image)
 
