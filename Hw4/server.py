@@ -34,6 +34,7 @@ def add_image(images, source):
 
 # we need this or else it shuts down post requests
 @app.after_request
+
 def add_header(response):
     response.headers['Access-Control-Allow-Origin'] = '*'
     response.headers['Access-Control-Allow-Headers'] = '*'
@@ -49,6 +50,7 @@ def test_route():
 
 @app.route('/pictures') # works
 def get_pictures():
+    """ Fetches the list of pictures without the comments or source """
     filteredPics = copy.deepcopy(PICTURES)
     print(filteredPics)
     for i in filteredPics.values():
@@ -60,6 +62,7 @@ def get_pictures():
 
 @app.route('/picture/<ID>') # works
 def get_picture(ID):
+    """ Fetches a specific picture with all of its comments and its source """
     pic = PICTURES[ID]
     print("Pic is: " + str(pic))
     filename = pic["source"]
@@ -70,6 +73,7 @@ def get_picture(ID):
 
 @app.route('/new-picture-url', methods=['POST']) # works
 def add_picture():
+    """ Adds a picture to the picture folder """
 
     global PICTURES
 
