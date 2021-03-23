@@ -99,14 +99,28 @@ def add_picture():
     return jsonify(return_data)
 
 
-@app.route('/comments/<ID>') # get route
+@app.route('/comments/<ID>') # get route #works
 def get_comments(ID):
-    pass
+    pic = PICTURES[ID]
+    comments = pic["comments"]
+    result = {"comments": comments}
+    return jsonify(result)
 
 
-@app.route('/new-comment/<ID>', methods=['POST']) # post route
+@app.route('/new-comment/<ID>', methods=['POST']) # post route #works
 def new_comment(ID):
-    pass
+    ''' adds a comment to a picture '''
+
+    print("GOT A COMMENT REQUEST")
+    print(request.get_json())
+    print(type(request.get_json()))
+    data = request.get_json()
+    pic = PICTURES[ID]
+    comments = pic["comments"]
+    comments.append({"comment": data['comment'], "timestamp": PICTURES[ID]["timestamp"]})
+    result = {"comments": comments}
+    return jsonify(result)
+    
 
 @app.route('/<path:path>')
 def catch_all(path):
