@@ -3,6 +3,9 @@ import uuid
 import datetime
 import copy
 import requests
+import json
+import pickle
+import os.path
 
 app = Flask(__name__)
 
@@ -29,6 +32,8 @@ def add_image(images, source):
     """
     pic = create_picture(source)
     images[pic["id"]] = pic
+
+    pickle.dump( images, open( "pictures.p", "wb" ) )
     return (images, pic["id"])
 
 
@@ -129,11 +134,18 @@ def catch_all(path):
 
 
 def persistence():
-    # make the stuff persistent
-    pass
+    global PICTURES
+    # need to dump each time we change pictures
+    if PICTURES:
+        json.loads(PICTURES)
 
 
-PICTURES, _ = add_image(PICTURES, "Starsinthesky.jpg")
-PICTURES, _ = add_image(PICTURES, "Starsinthesky.jpg")
+
+
+if os.path.exists("pictures.p"):
+    PICTURES = pickle.load( open( "pictures.p", "rb" ) )
+else:
+    PICTURES, _ = add_image(PICTURES, "Starsinthesky.jpg")
+    PICTURES, _ = add_image(PICTURES, "Starsinthesky.jpg")
 print(PICTURES)
 app.run(port=PORT)

@@ -14,6 +14,7 @@ class Model {
         this.current = null
 	// list of functions to call when picture is added
         this.addedPictureSubscribers = []
+        this.addedCommentSubscribers = []
     }
 
 
@@ -21,6 +22,10 @@ class Model {
         this.addedPictureSubscribers.push(f)
     }
     
+    subAddedComment(f) {
+        this.addedCommentSubscribers.push(f)
+    }
+
     // actions
   
     changePicture(v) {
@@ -86,6 +91,23 @@ class Model {
         })
     }
 
+    addComment(comment) {
+         /* adds a comment when told to do so by the new picture controller
+             does it by sending a post request to the backend with the picture url
+             and then updates the model state when its done and reloads all pictures */
+
+        console.log("MODEL GOT COMMENT")
+        pic = this.current
+        const addComm = fetch(pic,{
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+                },
+            body: JSON.stringify(comment)
+         })
+
+         }
+
 
     fetchPicture(pic_id){
         /* Gets more detail about a particular picture
@@ -126,6 +148,20 @@ class Model {
     }
 }
 
+function onClickedFun(image){
+    // console.log(i.pict.picture.source.toString().substring(0, i.pict.picture.source.lastIndexOf('.')) || i.pict.picture.source)
+            // console.log(MODEL)
+            console.log(image)
+            console.log(image.target)
+            console.log(image.target.nodeValue)
+            
+            // const k = fetchPicture(image.id)
+            const it = MODEL.fetchPicture(image.id)
+            console.log(it)
+            console.log("CLICKED AN IMAGE")
+
+}
+
 class PictureView {
     /* Controls the gallery view of images presented on the main screen
         adds picture elements to a flexbox 4 across and adds listeners
@@ -135,6 +171,17 @@ class PictureView {
         this.gallery = document.getElementById("imageGallery")
         m.subAddedPicture(() => this.updatePictures())
     }
+    
+    // onClickedFun(model){
+    //     console.log(i.pict.picture.source.toString().substring(0, i.pict.picture.source.lastIndexOf('.')) || i.pict.picture.source)
+    //             console.log(model)
+    //             // const la = model.fetchPicture(image.id)
+    //             // const k = fetchPicture(image.id)
+    //             // const it = model.fetchPicture(image.id)
+    //             // console.log(it)
+    //             console.log("CLICKED AN IMAGE")
+
+    // }
 
 
 
@@ -152,12 +199,30 @@ class PictureView {
             console.log(image)
             image.src = "/image/" +  i.pict.picture.source//? maybe
             image.classList.add("item")
-
+            console.log(i.pict.picture.id)
+            image.id = i.pict.picture.id
+            console.log(typeof(this.model))
+            // Object model = this.model
+            // image.onclick = {() => onclickfun(this.model)}
             // Here is where it needs to go to another page when you click on it
-            image.onclick = function(){console.log("CLICKED AN IMAGE")}
+            image.onclick = function(image){onClickedFun(image);}
+                //get image name
+                //create new page w/ index/image name
+                //build that image page w/ ordered comments and image and back button
+
+        
+                // console.log(i.pict.picture.source.toString().substring(0, i.pict.picture.source.lastIndexOf('.')) || i.pict.picture.source)
+                // console.log(model)
+                // // const la = model.fetchPicture(image.id)
+                // // const k = fetchPicture(image.id)
+                // // const it = model.fetchPicture(image.id)
+                // // console.log(it)
+                // console.log("CLICKED AN IMAGE")}
             this.gallery.appendChild(image)
         }
     }
+
+
 }
 
 
@@ -191,19 +256,27 @@ class NewPictureController {
 	    this.clearInputs()
         }
     }
+
+    getComment() {
+        console.log("NEW COMMENT INPUTTED")
+        const comment_input = this.elt(newComment).createElement("INPUT");
+        comment_input.setAttribute("type", "text");
+        comment_input.addEventListener('input',this.model.addComment(comment_input.value))
+    }
+
 }
 
 
 function init() {
-    const model = new Model()
-    const pictureView = new PictureView(model)
-    const newPicC = new NewPictureController(model)
+    MODEL = new Model()
+    const pictureView = new PictureView(MODEL)
+    const newPicC = new NewPictureController(MODEL)
 
-    model.fetchPictures()
+    MODEL.fetchPictures()
 }
 
 // put all the initialization code in a function called
 // when the document finishes loading
 // (you're sure all elements have been created before your code kicks in)
-
+let MODEL = null
 window.addEventListener('load', init)
