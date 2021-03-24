@@ -108,6 +108,45 @@ class Model {
 
          }
 
+        getPictureDetails(pic_id){
+            /* Gets more detail about a particular picture
+                such as the image source and comments
+                should be called on an image id out of model.pictures
+                and will save info to the model in picture_detals then
+                call added picture subscribers (dont know if we wnat that)*/
+    
+            console.log("PIC ID")
+            console.log(pic_id)
+            console.log("MODEL")
+            console.log(MODEL.pictures_detals)
+
+            console.log(MODEL.pictures_detals[0])
+
+            for (let i of MODEL.pictures_detals){
+                console.log("I")
+                console.log(i)
+                if (i.pict.picture.id == pic_id){
+                    console.log(i.pict.picture)
+                    return i.pict.picture
+                }
+            }
+    
+    
+    
+            // const pFetchPict = fetch('http://localhost:8080/picture/' + pic_id)
+            // console.log("P FETCH PICT" + pFetchPict.toString())
+            // pFetchPict.then((response) => { response.json().then((json) => {
+    
+            // //       console.log("HERE")
+            // console.log("P FETCH PICT")
+            // console.log(json)
+            // MODEL.current = json.picture.id
+    
+            // //       this.get_picture_info(json)
+            //   })});
+    
+        }
+
 
     fetchPicture(pic_id){
         /* Gets more detail about a particular picture
@@ -121,12 +160,11 @@ class Model {
 
 
 
+
         const pFetchPict = fetch('http://localhost:8080/picture/' + pic_id)
         pFetchPict.then((response) => { response.json().then((json) => {
 
-              console.log("HERE")
-              console.log(json)
-
+              console.log("HERE")              
               this.get_picture_info(json)
           })});
 
@@ -149,16 +187,20 @@ class Model {
 }
 
 function onClickedFun(image){
-    // console.log(i.pict.picture.source.toString().substring(0, i.pict.picture.source.lastIndexOf('.')) || i.pict.picture.source)
+            s = (image.target.attributes[0].value.toString().substring(image.target.attributes[0].value.lastIndexOf('/'), image.target.attributes[0].value.lastIndexOf('.')) || image.target.attributes[0].value) + ".html"
+            console.log(s)
             // console.log(MODEL)
+            console.log("CLICKED AN IMAGE")
             console.log(image)
             console.log(image.target)
-            console.log(image.target.nodeValue)
+            console.log(image.target.id)
             
             // const k = fetchPicture(image.id)
-            const it = MODEL.fetchPicture(image.id)
+            const it = MODEL.getPictureDetails(image.target.id)
             console.log(it)
             console.log("CLICKED AN IMAGE")
+
+            // hide the gallery and show the image and back button
 
 }
 

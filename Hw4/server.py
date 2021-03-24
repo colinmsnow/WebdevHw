@@ -3,7 +3,6 @@ import uuid
 import datetime
 import copy
 import requests
-import json
 import pickle
 import os.path
 
@@ -133,17 +132,9 @@ def catch_all(path):
     return send_from_directory("", path)
 
 
-def persistence():
-    global PICTURES
-    # need to dump each time we change pictures
-    if PICTURES:
-        json.loads(PICTURES)
-
-
-
 
 if os.path.exists("pictures.p"):
-    PICTURES = pickle.load( open( "pictures.p", "rb" ) )
+    PICTURES = pickle.load(open("pictures.p", "rb" ))
 else:
     PICTURES, _ = add_image(PICTURES, "Starsinthesky.jpg")
     PICTURES, _ = add_image(PICTURES, "Starsinthesky.jpg")
