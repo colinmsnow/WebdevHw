@@ -15,6 +15,7 @@ class Model {
 	// list of functions to call when picture is added
         this.addedPictureSubscribers = []
         this.addedCommentSubscribers = []
+
     }
 
 
@@ -199,7 +200,8 @@ function onClickedFun(image){
             const it = MODEL.getPictureDetails(image.target.id)
             console.log(it)
             console.log("CLICKED AN IMAGE")
-
+            this.newpage = elt('NewPage')
+            this.newpage.style = "display:block"
             // hide the gallery and show the image and back button
 
 }
@@ -301,8 +303,6 @@ class NewPictureController {
 
     getComment() {
         console.log("NEW COMMENT INPUTTED")
-        const comment_input = this.elt(newComment).createElement("INPUT");
-        comment_input.setAttribute("type", "text");
         comment_input.addEventListener('input',this.model.addComment(comment_input.value))
     }
 
