@@ -99,7 +99,7 @@ class Model {
 
         console.log("MODEL GOT COMMENT")
         pic = this.current
-        const addComm = fetch(pic,{
+        const addComm = fetch('http://localhost:8080/new-comment/' + pic,{
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -200,8 +200,11 @@ function onClickedFun(image){
             const it = MODEL.getPictureDetails(image.target.id)
             console.log(it)
             console.log("CLICKED AN IMAGE")
+            this.current = it.id
+            console.log(this.current)
             this.newpage = elt('NewPage')
             this.newpage.style = "display:block"
+            console.log(it.comments)
             // hide the gallery and show the image and back button
 
 }
@@ -301,9 +304,9 @@ class NewPictureController {
         }
     }
 
-    getComment() {
+    getComment(input) {
         console.log("NEW COMMENT INPUTTED")
-        comment_input.addEventListener('input',this.model.addComment(comment_input.value))
+        input.addEventListener('input',this.model.addComment(input.value))
     }
 
 }
