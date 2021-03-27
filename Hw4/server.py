@@ -35,6 +35,8 @@ def add_image(images, source):
     pickle.dump( images, open( "pictures.p", "wb" ) )
     return (images, pic["id"])
 
+def add_image(file_path):
+    
 
 # we need this or else it shuts down post requests
 @app.after_request

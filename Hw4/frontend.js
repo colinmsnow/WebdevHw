@@ -76,7 +76,7 @@ class Model {
 
     addPicture(pict) {
         /* adds a picture when told to do so by the new picture controller
-            does it by sending a pist request to the backend with the picture url
+            does it by sendin...g a pist request to the backend with the picture url
             and then updates the model state when its done and reloads all pictures */
 
         console.log("MODEL GOT PICTURE URL")
@@ -201,12 +201,22 @@ function onClickedFun(image){
             console.log(it)
             console.log("CLICKED AN IMAGE")
             this.current = it.id
+            MODEL.current = it.id
             console.log(this.current)
             this.newpage = elt('NewPage')
             this.newpage.style = "display:block"
             console.log(it.comments)
             // hide the gallery and show the image and back button
-
+            
+            //hides the gallery 
+            this.newpage.previousElementSibling.style.display = 'none'
+            
+            // shows just relevant image
+            console.log(it)
+            pic = document.createElement("img")
+            pic.src = '/image/' + it.source
+            this.newpage.appendChild(pic)
+            
 }
 
 class PictureView {
