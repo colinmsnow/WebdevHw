@@ -106,6 +106,7 @@ class Model {
                 },
             body: JSON.stringify(comment)
          })
+         
 
          }
 
@@ -167,6 +168,29 @@ class Model {
 
               console.log("HERE")              
               this.get_picture_info(json)
+          })});
+
+    }
+
+
+    fetchComments(pic_id){
+        /* Gets more detail about a particular picture
+            such as the image source and comments
+            should be called on an image id out of model.pictures
+            and will save info to the model in picture_detals then
+            call added picture subscribers (dont know if we wnat that)*/
+
+        console.log("PIC ID")
+        console.log(pic_id)
+
+
+
+
+        const comments = fetch('http://localhost:8080/comments/' + pic_id)
+        comments.then((response) => { response.json().then((json) => {
+
+              console.log("HERE")  
+              elt('dispcom').innerHTML = JSON.stringify(json);
           })});
 
     }
@@ -290,6 +314,7 @@ class NewPictureController {
         this.eltButton = elt('create-button')
         this.eltButton.addEventListener('click', () => this.newPicture())
         this.eltNewUrl = elt('new-url')
+        this.input = elt('new-comment')
         // console.log("ELEMENT BUTTON")
         // console.log(this.eltButton)
     }
@@ -314,9 +339,11 @@ class NewPictureController {
         }
     }
 
-    getComment(input) {
-        console.log("NEW COMMENT INPUTTED")
-        input.addEventListener('input',this.model.addComment(input.value))
+    getComment() {
+        this.input.addEventListener('input',evt => {
+            console.log("NEW COMMENT INPUTTED")
+            MODEL.addComment(this.input.value)
+        })
     }
 
 }
