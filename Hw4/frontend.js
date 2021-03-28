@@ -92,46 +92,47 @@ class Model {
         })
     }
 
-    addComment(comment) {
+    addComment(pic_id,comment) {
          /* adds a comment when told to do so by the new picture controller
              does it by sending a post request to the backend with the picture url
              and then updates the model state when its done and reloads all pictures */
 
         console.log("MODEL GOT COMMENT")
-        pic = this.current
-        const addComm = fetch('http://localhost:8080/new-comment/' + pic,{
-            method: 'POST',
+        console.log(comment)
+        console.log(pic_id)
+        const addComm = fetch('http://localhost:8080/new-comment/'+pic_id,{
+            method:'POST',
             headers: {
                 'Content-Type': 'application/json'
                 },
-            body: JSON.stringify(comment)
+            data: JSON.stringify(comment)
          })
-         
+         addComm.then((response) => {
+            this.fetchComments()
+        })
+        }
 
-         }
-
-        getPictureDetails(pic_id){
+    getPictureDetails(pic_id){
             /* Gets more detail about a particular picture
                 such as the image source and comments
                 should be called on an image id out of model.pictures
                 and will save info to the model in picture_detals then
                 call added picture subscribers (dont know if we wnat that)*/
     
-            console.log("PIC ID")
-            console.log(pic_id)
-            console.log("MODEL")
-            console.log(MODEL.pictures_detals)
+        console.log("PIC ID")
+        console.log(pic_id)
+        console.log("MODEL")
+        console.log(MODEL.pictures_detals)
 
-            console.log(MODEL.pictures_detals[0])
-
-            for (let i of MODEL.pictures_detals){
-                console.log("I")
-                console.log(i)
-                if (i.pict.picture.id == pic_id){
-                    console.log(i.pict.picture)
-                    return i.pict.picture
-                }
+        console.log(MODEL.pictures_detals[0])
+        for (let i of MODEL.pictures_detals){
+            console.log("I")
+            console.log(i)
+            if (i.pict.picture.id == pic_id){
+                console.log(i.pict.picture)
+                return i.pict.picture
             }
+        }
     
     
     
@@ -213,33 +214,41 @@ class Model {
 
 function onClickedFun(image){
             s = (image.target.attributes[0].value.toString().substring(image.target.attributes[0].value.lastIndexOf('/'), image.target.attributes[0].value.lastIndexOf('.')) || image.target.attributes[0].value) + ".html"
-            console.log(s)
             // console.log(MODEL)
             console.log("CLICKED AN IMAGE")
-            console.log(image)
-            console.log(image.target)
-            console.log(image.target.id)
-            
-            // const k = fetchPicture(image.id)
             const it = MODEL.getPictureDetails(image.target.id)
-            console.log(it)
-            console.log("CLICKED AN IMAGE")
             this.current = it.id
             MODEL.current = it.id
-            console.log(this.current)
             this.newpage = elt('NewPage')
+            this.newcomment = elt('new-comment')
+            this.back = elt('back')
+            this.submit = elt('submit')
             this.newpage.style = "display:block"
             console.log(it.comments)
+            MODEL.fetchComments(MODEL.current)
+            this.newcomment.addEventListener('input',evt => {
+                this.submit.addEventListener('click',evt =>{
+                    console.log("NEW COMMENT INPUTTED")
+                    MODEL.addComment(MODEL.current,this.newcomment.value)
+                })
+            })
+
             // hide the gallery and show the image and back button
             
             //hides the gallery 
             this.newpage.previousElementSibling.style.display = 'none'
             
             // shows just relevant image
-            console.log(it)
             pic = document.createElement("img")
             pic.src = '/image/' + it.source
             this.newpage.appendChild(pic)
+
+            this.back.addEventListener('click',evt =>{
+                console.log("CLICKED BACK")
+                this.newpage.previousElementSibling.style.display = 'block'
+                this.newpage.removeChild(pic)
+                this.newpage.style = "display:none"
+            })
             
 }
 
@@ -337,13 +346,6 @@ class NewPictureController {
             this.model.addPicture(pict_url)
 	    this.clearInputs()
         }
-    }
-
-    getComment() {
-        this.input.addEventListener('input',evt => {
-            console.log("NEW COMMENT INPUTTED")
-            MODEL.addComment(this.input.value)
-        })
     }
 
 }

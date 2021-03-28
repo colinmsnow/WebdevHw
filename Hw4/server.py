@@ -35,12 +35,11 @@ def add_image(images, source):
     pickle.dump( images, open( "pictures.p", "wb" ) )
     return (images, pic["id"])
 
-def add_image(file_path):
+#def add_image(file_path):
     
 
 # we need this or else it shuts down post requests
 @app.after_request
-
 def add_header(response):
     response.headers['Access-Control-Allow-Origin'] = '*'
     response.headers['Access-Control-Allow-Headers'] = '*'
