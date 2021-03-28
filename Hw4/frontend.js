@@ -100,15 +100,19 @@ class Model {
         console.log("MODEL GOT COMMENT")
         console.log(comment)
         console.log(pic_id)
-        const addComm = fetch('http://localhost:8080/new-comment/'+pic_id,{
+        this.fetchComments(pic_id)
+        const addComm = fetch('http://localhost:8080/new-comment/' + pic_id,{
             method:'POST',
             headers: {
                 'Content-Type': 'application/json'
                 },
             data: JSON.stringify(comment)
          })
+
+         console.log(addComm)
          addComm.then((response) => {
-            this.fetchComments()
+            console.log(this)
+            this.fetchComments(this.current)
         })
         }
 
@@ -184,9 +188,6 @@ class Model {
         console.log("PIC ID")
         console.log(pic_id)
 
-
-
-
         const comments = fetch('http://localhost:8080/comments/' + pic_id)
         comments.then((response) => { response.json().then((json) => {
 
@@ -229,6 +230,7 @@ function onClickedFun(image){
             this.newcomment.addEventListener('input',evt => {
                 this.submit.addEventListener('click',evt =>{
                     console.log("NEW COMMENT INPUTTED")
+                    console.log(MODEL)
                     MODEL.addComment(MODEL.current,this.newcomment.value)
                 })
             })
@@ -240,6 +242,7 @@ function onClickedFun(image){
             
             // shows just relevant image
             pic = document.createElement("img")
+            console.log(it.source)
             pic.src = '/image/' + it.source
             this.newpage.appendChild(pic)
 
@@ -287,6 +290,7 @@ class PictureView {
             console.log(i.pict.picture.source)
             const image = document.createElement('img')
             console.log(image)
+            console.log(i.pict.picture.source)
             image.src = "/image/" +  i.pict.picture.source//? maybe
             image.classList.add("item")
             console.log(i.pict.picture.id)

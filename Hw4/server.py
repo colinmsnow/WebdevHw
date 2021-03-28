@@ -1,4 +1,5 @@
-from flask import Flask, jsonify, send_from_directory, request
+from flask import Flask, jsonify, send_from_directory, request, flash, redirect
+from werkzeug.utils import secure_filename
 import uuid
 import datetime
 import copy
@@ -12,6 +13,12 @@ PORT = 8080
 IMAGES_FOLDER = 'image'
 PICTURES = {} # This is where the data is stored.
 # Its a gross global dictionary but jsonify likes dicts so its easier this way
+
+
+ALLOWED_EXTENSIONS = set(['png', 'jpg'])
+
+def allowed_file(filename):
+	return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 def create_picture(source):
     """ Creates a picture object which stores a unique id, timestamp, comments, and the image source as a filename """
@@ -103,6 +110,26 @@ def add_picture():
 
     return jsonify(return_data)
 
+@app.route('/new-picture-path', methods=['POST'])
+def upload_file():
+	if request.method == 'POST':
+        # check if the post request has the file part
+        # this doesn't do exactly what we want, but it's decently close. And I know it wokred in our POE project! 
+		if 'file' not in request.files:
+			flash('No file part')
+			return redirect(request.url)
+		file = request.files['file']
+		if file.filename == '':
+			flash('No file selected for uploading')
+			return redirect(request.url)
+		if file and allowed_file(file.filename):
+			filename = secure_filename(file.filename)
+			file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+			flash('File successfully uploaded')
+			return redirect('/')
+		else:
+			flash('Allowed file types are png or jpg')
+			return redirect(request.url)
 
 @app.route('/comments/<ID>') # get route #works
 def get_comments(ID):
@@ -120,6 +147,7 @@ def new_comment(ID):
     print(request.get_json())
     print(type(request.get_json()))
     data = request.get_json()
+    global PICTURES
     pic = PICTURES[ID]
     comments = pic["comments"]
     comments.append({"comment": data['comment'], "timestamp": PICTURES[ID]["timestamp"]})
