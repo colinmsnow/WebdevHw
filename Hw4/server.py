@@ -110,24 +110,23 @@ def add_picture():
 
     return jsonify(return_data)
 
-@app.route('/new-picture-path', methods=['POST'])
+@app.route('/new-picture-upload', methods=['POST'])
 def upload_file():
 	if request.method == 'POST':
         # check if the post request has the file part
         # this doesn't do exactly what we want, but it's decently close. And I know it wokred in our POE project! 
-		if 'file' not in request.files:
-			flash('No file part')
-			return redirect(request.url)
 		file = request.files['file']
-		if file.filename == '':
-			flash('No file selected for uploading')
-			return redirect(request.url)
-		if file and allowed_file(file.filename):
-			filename = secure_filename(file.filename)
-			file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-			flash('File successfully uploaded')
-			return redirect('/')
-		else:
+        if file.filename == '':
+            flash('No file selected for uploading')
+            return redirect(request.url)
+        if file and allowed_file(file.filename):
+            filename = secure_filename(file.filename)
+            global PICTURES
+            print(file)
+            file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+            flash('File successfully uploaded')
+            return redirect('/')
+        else:
 			flash('Allowed file types are png or jpg')
 			return redirect(request.url)
 

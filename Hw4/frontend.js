@@ -76,20 +76,35 @@ class Model {
 
     addPicture(pict) {
         /* adds a picture when told to do so by the new picture controller
-            does it by sendin...g a pist request to the backend with the picture url
+            does it by sending a post request to the backend with the picture url
             and then updates the model state when its done and reloads all pictures */
 
         console.log("MODEL GOT PICTURE URL")
-	    const pAddPict = fetch('http://localhost:8080/new-picture-url', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(pict)
-        })
-	    pAddPict.then((response) => {
-            this.fetchPictures()
-        })
+        console.log(typeof(pict))
+        console.log(pict)
+
+        if pict.find("fakepath") >= 0:
+            let formData = formData()
+            formData.append(pict)
+            constPAdd = fetch('http://localhost:8080/new-picture-upload', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                },
+                body: JSON.stringify(pict)
+            })
+        // else:
+        // TODO: include what to do if this is a local file
+            const pAddPict = fetch('http://localhost:8080/new-picture-url', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(pict)
+            })
+            pAddPict.then((response) => {
+                this.fetchPictures()
+            })
     }
 
     addComment(pic_id,comment) {
@@ -100,7 +115,7 @@ class Model {
        console.log("MODEL GOT COMMENT")
        console.log(comment)
        console.log(pic_id)
-       const addComm = fetch('http://localhost:8080/new-comment/'+pic_id,{
+       const addComm = fetch('http://localhost:8080/new-comment/' + pic_id,{
            method:'POST',
            headers:{
                'Content-Type':'application/json'
@@ -322,6 +337,7 @@ class NewPictureController {
         this.eltButton = elt('create-button')
         this.eltButton.addEventListener('click', () => this.newPicture())
         this.eltNewUrl = elt('new-url')
+        this.eltNewFile = elt('new-file')
         this.input = elt('new-comment')
         // console.log("ELEMENT BUTTON")
         // console.log(this.eltButton)
@@ -333,8 +349,15 @@ class NewPictureController {
 
     }
 
+    getPictureInfo() {
+        const file = this.eltNewFile.value
+        return file
+
+    }
+
     clearInputs() {
 	this.eltNewUrl.value = ''
+    this.eltNewFile.value = ''
     }    
 
     newPicture() {
