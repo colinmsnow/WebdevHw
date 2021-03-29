@@ -180,9 +180,7 @@ class Model {
             should be called on an image id out of model.pictures
             and will save info to the model in picture_detals then
             call added picture subscribers (dont know if we wnat that)*/
-
-        console.log("PIC ID")
-        console.log(pic_id)
+        console.log("FETCHING COMMENTS")
 
         const comments = fetch('http://localhost:8080/comments/' + pic_id)
         comments.then((response) => { response.json().then((json) => {
@@ -209,47 +207,6 @@ class Model {
     }
 }
 
-function onClickedFun(image){
-            s = (image.target.attributes[0].value.toString().substring(image.target.attributes[0].value.lastIndexOf('/'), image.target.attributes[0].value.lastIndexOf('.')) || image.target.attributes[0].value) + ".html"
-            // console.log(MODEL)
-            console.log("CLICKED AN IMAGE")
-            const it = MODEL.getPictureDetails(image.target.id)
-            this.current = it.id
-            MODEL.current = it.id
-            this.newpage = elt('NewPage')
-            this.newcomment = elt('new-comment')
-            this.back = elt('back')
-            this.submit = elt('submit')
-            this.newpage.style = "display:block"
-            console.log(it.comments)
-            MODEL.fetchComments(MODEL.current)
-            this.newcomment.addEventListener('input',evt => {
-                this.submit.addEventListener('click',evt =>{
-                    console.log("NEW COMMENT INPUTTED")
-                    MODEL.addComment(MODEL.current,this.newcomment.value)
-                })
-            })
-
-            // hide the gallery and show the image and back button
-            
-            //hides the gallery 
-            this.newpage.previousElementSibling.style.display = 'none'
-            
-            // shows just relevant image
-            pic = document.createElement("img")
-            console.log(it.source)
-            pic.src = '/image/' + it.source
-            this.newpage.appendChild(pic)
-
-            this.back.addEventListener('click',evt =>{
-                console.log("CLICKED BACK")
-                this.newpage.previousElementSibling.style.display = 'block'
-                this.newpage.removeChild(pic)
-                this.newpage.style = "display:none"
-            })
-            
-}
-
 class PictureView {
     /* Controls the gallery view of images presented on the main screen
         adds picture elements to a flexbox 4 across and adds listeners
@@ -257,6 +214,7 @@ class PictureView {
     constructor(m) {
         this.model = m
         this.gallery = document.getElementById("imageGallery")
+        this.newpage = elt('NewPage')
         m.subAddedPicture(() => this.updatePictures())
     }
     
@@ -294,7 +252,7 @@ class PictureView {
             // Object model = this.model
             // image.onclick = {() => onclickfun(this.model)}
             // Here is where it needs to go to another page when you click on it
-            image.onclick = function(image){onClickedFun(image);}
+            image.onclick = function(image){PictureView.onClickedFun(image);}
                 //get image name
                 //create new page w/ index/image name
                 //build that image page w/ ordered comments and image and back button
@@ -311,6 +269,24 @@ class PictureView {
         }
     }
 
+    onClickedFun(image){
+        s = (image.target.attributes[0].value.toString().substring(image.target.attributes[0].value.lastIndexOf('/'), image.target.attributes[0].value.lastIndexOf('.')) || image.target.attributes[0].value) + ".html"
+        console.log("CLICKED AN IMAGE")
+        const it = MODEL.getPictureDetails(image.target.id)
+        MODEL.current = it.id
+        this.newpage.style = "display:block"
+        MODEL.fetchComments(MODEL.current)
+        //hides the gallery 
+        this.newpage.previousElementSibling.style.display = 'none'
+        // shows just relevant image
+        pic = document.createElement("img")
+        pic.src = '/image/' + it.source
+        this.newpage.appendChild(pic)
+        newPicC.addComment()
+        newPicC.return(pic)
+        
+}
+
 
 }
 
@@ -322,7 +298,9 @@ class NewPictureController {
         this.eltButton = elt('create-button')
         this.eltButton.addEventListener('click', () => this.newPicture())
         this.eltNewUrl = elt('new-url')
-        this.input = elt('new-comment')
+        this.newcomment = elt('new-comment')
+        this.back = elt('back')
+        this.submit = elt('submit')
         // console.log("ELEMENT BUTTON")
         // console.log(this.eltButton)
     }
@@ -347,6 +325,24 @@ class NewPictureController {
         }
     }
 
+    addComment()
+    {
+        this.submit.addEventListener('click',evt =>{
+            console.log("NEW COMMENT INPUTTED")
+            MODEL.addComment(MODEL.current,this.newcomment.value)
+            })
+    }
+
+    return(pic)
+    {
+        this.back.addEventListener('click',evt =>{
+            console.log("CLICKED BACK")
+            PictureView.newpage.previousElementSibling.style.display = 'block'
+            PictureView.newpage.style = "display:none"
+            pic.style = "display:none"
+            this.newcomment.value = ""
+        })
+    }
 }
 
 
