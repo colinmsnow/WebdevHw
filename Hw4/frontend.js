@@ -93,28 +93,24 @@ class Model {
     }
 
     addComment(pic_id,comment) {
-         /* adds a comment when told to do so by the new picture controller
-             does it by sending a post request to the backend with the picture url
-             and then updates the model state when its done and reloads all pictures */
-
-        console.log("MODEL GOT COMMENT")
-        console.log(comment)
-        console.log(pic_id)
-        this.fetchComments(pic_id)
-        const addComm = fetch('http://localhost:8080/new-comment/' + pic_id,{
-            method:'POST',
-            headers: {
-                'Content-Type': 'application/json'
-                },
-            data: JSON.stringify(comment)
-         })
-
-         console.log(addComm)
-         addComm.then((response) => {
-            console.log(this)
-            this.fetchComments(this.current)
+        /* adds a comment when told to do so by the new picture controller
+            does it by sending a post request to the backend with the picture url
+            and then updates the model state when its done and reloads all pictures */
+    
+       console.log("MODEL GOT COMMENT")
+       console.log(comment)
+       console.log(pic_id)
+       const addComm = fetch('http://localhost:8080/new-comment/'+pic_id,{
+           method:'POST',
+           headers:{
+               'Content-Type':'application/json'
+               },
+           body: JSON.stringify({"comment": comment})
         })
-        }
+        addComm.then((response) => {
+           this.fetchComments(this.current)
+       })
+       }
 
     getPictureDetails(pic_id){
             /* Gets more detail about a particular picture
@@ -230,7 +226,6 @@ function onClickedFun(image){
             this.newcomment.addEventListener('input',evt => {
                 this.submit.addEventListener('click',evt =>{
                     console.log("NEW COMMENT INPUTTED")
-                    console.log(MODEL)
                     MODEL.addComment(MODEL.current,this.newcomment.value)
                 })
             })
