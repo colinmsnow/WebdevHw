@@ -50,10 +50,10 @@ class Model {
         const pPics = fetch('http://localhost:8080/pictures')
         const process = (obj) => {
             console.log('Received pictures =', obj)
-            console.log("LISTING PICTURES")
-            for (const p in obj.pictures) { 
-                console.log(p)
-            }
+            // console.log("LISTING PICTURES")
+            // for (const p in obj.pictures) { 
+            //     console.log(p)
+            // }
             for (const p in obj.pictures) { 
                 this.addLocalPicture(p)
             }
@@ -66,8 +66,8 @@ class Model {
         
     addLocalPicture(pict) {
         /* Adds a picture to the list of pictures which is held by the model */
-        console.log("ADDING LOCAL PICTURE")
-        console.log(pict)
+        // console.log("ADDING LOCAL PICTURE")
+        // console.log(pict)
         this.pictures.push(pict)
         this.fetchPicture(pict)
         const idx = this.pictures.length - 1
@@ -176,8 +176,8 @@ class Model {
             and will save info to the model in picture_detals then
             call added picture subscribers (dont know if we wnat that)*/
 
-        console.log("PIC ID")
-        console.log(pic_id)
+        // console.log("PIC ID")
+        // console.log(pic_id)
 
 
 
@@ -258,8 +258,8 @@ class PictureView {
 
         for (const i of this.model.pictures_detals){
             
-            console.log("Loaded Image:")
-            console.log(i)
+            // console.log("Loaded Image:")
+            // console.log(i)
             let num_comments = i.pict.picture.comments.length
             // console.log(i.pict.picture.source)
             const image = document.createElement('img')
@@ -291,12 +291,12 @@ class PictureView {
             this.gallery.appendChild(image)
             let elementrect = image.getBoundingClientRect()
 
-            console.log(elementrect)
+            // console.log(elementrect)
             const comment_num = document.createElement("div")
             comment_num.className = "circle"
             comment_num.innerHTML = num_comments
             comment_num.style.position = 'absolute'
-            console.log(image)
+            // console.log(image)
             comment_num.style.left = elementrect.left.toString() + 'px'
             comment_num.style.top = elementrect.top.toString() + 'px'
             this.gallery.appendChild(comment_num)
