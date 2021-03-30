@@ -202,9 +202,22 @@ class Model {
 
         const comments = fetch('http://localhost:8080/comments/' + pic_id)
         comments.then((response) => { response.json().then((json) => {
-
-              console.log("HERE")  
-              elt('dispcom').innerHTML = JSON.stringify(json);
+            console.log("HERE") 
+            var c = JSON.parse(JSON.stringify(json)); 
+            console.log(c)
+            console.log(typeof(c))
+            console.log(c["comments"])
+            if (c["comments"].length == 0){
+                elt('dispcom').innerHTML += "No Comments"
+            }
+            else if (c["comments"].length-1 == 0){
+                elt('dispcom').innerHTML += "comment: " + JSON.stringify(c["comments"][0]["comment"]) + "&nbsp &nbsp" + "timestamp: " + JSON.stringify(c["comments"][0]["timestamp"])
+            }
+            else{
+            for(var i=0;i<c["comments"].length-1;i+=2){
+                elt('dispcom').innerHTML += "comment: " + JSON.stringify(c["comments"][i]["comment"]) + "&nbsp &nbsp" + "timestamp: " + JSON.stringify(c["comments"][i]["timestamp"]) + "<br>" + "comment: " + JSON.stringify(c["comments"][i+1]["comment"]) +  "&nbsp &nbsp" + "timestamp: " + JSON.stringify(c["comments"][i+1]["timestamp"])+"<br>";
+            }
+            }
           })});
 
     }
@@ -234,6 +247,11 @@ class PictureView {
         this.gallery = document.getElementById("imageGallery")
         this.newpage = elt('NewPage')
         this.newPicC = newPicC
+        this.newurl = elt('new-url')
+        this.newfile = elt('new-file')
+        this.addpic = elt('create-button')
+        this.file = elt('file')
+        this.url = elt('url')
         m.subAddedPicture(() => this.updatePictures())
     }
     
@@ -313,6 +331,11 @@ class PictureView {
         MODEL.fetchComments(MODEL.current)
         //hides the gallery 
         this.newpage.previousElementSibling.style.display = 'none'
+        this.newurl.style.display = 'none'
+        this.newfile.style.display = 'none'
+        this.addpic.style.display = 'none'
+        this.url.style.display = "none"
+        this.file.style.display = "none"
         // shows just relevant image
         let pic = document.createElement("img")
         console.log("PIC")
@@ -321,6 +344,7 @@ class PictureView {
         this.newpage.appendChild(pic)
         this.newPicC.addComment()
         this.newPicC.return(pic)
+
         
 }
 
@@ -339,6 +363,8 @@ class NewPictureController {
         this.newcomment = elt('new-comment')
         this.back = elt('back')
         this.submit = elt('submit')
+        this.file = elt('file')
+        this.url = elt('url')
         // console.log("ELEMENT BUTTON")
         // console.log(this.eltButton)
     }
@@ -403,6 +429,11 @@ class NewPictureController {
             this.pictureView.newpage.previousElementSibling.style.display = 'block'
             this.pictureView.newpage.style = "display:none"
             pic.style = "display:none"
+            this.eltButton.style.display = "block"
+            this.eltNewUrl.style.display = "block"
+            this.eltNewFile.style.display = "block"
+            this.url.style.display = "block"
+            this.file.style.display = "block"
             this.newcomment.value = ""
             // this.model.fetchPictures()
             window.location.replace("index.html");

@@ -25,10 +25,10 @@
 
 <form id="form" name="form" enctype="multipart/form-data">
 
-    <label class="spaced" for="new-url">URL:</label>
+    <label class="spaced" id = "url" for="new-url">URL:</label>
     <input type="text" id="new-url">
     
-    <label class="spaced" for="new-file">File:</label>
+    <label class="spaced" id = "file" for="new-file">File:</label>
     <input type="file" id="new-file" name="new-file">
 
     <button class="spaced" id="create-button">Add picture</button>
@@ -45,9 +45,9 @@
     </div>
 
     <div id="NewPage" style = "display: none">
-      <button class="spaced" id="back">Back</button>
-      <input type="text" id="new-comment">
-      <button class="spaced" id="submit">Submit Comment</button>
+      <div><button class="spaced" id="back">Back</button> </div>
+      <div><input type="text" id="new-comment"> 
+      <button class="spaced" id="submit">Submit Comment</button> </div>
       <div id="dispcom"></div>
     </div>
 
