@@ -229,10 +229,11 @@ class PictureView {
     /* Controls the gallery view of images presented on the main screen
         adds picture elements to a flexbox 4 across and adds listeners
         that make them do things when you click on them */
-    constructor(m) {
+    constructor(m, newPicC) {
         this.model = m
         this.gallery = document.getElementById("imageGallery")
         this.newpage = elt('NewPage')
+        this.newPicC = newPicC
         m.subAddedPicture(() => this.updatePictures())
     }
     
@@ -304,8 +305,8 @@ class PictureView {
         console.log(pic)
         pic.src = '/image/' + it.source
         this.newpage.appendChild(pic)
-        newPicC.addComment()
-        newPicC.return(pic)
+        this.newPicC.addComment()
+        this.newPicC.return(pic)
         
 }
 
@@ -385,8 +386,8 @@ class NewPictureController {
     {
         this.back.addEventListener('click',evt =>{
             console.log("CLICKED BACK")
-            PictureView.newpage.previousElementSibling.style.display = 'block'
-            PictureView.newpage.style = "display:none"
+            this.pictureView.newpage.previousElementSibling.style.display = 'block'
+            this.pictureView.newpage.style = "display:none"
             pic.style = "display:none"
             this.newcomment.value = ""
         })
@@ -396,8 +397,10 @@ class NewPictureController {
 
 function init() {
     MODEL = new Model()
-    const pictureView = new PictureView(MODEL)
+    
     const newPicC = new NewPictureController(MODEL)
+    const pictureView = new PictureView(MODEL, newPicC)
+    newPicC.pictureView = pictureView
 
     MODEL.fetchPictures()
 }
