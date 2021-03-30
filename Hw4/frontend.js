@@ -74,7 +74,7 @@ class Model {
     }
         
 
-    addPicture(pict) {
+    addPicture(pict, type) {
         /* adds a picture when told to do so by the new picture controller
             does it by sending a post request to the backend with the picture url
             and then updates the model state when its done and reloads all pictures */
@@ -82,18 +82,20 @@ class Model {
         console.log("MODEL GOT PICTURE URL")
         console.log(typeof(pict))
         console.log(pict)
-
-        // if pict.find("fakepath") >= 0:
-            let formData = formData()
-            formData.append(pict)
+        if (type == "file") {
+            console.log(pict)
+            const formData = new FormData('form')
+            formData.append('new-file', pict)
+            console.log(formData)
             constPAdd = fetch('http://localhost:8080/new-picture-upload', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'multipart/form-data'
                 },
-                body: JSON.stringify(pict)
+                body: new FormData (pict)
             })
-        // else:
+        }
+        else{
         // TODO: include what to do if this is a local file
             const pAddPict = fetch('http://localhost:8080/new-picture-url', {
                 method: 'POST',
@@ -105,6 +107,7 @@ class Model {
             pAddPict.then((response) => {
                 this.fetchPictures()
             })
+        }
     }
 
     addComment(pic_id,comment) {
@@ -313,6 +316,7 @@ class NewPictureController {
         this.eltButton = elt('create-button')
         this.eltButton.addEventListener('click', () => this.newPicture())
         this.eltNewUrl = elt('new-url')
+        this.eltNewFile = elt('new-file')
         this.newcomment = elt('new-comment')
         this.back = elt('back')
         this.submit = elt('submit')
@@ -326,23 +330,41 @@ class NewPictureController {
 
     }
 
-    getPictureInfo() {
-        const file = this.eltNewFile.value
+    getPictureInfoFile() {
+        const file = this.eltNewFile.files
         return file
 
     }
 
+
     clearInputs() {
 	this.eltNewUrl.value = ''
     this.eltNewFile.value = ''
-    }    
+    }  
+    
+    // newPicture() {
+    //     console.log("NEW PICTURE CLICKED")
+    //     const pict_url = this.getPictureInfo()
+    //     console.log(pict_url)
+    //     if (pict_url) {
+    //         this.model.addPicture(pict_url)
+	//     this.clearInputs()
+    //     }
+    // }
 
     newPicture() {
         console.log("NEW PICTURE CLICKED")
+        console.log(this.files)
+        console.log(this.getPictureInfoFile())
         const pict_url = this.getPictureInfo()
+        const pict_file = this.getPictureInfoFile()[0]
         console.log(pict_url)
         if (pict_url) {
-            this.model.addPicture(pict_url)
+            this.model.addPicture(pict_url, "link")
+	    this.clearInputs()
+        }
+        if (pict_file) {
+            this.model.addPicture(pict_file, "file")
 	    this.clearInputs()
         }
     }
