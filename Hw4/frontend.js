@@ -404,6 +404,8 @@ class NewPictureController {
             this.pictureView.newpage.style = "display:none"
             pic.style = "display:none"
             this.newcomment.value = ""
+            // this.model.fetchPictures()
+            window.location.replace("index.html");
         })
     }
 }
