@@ -7,6 +7,7 @@ import requests
 import pickle
 import os.path
 
+
 app = Flask(__name__)
 
 PORT = 8080
@@ -120,23 +121,16 @@ def add_picture():
 
 @app.route('/new-picture-upload', methods=['POST'])
 def upload_file():
-    if request.method == 'POST':
-        # check if the post request has the file part
-        # this doesn't do exactly what we want, but it's decently close. And I know it wokred in our POE project! 
-        file = request.files['file']
-        if file.filename == '':
-            flash('No file selected for uploading')
-            return redirect(request.url)
-        if file and allowed_file(file.filename):
-            filename = secure_filename(file.filename)
-            global PICTURES
-            print(file)
-            file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-            flash('File successfully uploaded')
-            return redirect('/')
-        else:
-            flash('Allowed file types are png or jpg')
-            return redirect(request.url)
+
+    global PICTURES
+
+    print("GOT A REQUEST")
+    
+    file = request.files['new-file']
+    filename = secure_filename(file.filename)
+    file.save(os.path.join(app.config[IMAGES_FOLDER], filename))
+    flash('File successfully uploaded')
+    return redirect('/')    
 
 @app.route('/comments/<ID>') # get route #works
 def get_comments(ID):

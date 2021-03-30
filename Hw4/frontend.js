@@ -73,27 +73,23 @@ class Model {
         const idx = this.pictures.length - 1
     }
         
-
     addPicture(pict, type) {
         /* adds a picture when told to do so by the new picture controller
             does it by sending a post request to the backend with the picture url
             and then updates the model state when its done and reloads all pictures */
 
         console.log("MODEL GOT PICTURE URL")
-        console.log(typeof(pict))
-        console.log(pict)
         if (type == "file") {
-            console.log(pict)
-            const formData = new FormData('form')
-            formData.append('new-file', pict)
-            console.log(formData)
-            constPAdd = fetch('http://localhost:8080/new-picture-upload', {
+            const formData = new FormData()
+            formData.append("new-file",pict)
+            console.log(formData.entries())
+            const PAdd = fetch('http://localhost:8080/new-picture-upload', {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'multipart/form-data'
-                },
-                body: new FormData (pict)
+                body: formData
             })
+            PAdd.then((response) => response.json().then(data => {
+                this.fetchPictures()
+            }))
         }
         else{
         // TODO: include what to do if this is a local file
@@ -399,8 +395,6 @@ class NewPictureController {
 
     newPicture() {
         console.log("NEW PICTURE CLICKED")
-        console.log(this.files)
-        console.log(this.getPictureInfoFile())
         const pict_url = this.getPictureInfo()
         const pict_file = this.getPictureInfoFile()[0]
         console.log(pict_url)
