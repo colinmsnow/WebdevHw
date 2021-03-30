@@ -208,14 +208,23 @@ class Model {
             console.log(typeof(c))
             console.log(c["comments"])
             if (c["comments"].length == 0){
-                elt('dispcom').innerHTML += "No Comments"
+                let a = document.createElement("li")
+                a.innerHTML = "No Comments"
+                elt('dispcom').appendChild(a)
+                // elt('dispcom').innerHTML += "No Comments"
             }
             else if (c["comments"].length-1 == 0){
-                elt('dispcom').innerHTML += "comment: " + JSON.stringify(c["comments"][0]["comment"]) + "&nbsp &nbsp" + "timestamp: " + JSON.stringify(c["comments"][0]["timestamp"])
+                let a = document.createElement("li")
+                a.innerHTML = "comment: " + JSON.stringify(c["comments"][0]["comment"]) + "&nbsp &nbsp" + "timestamp: " + JSON.stringify(c["comments"][0]["timestamp"])
+                elt('dispcom').appendChild(a)
+                // elt('dispcom').innerHTML += "comment: " + JSON.stringify(c["comments"][0]["comment"]) + "&nbsp &nbsp" + "timestamp: " + JSON.stringify(c["comments"][0]["timestamp"])
             }
             else{
             for(var i=0;i<c["comments"].length-1;i+=2){
-                elt('dispcom').innerHTML += "comment: " + JSON.stringify(c["comments"][i]["comment"]) + "&nbsp &nbsp" + "timestamp: " + JSON.stringify(c["comments"][i]["timestamp"]) + "<br>" + "comment: " + JSON.stringify(c["comments"][i+1]["comment"]) +  "&nbsp &nbsp" + "timestamp: " + JSON.stringify(c["comments"][i+1]["timestamp"])+"<br>";
+                let a = document.createElement("li")
+                a.innerHTML = "comment: " + JSON.stringify(c["comments"][i]["comment"]) + "&nbsp &nbsp" + "timestamp: " + JSON.stringify(c["comments"][i]["timestamp"]) + "<br>" + "comment: " + JSON.stringify(c["comments"][i+1]["comment"]) +  "&nbsp &nbsp" + "timestamp: " + JSON.stringify(c["comments"][i+1]["timestamp"])+"<br>";
+                elt('dispcom').appendChild(a)
+                // elt('dispcom').innerHTML += "comment: " + JSON.stringify(c["comments"][i]["comment"]) + "&nbsp &nbsp" + "timestamp: " + JSON.stringify(c["comments"][i]["timestamp"]) + "<br>" + "comment: " + JSON.stringify(c["comments"][i+1]["comment"]) +  "&nbsp &nbsp" + "timestamp: " + JSON.stringify(c["comments"][i+1]["timestamp"])+"<br>";
             }
             }
           })});
@@ -341,7 +350,8 @@ class PictureView {
         console.log("PIC")
         console.log(pic)
         pic.src = '/image/' + it.source
-        this.newpage.appendChild(pic)
+        // this.newpage.appendChild(pic)
+        elt('dispcom').before(pic)
         this.newPicC.addComment()
         this.newPicC.return(pic)
 
