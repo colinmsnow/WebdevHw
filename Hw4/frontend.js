@@ -258,16 +258,19 @@ class PictureView {
 
         for (const i of this.model.pictures_detals){
             
-            console.log("GOT TO HERE")
-            console.log(i.pict.picture.source)
+            console.log("Loaded Image:")
+            console.log(i)
+            let num_comments = i.pict.picture.comments.length
+            // console.log(i.pict.picture.source)
             const image = document.createElement('img')
-            console.log(image)
-            console.log(i.pict.picture.source)
+            
+            // console.log(image)
+            // console.log(i.pict.picture.source)
             image.src = "/image/" +  i.pict.picture.source//? maybe
             image.classList.add("item")
-            console.log(i.pict.picture.id)
+            // console.log(i.pict.picture.id)
             image.id = i.pict.picture.id
-            console.log(typeof(this.model))
+            // console.log(typeof(this.model))
             // Object model = this.model
             // image.onclick = {() => onclickfun(this.model)}
             // Here is where it needs to go to another page when you click on it
@@ -286,6 +289,17 @@ class PictureView {
                 // // console.log(it)
                 // console.log("CLICKED AN IMAGE")}
             this.gallery.appendChild(image)
+            let elementrect = image.getBoundingClientRect()
+
+            console.log(elementrect)
+            const comment_num = document.createElement("div")
+            comment_num.className = "circle"
+            comment_num.innerHTML = num_comments
+            comment_num.style.position = 'absolute'
+            console.log(image)
+            comment_num.style.left = elementrect.left.toString() + 'px'
+            comment_num.style.top = elementrect.top.toString() + 'px'
+            this.gallery.appendChild(comment_num)
         }
     }
 
