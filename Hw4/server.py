@@ -18,7 +18,7 @@ PICTURES = {} # This is where the data is stored.
 ALLOWED_EXTENSIONS = set(['png', 'jpg'])
 
 def allowed_file(filename):
-	return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 def create_picture(source):
     """ Creates a picture object which stores a unique id, timestamp, comments, and the image source as a filename """
@@ -41,6 +41,14 @@ def add_image(images, source):
 
     pickle.dump( images, open( "pictures.p", "wb" ) )
     return (images, pic["id"])
+
+def save_data():
+
+    """ Update the persistent stuff in the backend by re downloading the new version """
+
+    pickle.dump( PICTURES, open( "pictures.p", "wb" ) )
+
+
 
 #def add_image(file_path):
     
@@ -112,10 +120,10 @@ def add_picture():
 
 @app.route('/new-picture-upload', methods=['POST'])
 def upload_file():
-	if request.method == 'POST':
+    if request.method == 'POST':
         # check if the post request has the file part
         # this doesn't do exactly what we want, but it's decently close. And I know it wokred in our POE project! 
-		file = request.files['file']
+        file = request.files['file']
         if file.filename == '':
             flash('No file selected for uploading')
             return redirect(request.url)
@@ -127,8 +135,8 @@ def upload_file():
             flash('File successfully uploaded')
             return redirect('/')
         else:
-			flash('Allowed file types are png or jpg')
-			return redirect(request.url)
+            flash('Allowed file types are png or jpg')
+            return redirect(request.url)
 
 @app.route('/comments/<ID>') # get route #works
 def get_comments(ID):
@@ -150,9 +158,10 @@ def new_comment(ID):
     pic = PICTURES[ID]
     comments = pic["comments"]
     comments.append({"comment": data['comment'], "timestamp": PICTURES[ID]["timestamp"]})
+    save_data()
     result = {"comments": comments}
     return jsonify(result)
-    
+
 
 @app.route('/<path:path>')
 def catch_all(path):

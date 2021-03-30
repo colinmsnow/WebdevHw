@@ -270,7 +270,8 @@ class PictureView {
             // Object model = this.model
             // image.onclick = {() => onclickfun(this.model)}
             // Here is where it needs to go to another page when you click on it
-            image.onclick = function(image){PictureView.onClickedFun(image);}
+            // Object current_obj = this
+            image.onclick = function(image){(this).onClickedFun(image);}.bind(this)
                 //get image name
                 //create new page w/ index/image name
                 //build that image page w/ ordered comments and image and back button
@@ -288,8 +289,9 @@ class PictureView {
     }
 
     onClickedFun(image){
-        s = (image.target.attributes[0].value.toString().substring(image.target.attributes[0].value.lastIndexOf('/'), image.target.attributes[0].value.lastIndexOf('.')) || image.target.attributes[0].value) + ".html"
+        // s = (image.target.attributes[0].value.toString().substring(image.target.attributes[0].value.lastIndexOf('/'), image.target.attributes[0].value.lastIndexOf('.')) || image.target.attributes[0].value) + ".html"
         console.log("CLICKED AN IMAGE")
+        // console.log(image.target)
         const it = MODEL.getPictureDetails(image.target.id)
         MODEL.current = it.id
         this.newpage.style = "display:block"
@@ -297,7 +299,9 @@ class PictureView {
         //hides the gallery 
         this.newpage.previousElementSibling.style.display = 'none'
         // shows just relevant image
-        pic = document.createElement("img")
+        let pic = document.createElement("img")
+        console.log("PIC")
+        console.log(pic)
         pic.src = '/image/' + it.source
         this.newpage.appendChild(pic)
         newPicC.addComment()
