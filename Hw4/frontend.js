@@ -80,16 +80,25 @@ class Model {
 
         console.log("MODEL GOT PICTURE URL")
         if (type == "file") {
-            const formData = new FormData()
-            formData.append("new-file",pict)
-            console.log(formData.entries())
-            const PAdd = fetch('http://localhost:8080/new-picture-upload', {
+            console.log('testing')
+            const fo = document.querySelector("form")
+            console.log(fo)
+            document.querySelector("form").onsubmit = asych (e) => {
+                e.preventDefault()
+            
+            // const formData = new FormData(document.querySelector("form"))
+                const formData = new FormData()
+                console.log(formData)
+                formData.append("new-file", pict)
+                console.log(formData.entries())
+                const PAdd = await fetch('http://localhost:8080/new-picture-upload', {
                 method: 'POST',
                 body: formData
             })
             PAdd.then((response) => response.json().then(data => {
                 this.fetchPictures()
             }))
+        }
         }
         else{
         // TODO: include what to do if this is a local file
