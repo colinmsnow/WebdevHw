@@ -1,4 +1,7 @@
 new folder
 npx create-react-app frontend
 npm i socket.io-client
-npm run eject  (not sure this worked)
+npm run eject  (didnt work)
+npm uninstall react-scripts
+npm install react-scripts-cssmodules
+npm run eject
