@@ -4,4 +4,13 @@ npm i socket.io-client
 npm run eject  (didnt work)
 npm uninstall react-scripts
 npm install react-scripts-cssmodules
-npm run eject
+npm run eject  (worked this time)
+edit path.js with   appBuild: resolveApp('../Server/static/react'),,
+remove all static/ from webpack.config (both)
+add filename: filename: "../../templates/index.html", to HtmlWebpackPlugin
+add <script> window.token="{{flask_token}}"</script> to index.html
+add <p>My Token = {window.token}</p> to app.js
+add "homepage": "/static/react" to package.json
+remove "not dead" from package.json
+
+(At this point it compiles)
