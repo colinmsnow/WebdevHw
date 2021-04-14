@@ -1,0 +1,21 @@
+https://medium.com/swlh/build-a-real-time-chat-app-with-react-hooks-and-socket-io-4859c9afecb0
+frontend - sends a message, goes into a server
+backend - receives message, stores into database
+make login page
+https://flask-socketio.readthedocs.io/en/latest/
+
+
+Key Interfaces:
+- current chat & all other
+- clear logout button
+- profile pictures
+
+components: button component, text input component, chats feature, message feature
+
+
+Make login functionality --> connect to a server & create a new thread of backend per user
+
+Send a message (socket ish)
+
+Read the message and store it in a database in a threadsafe way (table of chats vs. who can see it, linked to another
+database per chat (foreign key) -- his opinion on how to actually set up a table for this or all one giant table. 
