@@ -1,0 +1,5 @@
+https://medium.com/swlh/build-a-real-time-chat-app-with-react-hooks-and-socket-io-4859c9afecb0 
+frontend - sends a message, goes into a server 
+backend - receives message, stores into database 
+make login page 
+https://flask-socketio.readthedocs.io/en/latest/ 
