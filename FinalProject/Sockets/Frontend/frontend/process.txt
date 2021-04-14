@@ -1,0 +1,4 @@
+new folder
+npx create-react-app frontend
+npm i socket.io-client
+npm run eject  (not sure this worked)
