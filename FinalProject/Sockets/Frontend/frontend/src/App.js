@@ -43,9 +43,9 @@ function App() {
   }, []);
 
   return (
-    <p>
-      It's <p>{response}</p>
-    </p>
+    <div>
+      <p>It's {response}</p>
+    </div>
   );
 }
 

@@ -31,6 +31,7 @@ def index():
 def handle_message(data):
     print('received message: ' + data)
 
+
 # @socketio.event
 # def my_event(message):
 #     emit('my response', {'data': 'got it!'})
