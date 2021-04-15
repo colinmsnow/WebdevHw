@@ -42,3 +42,13 @@ npm install -g npm-install-peers (threw errors)
 npm install --save-dev @babel/core
 npm install webpack
 
+
+
+(because socket.io-client is dumb and needs an old version we need old versions of flask stuff too)
+
+python-engineio==3.2.0
+python-socketio==4.0.0
+Flask==1.1.2
+Flask-Cors==3.0.10
+Flask-SocketIO==4.0.0
+eventlet==0.30.2
