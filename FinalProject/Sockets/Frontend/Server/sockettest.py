@@ -7,11 +7,12 @@ socketio = SocketIO(app)
 
 @app.route('/')
 def index():
-    return render_template('index.html')
+    return render_template('index.html', flask_token="Hello   world")
 
 @socketio.event
 def my_event(message):
     emit('my response', {'data': 'got it!'})
 
 if __name__ == '__main__':
-    socketio.run(app)
+    socketio.run(app, debug=True)
+    # app.run()

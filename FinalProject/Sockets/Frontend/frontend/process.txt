@@ -12,5 +12,33 @@ add <script> window.token="{{flask_token}}"</script> to index.html
 add <p>My Token = {window.token}</p> to app.js
 add "homepage": "/static/react" to package.json
 remove "not dead" from package.json
+npm run build
 
 (At this point it compiles)
+
+
+npm install socket.io-client
+npm install socket.io
+npm install engine.io-parser (didnt fix it)
+npm install --save --save-exact react-scripts@2.x.x
+
+
+(not letting me install socketio)
+
+sudo rm -rf /usr/local/lib/node_modules
+brew install node (neither did anything)
+
+
+rm -rf node_modules
+completely reinstall node from website
+npm install
+rm -rf node_modules
+manually remove all the stuff I tried to install from package.json
+npm install
+
+(back where we started now)
+
+npm install -g npm-install-peers (threw errors)
+npm install --save-dev @babel/core
+npm install webpack
+
