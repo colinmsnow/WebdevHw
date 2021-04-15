@@ -37,13 +37,14 @@ function App() {
   useEffect(() => {
     const socket = socketIOClient(ENDPOINT);
     socket.on("FromAPI", data => {
+      socket.emit("FromFrontend", "hello")
       setResponse(data);
     });
   }, []);
 
   return (
     <p>
-      It's <time dateTime={response}>{response}</time>
+      It's <p>{response}</p>
     </p>
   );
 }

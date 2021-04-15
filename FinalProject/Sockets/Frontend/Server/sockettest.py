@@ -27,7 +27,7 @@ def add_header(response):
 def index():
     return render_template('index.html', flask_token="Hello world")
 
-@socketio.on("FromAPI")
+@socketio.on("FromFrontend")
 def handle_message(data):
     print('received message: ' + data)
 
@@ -36,12 +36,12 @@ def handle_message(data):
 #     emit('my response', {'data': 'got it!'})
 
 def some_function():
-    socketio.emit('some event', {'data': 42})
+    socketio.emit('some event', "Hello")
 
 @socketio.on('connect')
 def test_connect():
     print("CONNECTED")
-    emit('my response', {'data': 'Connected'})
+    emit('FromAPI', "Hello", broadcast=True)
 
 if __name__ == '__main__':
     socketio.run(app, debug=True)
