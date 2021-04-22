@@ -27,26 +27,43 @@
 
 // export default App;
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, Component } from "react";
+import {BrowserRouter, Switch, Route } from "react-router-dom"
 import socketIOClient from "socket.io-client";
+import login from "./components/login";
+import chat from "./components/chat";
+// import profile from "./components/profile";
+import "./App.css";
+import { render } from "react-dom";
+
 const ENDPOINT = "http://127.0.0.1:5000";
 
-function App() {
-  const [response, setResponse] = useState("");
+class App extends Component {
+  constructor(props){
+  // const [response, setResponse] = useState("");
+    super(props);
+  
+  }
 
-  useEffect(() => {
-    const socket = socketIOClient(ENDPOINT);
-    socket.on("FromAPI", data => {
-      socket.emit("FromFrontend", "hello")
-      setResponse(data);
-    });
-  }, []);
+  render(){
+    return (
+      // useEffect(() => {
+      //   const socket = socketIOClient(ENDPOINT);
+      //   socket.on("FromAPI", data => {
+      //     socket.emit("FromFrontend", "hello")
+      //     setResponse(data);
+      //   });
+      // }, []);
+      // <div>
+      //   <p>It's {response}</p>
+      // </div>
 
-  return (
-    <div>
-      <p>It's {response}</p>
-    </div>
+      <Switch>
+        <Route path = "/" component = {login} />
+        {/* <Route path = "/login" component={login} /> */}
+    </Switch>
   );
+}
 }
 
 export default App;

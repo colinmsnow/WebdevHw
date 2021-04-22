@@ -1,0 +1,29 @@
+
+.content {
+    width: 30vw;
+    height: 100vh;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+@media (max-width: 480px){
+    .content{
+        width: 90vw;
+        margin: auto;
+    }
+}
+@media (max-width: 768px){
+    .content{
+        width: 80vw;
+        margin: auto;
+    }
+}
+@media (max-width: 1024px){
+    .content{
+        width: 60vw;
+        margin: auto;
+    }
+}
+
