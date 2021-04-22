@@ -7,7 +7,7 @@ const Input_Field = props =>{
             <p>{props.name}</p>
             <input 
                 className = "field"
-                // id = {props.id}
+                id = {props.id}
                 name = {props.name}
                 type = "text"
                 value = {props.value}

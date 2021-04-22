@@ -163,13 +163,20 @@ def delete_account(json_data):
 
 @socketio.on('login')
 def login(json_data):
-    data = json.loads(json_data)
+    # data = json.loads(json_data)
     try:
-        username = data["username"]
-        password = data["password"]
+        username = json_data["username"]
+        password = json_data["password"]
     except KeyError:
         emit('Error', broadcast=True)
         return
+
+    print("GOT CREDENTIALS: {0}, {1}", username, password)
+
+    if (username == "hello" and password == "world"):
+        emit("login", "success")
+    else:
+        emit("login", "failure")
 
     # DATABASE: get password from username
 
