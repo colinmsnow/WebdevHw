@@ -24,23 +24,9 @@ class login extends Component {
         const socket = socketIOClient(ENDPOINT);
 
         socket.on("login", data => {
-            //   socket.emit("FromFrontend", "hello")
-            //   console.log(this.state.success);
               this.setState({success:data})
               console.log(this.state.success);
-            //   console.log(document.getElementById("Username"))
-            //   console.log(document.getElementById("Username").value)
             });
-
-
-        // useEffect(() => {
-        //     const socket = socketIOClient(ENDPOINT);
-        //     socket.on("login", data => {
-        //     //   socket.emit("FromFrontend", "hello")
-        //       console.log(data);
-        //     //   this.setState({success:data})
-        //     });
-        //   }, []);
 
 
         
