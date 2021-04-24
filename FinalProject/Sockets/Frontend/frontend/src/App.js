@@ -1,5 +1,5 @@
 import React, { useState, useEffect, Component } from "react";
-import {BrowserRouter, Switch, Route } from "react-router-dom";
+import {BrowserRouter, Switch, Route, Link} from "react-router-dom"
 import socketIOClient from "socket.io-client";
 import login from "./components/login";
 import create_account from "./components/create_account";
@@ -7,6 +7,7 @@ import chat from "./components/chat";
 // import profile from "./components/profile";
 import "./App.css";
 import { render } from "react-dom";
+import create_account from "./components/create_account";
 
 
 const ENDPOINT = "http://127.0.0.1:5000";
@@ -36,6 +37,16 @@ class App extends Component {
         <Route path = "/create" component={create_account} />
     </Switch>
     </BrowserRouter>
+      
+      // <BrowserRouter>
+      // <Switch>
+      //   {/* <IndexRoute component = {login}></IndexRoute> */}
+      //   <Route exact path = "/" component={login}>
+      //     {/* <create_account/> */}
+      //     </Route>
+      //   <Route path = "/create" component={create_account}></Route>
+      // </Switch>
+      // </BrowserRouter>
   );
 }
 }

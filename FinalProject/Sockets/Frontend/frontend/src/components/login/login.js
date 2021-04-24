@@ -1,4 +1,6 @@
+
 import React, {Component,  useState, useEffect } from 'react';
+import {Link} from 'react-router-dom'
 import {Purple_Button, White_Button, White_Button_Right} from '../buttons/buttons';
 import Input_Field from '../input_field/input_field';
 import './login.css';
@@ -33,7 +35,7 @@ class login extends Component {
 
         return (
             <div>
-            <Link to="/create" style={{textDecoration:none}}>
+            <Link to="/create" style={{textDecoration:'none'}}>
                 <White_Button_Right name = "Create Account" />
             </Link>
             <div class="content">
