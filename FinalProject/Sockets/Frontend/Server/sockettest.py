@@ -44,10 +44,6 @@ def test_connect():
     print("CONNECTED")
     emit('FromAPI', "Hello", broadcast=True)
 
-<<<<<<< HEAD
-=======
-
-
 """ Frontend routes we want:
 
     create_user(name, username, password)
@@ -244,7 +240,6 @@ def send_message(json_data):
     # TODO: Find a way to update person 2 if they are online when this happens
 
 
->>>>>>> d2c84b1d632b3f95af05f9d0133121bb3366637a
 if __name__ == '__main__':
     socketio.run(app, debug=True)
     # app.run()
