@@ -38,5 +38,9 @@
 }
 
 .right {
-    align-items: flex-end;
+    width: fit-content;
+    padding-left: 3em;
+    padding-right:3em;
+    /* font-size: 1.75vh; */
+    font-size: unset;
 }
