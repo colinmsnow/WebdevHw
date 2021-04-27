@@ -30,6 +30,11 @@ class login extends Component {
               console.log(this.state.success);
             });
 
+        socket.on("Error", data => {
+            console.log("Error in login: " + data);
+            // TODO: Create popup with error from data
+        });
+
 
         
 

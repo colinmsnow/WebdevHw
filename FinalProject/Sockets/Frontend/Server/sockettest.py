@@ -86,17 +86,28 @@ def test_connect():
 
 """
 @socketio.on('create_user')
-def create_user(json_data):
-    data = json.loads(json_data)
+def create_user(data):
     try:
         name = data["name"]
         username = data["username"]
         password = data["password"]
+        confirm_password = data["confirm_password"]
     except KeyError:
-        emit('Error', broadcast=True)
+        emit("Error","Fields are missing in create_user")
         return
 
+    
+    if (password != confirm_password):
+        # Not really sure what should happen if passwords dont match
+        emit("Error", "Passwords do not match")
+        return
+
+
     # DATABASE: create user in database
+
+    emit("create_user", "success")
+
+
 
 
 @socketio.on('get_user')
@@ -170,7 +181,7 @@ def login(json_data):
         username = json_data["username"]
         password = json_data["password"]
     except KeyError:
-        emit('Error', broadcast=True)
+        emit('Error', "Login fields missing")
         return
 
     print("GOT CREDENTIALS: {0}, {1}", username, password)
@@ -179,6 +190,7 @@ def login(json_data):
         emit("login", "success")
     else:
         emit("login", "failure")
+        emit('Error', "Incorrect username or passowrd")
 
     # DATABASE: get password from username
 
