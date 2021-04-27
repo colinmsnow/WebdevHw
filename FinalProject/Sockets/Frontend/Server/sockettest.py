@@ -44,6 +44,207 @@ def test_connect():
     print("CONNECTED")
     emit('FromAPI', "Hello", broadcast=True)
 
+<<<<<<< HEAD
+=======
+
+
+""" Frontend routes we want:
+
+    create_user(name, username, password)
+        returns: nothing or error if already used
+
+    get_user(username)
+        returns: (username, name, password, picture)
+
+    update_username(username, new_username):
+        returns: nothing
+    
+    update_password(username, newPassword):
+        returns: nothing
+
+    update_name(username, new_name):
+        returns: nothing
+
+    update_picture(username, new_picture): Dont implement yet
+        returns: nothing
+
+    delete_account(username):
+        returns: nothing
+    
+    login(user, password)
+        returns: success/failure
+
+    get_chats(username)
+        returns: Array of chats that the user is in with last message
+            [(toUser, userProfile, lastMessage, timestamp), (), ...]
+
+    get_messages(user1, user2)
+        returns: Array of messages in order
+            [(from, messageText, timestamp), (), ...]
+
+    send_message(sendingUser, receivingUser, content)
+        returns: nothing
+
+    new_message_incoming()
+        returns: that there was a new message
+
+"""
+@socketio.on('create_user')
+def create_user(json_data):
+    data = json.loads(json_data)
+    try:
+        name = data["name"]
+        username = data["username"]
+        password = data["password"]
+    except KeyError:
+        emit('Error', broadcast=True)
+        return
+
+    # DATABASE: create user in database
+
+
+@socketio.on('get_user')
+def get_user(json_data):
+    data = json.loads(json_data)
+    try:
+        username = data["username"]
+    except KeyError:
+        emit('Error', broadcast=True)
+        return
+
+    # DATABASE: get the user by username
+
+    # emit("get_user", json.dumps(username, name, password), broadcast=true)
+
+
+@socketio.on('update_username')
+def update_username(json_data):
+    data = json.loads(json_data)
+    try:
+        username = data["username"]
+        new_username = data["new_username"]
+    except KeyError:
+        emit('Error', broadcast=True)
+        return
+
+    # DATABASE: replace all instances of username with new username
+
+
+@socketio.on('update_password')
+def update_password(json_data):
+    data = json.loads(json_data)
+    try:
+        username = data["username"]
+        password = data["password"]
+    except KeyError:
+        emit('Error', broadcast=True)
+        return
+
+    # DATABASE: replace password of user with new passowrd
+
+
+@socketio.on('update_name')
+def update_name(json_data):
+    data = json.loads(json_data)
+    try:
+        username = data["username"]
+        name = data["name"]
+    except KeyError:
+        emit('Error', broadcast=True)
+        return
+
+    # DATABASE: replace name of user with new name
+
+@socketio.on('delete_account')
+def delete_account(json_data):
+    data = json.loads(json_data)
+    try:
+        username = data["username"]
+    except KeyError:
+        emit('Error', broadcast=True)
+        return
+
+    # DATABASE: delete all rows with that username
+
+
+@socketio.on('login')
+def login(json_data):
+    # data = json.loads(json_data)
+    try:
+        username = json_data["username"]
+        password = json_data["password"]
+    except KeyError:
+        emit('Error', broadcast=True)
+        return
+
+    print("GOT CREDENTIALS: {0}, {1}", username, password)
+
+    if (username == "hello" and password == "world"):
+        emit("login", "success")
+    else:
+        emit("login", "failure")
+
+    # DATABASE: get password from username
+
+    # correct_password = password_from_database(username)
+
+    # if(password == correct_password):
+    #     emit('success', broadcast=True)
+    # else:
+    #     emit('failure', broadcast=True)
+
+@socketio.on('get_chats')
+def get_chats(json_data):
+    data = json.loads(json_data)
+    try:
+        username = data["username"]
+    except KeyError:
+        emit('Error', broadcast=True)
+        return
+
+    # DATABASE: get all messages to the user and find only the last one
+        # from each person
+
+    # chats = chats_from_database
+
+    # emit("get_chats", json.dumps(chats), broadcast=true)
+
+
+@socketio.on('get_messages')
+def get_messages(json_data):
+    data = json.loads(json_data)
+    try:
+        user1 = data["user1"]
+        user2 = data["user2"]
+    except KeyError:
+        emit('Error', broadcast=True)
+        return
+
+    # DATABASE: get all messages between users 1 and 2
+        # from each person
+
+    # messages = messages_from_database
+
+    # emit("get_messages", json.dumps(messages), broadcast=true)
+
+
+
+@socketio.on('send_message')
+def send_message(json_data):
+    data = json.loads(json_data)
+    try:
+        user1 = data["user1"]
+        user2 = data["user2"]
+    except KeyError:
+        emit('Error', broadcast=True)
+        return
+
+    # DATABASE: add a message from 1 to 2
+
+    # TODO: Find a way to update person 2 if they are online when this happens
+
+
+>>>>>>> d2c84b1d632b3f95af05f9d0133121bb3366637a
 if __name__ == '__main__':
     socketio.run(app, debug=True)
     # app.run()
