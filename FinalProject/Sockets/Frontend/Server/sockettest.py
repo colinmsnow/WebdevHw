@@ -1,7 +1,6 @@
 from flask import Flask, render_template
 from flask_socketio import SocketIO, emit
 from flask_cors import CORS, cross_origin
-import json
     
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'secret!'
@@ -32,6 +31,11 @@ def index():
 def handle_message(data):
     print('received message: ' + data)
 
+
+# @socketio.event
+# def my_event(message):
+#     emit('my response', {'data': 'got it!'})
+
 def some_function():
     socketio.emit('some event', "Hello")
 
@@ -40,6 +44,8 @@ def test_connect():
     print("CONNECTED")
     emit('FromAPI', "Hello", broadcast=True)
 
+<<<<<<< HEAD
+=======
 
 
 """ Frontend routes we want:
@@ -238,5 +244,7 @@ def send_message(json_data):
     # TODO: Find a way to update person 2 if they are online when this happens
 
 
+>>>>>>> d2c84b1d632b3f95af05f9d0133121bb3366637a
 if __name__ == '__main__':
     socketio.run(app, debug=True)
+    # app.run()
