@@ -1,0 +1,25 @@
+
+> fsevents@1.2.13 install /Users/colinsnow1/Documents/WebdevHw/FinalProject/Sockets/Frontend/frontend/node_modules/react-scripts/node_modules/chokidar/node_modules/fsevents
+> node install.js
+
+  SOLINK_MODULE(target) Release/.node
+  CXX(target) Release/obj.target/fse/fsevents.o
+  SOLINK_MODULE(target) Release/fse.node
+
+> ejs@2.7.4 postinstall /Users/colinsnow1/Documents/WebdevHw/FinalProject/Sockets/Frontend/frontend/node_modules/ejs
+> node ./postinstall.js
+
+Thank you for installing [35mEJS[0m: built with the [32mJake[0m JavaScript build tool ([32mhttps://jakejs.com/[0m)
+
+
+> core-js@3.10.1 postinstall /Users/colinsnow1/Documents/WebdevHw/FinalProject/Sockets/Frontend/frontend/node_modules/react-app-polyfill/node_modules/core-js
+> node -e "try{require('./postinstall')}catch(e){}"
+
++ react-scripts@4.0.3
+added 2222 packages from 448 contributors and audited 3787 packages in 71.27s
+
+137 packages are looking for funding
+  run `npm fund` for details
+
+found 42 vulnerabilities (31 low, 5 moderate, 6 high)
+  run `npm audit fix` to fix them, or `npm audit` for details

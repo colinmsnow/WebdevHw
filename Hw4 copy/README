@@ -1,0 +1,33 @@
+Please fill in this information
+
+Team members: Colin Snow, Maia Matterman, Shirin Kuppusamy
+
+Remarks:
+
+Run the server.py and then go to localhost:8080/index.html
+
+
+
+------------------------------------------------------------
+
+To run the server:
+
+Install flask using pip
+
+    pip install flask
+
+or set up a virtual environment to install it.
+
+
+Start the server by running
+
+    python server.py
+
+in this directory. It will start the server on port 8080.
+
+
+Once the server is running, you can hit the test route by pointing your browser to
+
+    http://localhost:8080/test
+
+If you see "Hello world", the server is working.

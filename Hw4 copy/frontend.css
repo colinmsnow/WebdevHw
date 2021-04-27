@@ -1,0 +1,104 @@
+body {
+    font-family: sans-serif;
+}
+
+p {
+    padding: 8px;
+    font-size: 16px;
+}
+
+h2 {
+    width: 640px;
+    text-align: center;
+    margin-top: 32px;
+    font-variant: small-caps;
+}
+
+img {
+    width: 640px;
+}
+
+select {
+    width: 320px;
+}
+
+.spaced {
+    margin-left: 32px;
+}
+
+.row {
+    display: flex;
+    flex-direction: row;
+    margin: 16px 0;
+}
+
+button {
+    padding: 8px;
+    font-size: 16px;
+    margin: 8px;
+}
+
+select {
+    padding: 8px;
+    font-size: 16px;
+}
+
+input {
+    padding: 8px;
+    font-size: 16px;
+}
+
+.thumbnail {
+    height: 1in;
+    width: 1in;
+    object-fit: contain;
+}
+
+/* helpful CSS class to hide an element */
+
+.hidden {
+    display: none
+}
+
+
+.container {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 5px;
+    /* justify-content: space-evenly; */
+}
+.item {
+    width: calc(25% - 10px);
+    margin-left: 10px;
+    margin-top: 10px;
+    padding: 40 px
+}
+
+.circle {
+    width: 50px;
+    height: 50px;
+    line-height: 50px;
+    border-radius: 50%;
+    font-size: 50px;
+    color: black;
+    text-align: center;
+    background: rgba(128, 128, 128, 0.5);
+    /* opacity: 50%; */
+  }
+
+#dispcom{
+    list-style-type: none;
+    border: 2px solid black;
+    /* padding:5px 5px 5px 5px; */
+    /* display: inline; */
+    /* line-height: 2.5; */
+    font-size: 30px;
+    list-style-position: outside;
+    /* -webkit-box-decoration-break: clone;
+    box-decoration-break: clone; */
+}
+
+/* ul{
+    list-style-type: square;
+} */
+  

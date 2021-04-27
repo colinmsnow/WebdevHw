@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+
+   <meta charset="utf-8"> 
+  
+  <head>
+    
+    <title>Homework 4</title>
+
+    <link rel="stylesheet" href="frontend.css">
+
+    <script src="frontend.js"></script>
+
+  </head>
+
+  
+  <body>
+    
+    <h1> Homework 4 </h1>
+
+
+
+    <div class="row" id="thumbnails"> </div>
+
+
+<form id="form" name="form" enctype="multipart/form-data" method="POST">
+
+    <label class="spaced" id = "url" for="new-url">URL:</label>
+    <input type="text" id="new-url">
+    
+    <label class="spaced" id = "file" for="new-file">File:</label>
+    <input type="file" id="new-file" name="new-file">
+
+    <button class="spaced" id="create-button">Add picture</button>
+</form>  
+    
+    <h2 id="name"></h2>
+
+    <img id="url">
+    
+    <div id="added"></div>
+
+
+    <div id="imageGallery" class="container"> 
+    </div>
+
+    <div id="NewPage" style = "display: none">
+      <div><button class="spaced" id="back">Back</button> </div>
+      <div><input type="text" id="new-comment"> 
+      <button class="spaced" id="submit">Submit Comment</button> </div>
+      <ul id="dispcom"></ul>
+    </div>
+
+
+  </body>
+  
+</html>
+

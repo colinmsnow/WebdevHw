@@ -1,0 +1,55 @@
+new folder
+npx create-react-app frontend
+npm i socket.io-client
+npm run eject  (didnt work)
+npm uninstall react-scripts
+npm install react-scripts-cssmodules
+npm run eject  (worked this time)
+edit path.js with   appBuild: resolveApp('../Server/static/react'),,
+remove all static/ from webpack.config (both)
+add filename: filename: "../../templates/index.html", to HtmlWebpackPlugin
+add <script> window.token="{{flask_token}}"</script> to index.html
+add <p>My Token = {window.token}</p> to app.js
+add "homepage": "/static/react" to package.json
+remove "not dead" from package.json
+npm run build
+
+(At this point it compiles)
+
+
+npm install socket.io-client
+npm install socket.io
+npm install engine.io-parser (didnt fix it)
+npm install --save --save-exact react-scripts@2.x.x
+
+
+(not letting me install socketio)
+
+sudo rm -rf /usr/local/lib/node_modules
+brew install node (neither did anything)
+
+
+rm -rf node_modules
+completely reinstall node from website
+npm install
+rm -rf node_modules
+manually remove all the stuff I tried to install from package.json
+npm install
+
+(back where we started now)
+
+npm install -g npm-install-peers (threw errors)
+npm install --save-dev @babel/core
+npm install webpack
+
+
+
+(because socket.io-client is dumb and needs an old version we need old versions of flask stuff too)
+
+python-engineio==3.2.0
+python-socketio==4.0.0
+Flask==1.1.2
+Flask-Cors==3.0.10
+Flask-SocketIO==4.0.0
+eventlet==0.30.2
+bidict==0.21.2

@@ -1,0 +1,19 @@
+.field {
+    background-color: #E5E5E5;
+    border: none;
+    border-radius: 0%;
+    margin-bottom: 1em;   
+    width: 100%;
+    height: 2em;
+    font-size: 3vh;
+    font-style: normal;
+    font-weight: normal;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+/* 
+p {
+    font-size: 1vh;
+} */
