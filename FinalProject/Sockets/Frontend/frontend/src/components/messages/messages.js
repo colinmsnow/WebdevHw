@@ -1,19 +1,14 @@
 import React  from "react";
 import './messages.css'
 
+
+let show_time;
 // function showTime(bool, time, e) {
-//     if (bool){
-//         return (time)
-        
-//         console.log(time)
-//     }
-//     else {
-//        //TODO: Fix Me!
-//     }
+//     this.state.show_time = bool
   
 // }
 // {(e) => showTime(true, props.time, e)} 
-let showTime;
+
 
 function Purple_Message(props) {
     return <div className= "purple message">
@@ -22,15 +17,17 @@ function Purple_Message(props) {
 }
 
 function Pink_Message(props) {
-    return <div className= "pink message" onMouseEnter={showTime = true} onMouseLeave={showTime = false} 
+    return <div className= "pink message" onMouseEnter={() => show_time = true} onMouseLeave={() => show_time = false} 
     > 
-        {showTime && 
-        <div className="time_label">
-            {props.time}
-        </div>}     
+        {show_time && 
+        console.log(props.time)
+        // <div className="time_label">
+        //    <p>{props.time}</p>
+        // </div>)
+        }     
         <p>{props.message}</p>
     </div>
 }
 
 
-export {Purple_Message, Pink_Message};
+export {Pink_Message, Purple_Message};
