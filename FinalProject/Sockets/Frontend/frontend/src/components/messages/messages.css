@@ -22,3 +22,8 @@
     background-color: #EFB1A7;
     align-self: flex-start;
 }
+.time_label {
+    font-size: .45rem;
+    color: black;
+    
+}

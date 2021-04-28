@@ -111,8 +111,7 @@ def create_user(data):
 
 
 @socketio.on('get_user')
-def get_user(json_data):
-    data = json.loads(json_data)
+def get_user(data):
     try:
         username = data["username"]
     except KeyError:
@@ -125,8 +124,7 @@ def get_user(json_data):
 
 
 @socketio.on('update_username')
-def update_username(json_data):
-    data = json.loads(json_data)
+def update_username(data):
     try:
         username = data["username"]
         new_username = data["new_username"]
@@ -138,8 +136,7 @@ def update_username(json_data):
 
 
 @socketio.on('update_password')
-def update_password(json_data):
-    data = json.loads(json_data)
+def update_password(data):
     try:
         username = data["username"]
         password = data["password"]
@@ -151,8 +148,7 @@ def update_password(json_data):
 
 
 @socketio.on('update_name')
-def update_name(json_data):
-    data = json.loads(json_data)
+def update_name(data):
     try:
         username = data["username"]
         name = data["name"]
@@ -163,8 +159,7 @@ def update_name(json_data):
     # DATABASE: replace name of user with new name
 
 @socketio.on('delete_account')
-def delete_account(json_data):
-    data = json.loads(json_data)
+def delete_account(data):
     try:
         username = data["username"]
     except KeyError:
@@ -175,11 +170,10 @@ def delete_account(json_data):
 
 
 @socketio.on('login')
-def login(json_data):
-    # data = json.loads(json_data)
+def login(data):
     try:
-        username = json_data["username"]
-        password = json_data["password"]
+        username = data["username"]
+        password = data["password"]
     except KeyError:
         emit('Error', "Login fields missing")
         return
@@ -202,8 +196,7 @@ def login(json_data):
     #     emit('failure', broadcast=True)
 
 @socketio.on('get_chats')
-def get_chats(json_data):
-    data = json.loads(json_data)
+def get_chats(data):
     try:
         username = data["username"]
     except KeyError:
@@ -219,8 +212,7 @@ def get_chats(json_data):
 
 
 @socketio.on('get_messages')
-def get_messages(json_data):
-    data = json.loads(json_data)
+def get_messages(data):
     try:
         user1 = data["user1"]
         user2 = data["user2"]
@@ -238,8 +230,7 @@ def get_messages(json_data):
 
 
 @socketio.on('send_message')
-def send_message(json_data):
-    data = json.loads(json_data)
+def send_message(data):
     try:
         user1 = data["user1"]
         user2 = data["user2"]
