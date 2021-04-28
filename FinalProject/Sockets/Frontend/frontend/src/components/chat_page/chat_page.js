@@ -1,9 +1,10 @@
 
-import React, {Component,  useState, useEffect } from 'react';
+import React, {Component,  useState, useEffect, Fragment} from 'react';
 import {Link} from 'react-router-dom'
 // import {Purple_Button, White_Button, White_Button_Right} from '../buttons/buttons';
 // import Input_Field from '../input_field/input_field';
 import './chat_page.css';
+import {top_bar} from '../top_bar/top_bar'
 import socketIOClient from "socket.io-client";
 import {Purple_Message, Pink_Message} from '../messages/messages';
 const ENDPOINT = "http://127.0.0.1:5000";
@@ -31,6 +32,9 @@ class chat_page extends Component {
         //     });
 
         return (
+            // <div className="content">
+            //    <top_bar/> 
+            // </div>
             <div className= "content">
             <h2>test</h2>
             
