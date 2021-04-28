@@ -1,19 +1,15 @@
-import React  from "react";
+import React, { useState }  from "react";
 import './messages.css'
 
+
+let show_time;
 // function showTime(bool, time, e) {
-//     if (bool){
-//         return (time)
-        
-//         console.log(time)
-//     }
-//     else {
-//        //TODO: Fix Me!
-//     }
+//     this.state.show_time = bool
   
 // }
 // {(e) => showTime(true, props.time, e)} 
-let showTime;
+
+
 
 function Purple_Message(props) {
     return <div className= "purple message">
@@ -22,15 +18,28 @@ function Purple_Message(props) {
 }
 
 function Pink_Message(props) {
-    return <div className= "pink message" onMouseEnter={showTime = true} onMouseLeave={showTime = false} 
-    > 
-        {showTime && 
-        <div className="time_label">
-            {props.time}
-        </div>}     
-        <p>{props.message}</p>
-    </div>
+
+    const [isShown, setIsShown] = useState(false);
+    return (
+    
+        <div className="resize" onMouseEnter={() => setIsShown(true)}
+        onMouseLeave={() => setIsShown(false)}>
+
+            {isShown && (
+            <div className="time_label">
+                <p>{props.time}</p>
+            </div>
+            )}
+
+            <div className="pink message">
+                <p>{props.message}</p>
+            </div>
+
+            
+
+        </div>
+    );
 }
 
 
-export {Purple_Message, Pink_Message};
+export {Pink_Message, Purple_Message};

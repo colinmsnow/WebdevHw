@@ -1,6 +1,6 @@
 
 import React, {Component,  useState, useEffect } from 'react';
-import {BrowserRouter, Link, Route} from 'react-router-dom'
+import {BrowserRouter, Link, Route, useHistory, Redirect} from 'react-router-dom'
 import {Purple_Button, White_Button, White_Button_Right} from '../buttons/buttons';
 import Input_Field from '../input_field/input_field';
 import './login.css'; 
@@ -29,6 +29,8 @@ class login extends Component {
         socket.on("login", data => {
               this.setState({success:data})
               console.log(this.state.success);
+            //   const history = useHistory();
+            //   history.push("/chats");
             });
         let enter;
 
@@ -39,15 +41,18 @@ class login extends Component {
 
 
         if (this.state.success == 'success') {
-            enter = 
+            // let history = useHistory();
+            // history.push("/chats");
             // <BrowserRouter>
             // {/* <chat_page/> */}
             // {/* </BrowserRouter>  */}
             // TODO: Get routing behavior
             // 
-            <Link to="/chats" style={{textDecoration:'none'}}>
-                <Purple_Button name = "Login" click = {()=>socket.emit("login", {"username": document.getElementById("Username").value, "password": document.getElementById("Password").value})} />
-            </Link>
+            return(<Redirect to="/chats" />)
+
+            // <Link to="/chats" style={{textDecoration:'none'}}>
+            //     <Purple_Button name = "Login" click = {()=>socket.emit("login", {"username": document.getElementById("Username").value, "password": document.getElementById("Password").value})} />
+            // </Link>
         }
         else {
             enter = 

@@ -4,13 +4,23 @@
     min-width: fit-content;
     padding-left: 2em;
     padding-right: 2em;
+    padding-top: 0em;
     display: flex;
+    /* max-width: 50%; */
 }
 
 .message p {
     font-size: .8rem;
-    color: black;
-    
+    color: black;    
+}
+
+.resize {
+    min-width: fit-content;
+    max-width: 50%;
+    display: flex;
+    flex-direction: column;
+    padding-top: 1em;
+    padding-bottom: 1em;
 }
 
 .purple {
@@ -24,6 +34,8 @@
 }
 .time_label {
     font-size: .45rem;
-    color: black;
+    color: gray;
+    padding-left: 4em;
+    padding-bottom: 0em;
     
 }

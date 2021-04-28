@@ -5,7 +5,7 @@ import {Link} from 'react-router-dom'
 // import Input_Field from '../input_field/input_field';
 import './chat_page.css';
 import socketIOClient from "socket.io-client";
-import { Pink_Message, Purple_Message } from '../messages/messages';
+import {Purple_Message, Pink_Message} from '../messages/messages';
 const ENDPOINT = "http://127.0.0.1:5000";
 
 class chat_page extends Component {
