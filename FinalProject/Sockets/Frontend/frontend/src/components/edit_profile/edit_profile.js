@@ -1,15 +1,16 @@
 
 import React, {Component,  useState, useEffect } from 'react';
 import {BrowserRouter, Link, Route, useHistory, Redirect} from 'react-router-dom'
-import {Purple_Button, White_Button, White_Button_Right} from '../buttons/buttons';
+import {Purple_Button, White_Button, Purple_Button_Right, Red_Button} from '../buttons/buttons';
 import Input_Field from '../input_field/input_field';
-import './login.css'; 
-import chat_page from '../chat_page/chat_page'
+import './edit_profile.css'; 
 // TODO: Make this App.css instead!
 import socketIOClient from "socket.io-client";
 const ENDPOINT = "http://127.0.0.1:5000";
 
-class login extends Component {
+// const BrowserHistory = require('react-router/lib/BrowserHistory').default;
+
+class edit_profile extends Component {
     constructor(props){
         super(props);
         this.state = {
@@ -41,18 +42,8 @@ class login extends Component {
 
 
         if (this.state.success == 'success') {
-            // let history = useHistory();
-            // history.push("/chats");
-            // <BrowserRouter>
-            // {/* <chat_page/> */}
-            // {/* </BrowserRouter>  */}
-            // TODO: Get routing behavior
-            // 
             return(<Redirect to="/chats" />)
 
-            // <Link to="/chats" style={{textDecoration:'none'}}>
-            //     <Purple_Button name = "Login" click = {()=>socket.emit("login", {"username": document.getElementById("Username").value, "password": document.getElementById("Password").value})} />
-            // </Link>
         }
         else {
             enter = 
@@ -63,21 +54,40 @@ class login extends Component {
         return (
             <div>
             <div class="nav">
-                {/* TODO: Change path back to create */}
-            <Link to="/edit" style={{textDecoration:'none'}}>
-                <White_Button_Right name = "Create Account" />
+            {/* TODO: Make this actually go back using router history */}
+            <Link to="/chats" style={{textDecoration:'none'}}>
+                <Purple_Button_Right name = "Back" />
             </Link>
             </div>
             <div class="content">
-                <Input_Field name = "Username" id = "Username" />
+                <table width = "100%">
+                    <tbody>
+                        <tr>
+                            <td>
+                                <h3>Name:</h3>
+                            </td>
+                            <td>
+                                <Input_Field id = "Name" placeholder = "test" disabled = "true"/>
+                            </td>
+                            <td>
+                                {/* <div className="in_table"> */}
+                                <Purple_Button_Right name= "Edit" style = {{marginTop: '0em', marginLeft: '1em'}} />
+                                {/* </div> */}
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                {/* <Input_Field name = "Username" id = "Username" />
                 <Input_Field name = "Password" id = "Password" />
                 {enter}
                 <Link to="/forgot" style={{textDecoration:'none'}}>
                     <White_Button name = "Forgot Password?" />
                 </Link>
+            </div> */}
+            <Red_Button name = "Delete Account" />   
             </div>
             </div>
         )
     }
 }
-export default login;
+export default edit_profile;
