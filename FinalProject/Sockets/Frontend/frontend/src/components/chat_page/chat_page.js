@@ -38,10 +38,10 @@ class chat_page extends Component {
             <div className= "content">
             <h2>test</h2>
             
-            <Purple_Message message = "hello!" />
-            <Pink_Message message = "hey, how's it going by you?" time="test" />
-            <Purple_Message message = "not too bad, web dev is super great!" />
-            <Pink_Message message = "really? You must take it with Riccardo." />
+            <Purple_Message message = "hello!" time = "9:15 AM"/>
+            <Pink_Message message = "hey, how's it going by you?" time="10:08 AM" />
+            <Purple_Message message = "not too bad, web dev is super great!" time="10:12 AM" />
+            <Pink_Message message = "really? You must take it with Riccardo." time="10:23 AM" />
             
             </div>
         )

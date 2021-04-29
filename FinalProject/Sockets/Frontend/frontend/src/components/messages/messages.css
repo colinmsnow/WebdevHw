@@ -1,5 +1,4 @@
 .message {
-    background-color: #D0BBE6;
     border-radius: 40px; /* TODO: Change me*/
     min-width: fit-content;
     padding-left: 2em;
@@ -34,9 +33,20 @@
 }
 .time_label {
     /* TODO: Look into making this bigger */
-    font-size: .7rem;
-    color: gray;
-    padding-left: 4em;
-    padding-bottom: 0em;
+    font-size: .75rem;
+    color: #646464;
+    padding-left: 3em;
+    padding-bottom: .3em;
     
+}
+
+.right {
+    padding-right: 3em;
+    padding-left: 0em;
+    position: relative;
+    float: right;
+}
+
+.right_message {
+    align-self: flex-end;
 }

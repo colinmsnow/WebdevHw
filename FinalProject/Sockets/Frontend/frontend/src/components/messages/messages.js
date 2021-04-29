@@ -12,9 +12,26 @@ let show_time;
 
 
 function Purple_Message(props) {
-    return <div className= "purple message">
-        <p>{props.message}</p>
+    const [isShown, setIsShown] = useState(false);
+    return (
+    
+        <div className="resize right_message" onMouseEnter={() => setIsShown(true)}
+        onMouseLeave={() => setIsShown(false)}>
+
+            {isShown && (
+            <div className="time_label right">
+                {props.time}
+            </div>
+            )}
+
+            <div className="purple message">
+                <p>{props.message}</p>
+            </div>
+
+            
+
         </div>
+    );
 }
 
 function Pink_Message(props) {
@@ -27,7 +44,7 @@ function Pink_Message(props) {
 
             {isShown && (
             <div className="time_label">
-                <p>{props.time}</p>
+                {props.time}
             </div>
             )}
 
