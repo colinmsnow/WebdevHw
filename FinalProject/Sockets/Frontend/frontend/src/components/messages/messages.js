@@ -19,7 +19,7 @@ function Purple_Message(props) {
         onMouseLeave={() => setIsShown(false)}>
 
             {isShown && (
-            <div className="time_label right">
+            <div className="time_label right_hover">
                 {props.time}
             </div>
             )}

@@ -71,7 +71,7 @@ class edit_profile extends Component {
                             </td>
                             <td>
                                 {/* <div className="in_table"> */}
-                                <Purple_Button_Right name= "Edit" style = {{marginTop: '0em', marginLeft: '1em'}} />
+                                <Purple_Button name= "Edit" style = {{marginTop: '0em', marginLeft: '1em'}} />
                                 {/* </div> */}
                             </td>
                         </tr>
