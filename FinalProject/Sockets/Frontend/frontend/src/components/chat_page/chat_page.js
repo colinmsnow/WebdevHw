@@ -97,7 +97,7 @@ class chat_page extends Component {
             <div className = "right_pane">
 
             <div>
-            <div className = "nam"><h2>test</h2></div>
+            <div className = "nam"><h2>{this.props.user}</h2></div>
             <div className = "sig">
             <Link to="/" style={{textDecoration:"none", marginRight:"1em"}}>
             <Purple_Button_Right name = "Sign Out" />
@@ -108,7 +108,7 @@ class chat_page extends Component {
             {/* <CurrentUser.Consumer>
 //          {value => <div>It's Main component. Context value is ${value.name}</div>}
 //          </CurrentUser.Consumer> */}
-            <h2>{this.props.user}</h2>
+            {/* <h2>{this.props.user}</h2> */}
             {this.state.messages.map((message, index) => (
                     (message.from == this.props.user)?
                         (<Purple_Message message = {message.message} time={message.time} />)
