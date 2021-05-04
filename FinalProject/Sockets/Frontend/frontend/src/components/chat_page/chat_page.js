@@ -6,6 +6,9 @@ import {Link} from 'react-router-dom'
 import './chat_page.css';
 import {top_bar} from '../top_bar/top_bar'
 import socketIOClient from "socket.io-client";
+import Top_bar from '../top_bar/top_bar'
+import Input_Field from '../input_field/input_field'
+import {Purple_Button_Right} from '../buttons/buttons';
 import {Purple_Message, Pink_Message} from '../messages/messages';
 import Chat_in_list from '../chat_in_list/chat_in_list';
 // import {CurrentUser} from "../../Currentuser";

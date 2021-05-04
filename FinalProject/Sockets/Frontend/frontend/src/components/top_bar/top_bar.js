@@ -1,12 +1,22 @@
 import React, { Component }  from "react";
 import './top_bar.css'
+import '../../assets/new_message.png'
 
-function top_bar(){
-    
-    return <div>
-        <h3>Conversations</h3>
+function Top_bar(){
+    let state = {
+        new_mess: false
+    };
+    // TODO: On new message icon click, re render conversation side to have input for new message
+    return (
+        <div className = "cont">
+        <div className="titl">
+        <h2>Conversations</h2>
         </div>
+        <img className='icon_message' src={require('../../assets/new_message.png')} onClick = {(console.log('new message, please!'))}/>
+        </div>
+    )
     
+
 }
 
-export default {top_bar};
+export default Top_bar;
