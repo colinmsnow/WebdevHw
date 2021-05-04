@@ -71,7 +71,7 @@ class chat_page extends Component {
             {/* <CurrentUser.Consumer>
 //          {value => <div>It's Main component. Context value is ${value.name}</div>}
 //          </CurrentUser.Consumer> */}
-            <h2>{this.context.name}</h2>
+            <h2>{this.props.user}</h2>
             <Purple_Message message = "hello!" time = "9:15 AM"/>
             <Pink_Message message = "hey, how's it going by you?" time="10:08 AM" />
             <Purple_Message message = "not too bad, web dev is super great!" time="10:12 AM" />
