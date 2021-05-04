@@ -3,15 +3,14 @@ import React, {Component,  useState, useEffect, Fragment} from 'react';
 import {Link} from 'react-router-dom'
 // import {Purple_Button, White_Button, White_Button_Right} from '../buttons/buttons';
 // import Input_Field from '../input_field/input_field';
-import './chat_page.css';
+import '../chat_page/chat_page.css';
 import {top_bar} from '../top_bar/top_bar'
 import socketIOClient from "socket.io-client";
-import Top_bar from '../top_bar/top_bar'
 import {Purple_Message, Pink_Message} from '../messages/messages';
 import Chat_in_list from '../chat_in_list/chat_in_list';
 const ENDPOINT = "http://127.0.0.1:5000";
 
-class chat_page extends Component {
+class new_message_page extends Component {
     constructor(props){
         super(props);
         this.state = {
@@ -40,7 +39,6 @@ class chat_page extends Component {
             <div>
              {/* <div className= "content"> */}
             <div className= "left_pane">
-            <Top_bar/>
             <Chat_in_list name="Maia Materman" last_time="10:05 PM" first_name="Maia" message="blah blah blah blah blah blah blah blah blah"/>
             <Chat_in_list name="Maia Materman" last_time="10:05 PM" first_name="Maia" message="blah blah blah blah blah blah blah blah blah"/>
             <Chat_in_list name="Maia Materman" last_time="10:05 PM" first_name="Maia" message="blah blah blah blah blah blah blah blah blah"/>
@@ -62,4 +60,4 @@ class chat_page extends Component {
         )
     }
 }
-export default chat_page;
+export default new_message_page;
