@@ -7,6 +7,7 @@ import './chat_page.css';
 import {top_bar} from '../top_bar/top_bar'
 import socketIOClient from "socket.io-client";
 import {Purple_Message, Pink_Message} from '../messages/messages';
+import Chat_in_list from '../chat_in_list/chat_in_list';
 const ENDPOINT = "http://127.0.0.1:5000";
 
 class chat_page extends Component {
@@ -35,14 +36,26 @@ class chat_page extends Component {
             // <div className="content">
             //    <top_bar/> 
             // </div>
-            <div className= "content">
+            <div>
+             {/* <div className= "content"> */}
+            <div className= "left_pane">
+            <Chat_in_list name="Maia Materman" last_time="10:05 PM" first_name="Maia" message="blah blah blah blah blah blah blah blah blah"/>
+            <Chat_in_list name="Maia Materman" last_time="10:05 PM" first_name="Maia" message="blah blah blah blah blah blah blah blah blah"/>
+            <Chat_in_list name="Maia Materman" last_time="10:05 PM" first_name="Maia" message="blah blah blah blah blah blah blah blah blah"/>
+            <Chat_in_list name="Maia Materman" last_time="10:05 PM" first_name="Maia" message="blah blah blah blah blah blah blah blah blah"/>
+            <Chat_in_list name="Maia Materman" last_time="10:05 PM" first_name="Maia" message="blah blah blah blah blah blah blah blah blah"/>
+            <Chat_in_list name="Maia Materman" last_time="10:05 PM" first_name="Maia" message="blah blah blah blah blah blah blah blah blah"/>
+            <Chat_in_list name="Maia Materman" last_time="10:05 PM" first_name="Maia" message="blah blah blah blah blah blah blah blah blah"/>
+            <Chat_in_list name="Maia Materman" last_time="10:05 PM" first_name="Maia" message="blah blah blah blah blah blah blah blah blah"/>
+            <Chat_in_list name="Maia Materman" last_time="10:05 PM" first_name="Maia" message="blah blah blah blah blah blah blah blah blah"/>
+            </div>
+            <div className = "right_pane">
             <h2>test</h2>
-            
             <Purple_Message message = "hello!" time = "9:15 AM"/>
             <Pink_Message message = "hey, how's it going by you?" time="10:08 AM" />
             <Purple_Message message = "not too bad, web dev is super great!" time="10:12 AM" />
             <Pink_Message message = "really? You must take it with Riccardo." time="10:23 AM" />
-            
+            </div>
             </div>
         )
     }

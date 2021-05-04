@@ -3,7 +3,8 @@ import React, {Component,  useState, useEffect } from 'react';
 import {BrowserRouter, Link, Route, useHistory, Redirect} from 'react-router-dom'
 import {Purple_Button, White_Button, White_Button_Right} from '../buttons/buttons';
 import Input_Field from '../input_field/input_field';
-import './login.css'; 
+import './login.css';
+import logo from '../logo.png' 
 import chat_page from '../chat_page/chat_page'
 // TODO: Make this App.css instead!
 import socketIOClient from "socket.io-client";
@@ -69,6 +70,7 @@ class login extends Component {
             </Link>
             </div>
             <div class="content">
+                <img src = {logo} className = "logo_style"></img>
                 <Input_Field name = "Username" id = "Username" />
                 <Input_Field name = "Password" id = "Password" />
                 {enter}
