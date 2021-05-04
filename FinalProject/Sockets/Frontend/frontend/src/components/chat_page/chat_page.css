@@ -38,6 +38,29 @@
     overflow: scroll;
 }
 
+.sig {
+    /* width: 30%; */
+    float: right;
+}
+
+.nam {
+    width: 70%;
+    float: left;
+}
+
+.mess_bar {
+    height: 5%;
+    position: fixed;
+    bottom: 5%;
+    padding-left: 2.5%;
+    
+}
+
+.messages {
+    width: 100%;
+    overflow-y: scroll;
+}
+
 @media (max-width: 480px){
     .content{
         width: 90vw;

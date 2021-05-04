@@ -1,0 +1,17 @@
+.cont{
+    position: sticky;
+    top: 0;
+    /* TODO: Fixme! */
+}
+
+.icon_message {
+    width: 1.5em;
+    float: right;
+    margin-top: 1.25em;
+    cursor: pointer;
+}
+
+.titl {
+    width: 80%;
+    float: left;
+}
