@@ -11,7 +11,9 @@ const Input_Field = props =>{
                 name = {props.name}
                 type = "text"
                 value = {props.value}
-                // onChange={}
+                placeholder = {props.placeholder}
+                disabled = {props.disabled}
+                // onChange={(e) => {this.setState({value: e.target.value })
             />
         </div>
     )

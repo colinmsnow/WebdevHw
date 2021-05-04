@@ -1,29 +1,62 @@
-import React  from "react";
+import React, { useState }  from "react";
 import './messages.css'
 
-function showTime(bool, e) {
-    if (bool){
-       
-    }
-    else {
-       
-    }
+
+let show_time;
+// function showTime(bool, time, e) {
+//     this.state.show_time = bool
   
-}
+// }
+// {(e) => showTime(true, props.time, e)} 
+
+
 
 function Purple_Message(props) {
-    return <div className= "purple message">
-        <p>{props.message}</p>
+    const [isShown, setIsShown] = useState(false);
+    return (
+    
+        <div className="resize right_message" onMouseEnter={() => setIsShown(true)}
+        onMouseLeave={() => setIsShown(false)}>
+
+            {isShown && (
+            <div className="time_label right_hover">
+                {props.time}
+            </div>
+            )}
+
+            <div className="purple message">
+                <p>{props.message}</p>
+            </div>
+
+            
+
         </div>
+    );
 }
 
 function Pink_Message(props) {
-    return <div className= "pink message" onMouseEnter={(e) => showTime(true, e)} onMouseLeave={(e) => showTime(false, e)} 
-    >
-        <p>{props.message}</p>
-    </div>
+
+    const [isShown, setIsShown] = useState(false);
+    return (
+    
+        <div className="resize" onMouseEnter={() => setIsShown(true)}
+        onMouseLeave={() => setIsShown(false)}>
+
+            {isShown && (
+            <div className="time_label">
+                {props.time}
+            </div>
+            )}
+
+            <div className="pink message">
+                <p>{props.message}</p>
+            </div>
+
+            
+
+        </div>
+    );
 }
 
 
-
-export {Purple_Message, Pink_Message};
+export {Pink_Message, Purple_Message};

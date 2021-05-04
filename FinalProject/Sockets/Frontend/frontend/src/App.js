@@ -5,10 +5,12 @@ import login from "./components/login";
 import create_account from "./components/create_account";
 import forgot_password from "./components/forgot_password";
 import chat_page from "./components/chat_page";
-import chat from "./components/chat";
+import edit_profile from "./components/edit_profile";
+// import chat from "./components/chat";
 // import profile from "./components/profile";
 import "./App.css";
 import { render } from "react-dom";
+// import edit_profile from "./components/edit_profile";
 
 
 // import create_account from "./components/create_account";
@@ -41,6 +43,7 @@ class App extends Component {
         <Route path = "/create" component = {create_account} />
         <Route path = "/forgot" component = {forgot_password} />
         <Route path = "/chats" component = {chat_page} />
+        <Route path = "/edit" component = {edit_profile} />
     </Switch>
     </BrowserRouter>
       

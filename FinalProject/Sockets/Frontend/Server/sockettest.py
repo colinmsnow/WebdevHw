@@ -101,6 +101,7 @@ def create_user(data):
     except KeyError:
         emit("Error","Fields are missing in create_user")
         return
+<<<<<<< HEAD
     
     if (password != confirm_password):
         emit("Error","Passwords do not match")
@@ -116,6 +117,21 @@ def create_user(data):
         emit('create_user','failure')
         emit('Error', "Username already exists, try another username")
         return
+=======
+
+    
+    if (password != confirm_password):
+        # Not really sure what should happen if passwords dont match
+        emit("Error", "Passwords do not match")
+        return
+
+
+    # DATABASE: create user in database
+>>>>>>> 4d8c75867f878fd694e4d1e5b79f0c759f9bfd21
+
+    emit("create_user", "success")
+
+
 
 
 @socketio.on('get_user')
@@ -133,9 +149,12 @@ def get_user(data):
 
 @socketio.on('update_username')
 def update_username(data):
+<<<<<<< HEAD
     #checks if current user exists -- doesn't exist, returns error
     #does exist, checks if new_username exists -- does exists, returns error
     #doesn't exist, changes current username to new username
+=======
+>>>>>>> 4d8c75867f878fd694e4d1e5b79f0c759f9bfd21
     try:
         username = data["username"]
         new_username = data["new_username"]
@@ -188,8 +207,13 @@ def update_Fisrtname(data):
 
     # DATABASE: replace name of user with new name
 
+<<<<<<< HEAD
 @socketio.on('update_lastname')
 def update_Fisrtname(data):
+=======
+@socketio.on('update_name')
+def update_name(data):
+>>>>>>> 4d8c75867f878fd694e4d1e5b79f0c759f9bfd21
     try:
         username = data["username"]
         lastname = data["lastname"]
@@ -224,6 +248,7 @@ def login(data):
         password = data["password"]
     except KeyError:
         emit('Error', "Login fields missing")
+<<<<<<< HEAD
         return
     
     #check if user exists
@@ -231,6 +256,17 @@ def login(data):
         emit('login','failure')
         emit('Error',"This user does not exist.")
         return
+=======
+        return
+
+    print("GOT CREDENTIALS: {0}, {1}", username, password)
+
+    if (username == "hello" and password == "world"):
+        emit("login", "success")
+    else:
+        emit("login", "failure")
+        emit('Error', "Incorrect username or passowrd")
+>>>>>>> 4d8c75867f878fd694e4d1e5b79f0c759f9bfd21
 
     # DATABASE: get password from username
     correct_password = db.login(username)
