@@ -3,9 +3,9 @@ import './chat_in_list.css'
 
 function Chat_in_list (props)
 {
-    // TODO: Figure out right length of substring
     return (
     // if props.isUnread === false
+    // TODO: Implement read or unread conditional
     <div>
     <div class="col">
     <h3>{props.name}</h3>
