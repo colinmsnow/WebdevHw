@@ -17,7 +17,8 @@ class chat_page extends Component {
         this.state = {
             success: null,
             chats:[],
-            messages:[]
+            messages:[],
+            other_user:"Maia Matterman"
 
 
         };
@@ -59,7 +60,7 @@ class chat_page extends Component {
 
 
         if (this.state.success == null){
-            socket.emit("get_chats", {username:this.props.user})
+            socket.emit("get_chats", {username:this.props.user, other_user:this.state.other_user})
         }
 
         return (

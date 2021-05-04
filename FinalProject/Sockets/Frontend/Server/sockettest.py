@@ -118,6 +118,9 @@ def get_user(data):
         emit('Error', broadcast=True)
         return
 
+    user_info = {"success":"success", "username": "A user", "password": "*********", "first_name": "joseph", "last_name": "joe"}
+    emit("user", user_info)
+
     # DATABASE: get the user by username
 
     # emit("get_user", json.dumps(username, name, password), broadcast=true)
@@ -197,8 +200,11 @@ def login(data):
 
 @socketio.on('get_chats')
 def get_chats(data):
+    # This function gets all info needed to display the chat page
+    # Should return a response with a success value, list of chats, and list of messages
     try:
         username = data["username"]
+        other_user = data["other_user"]
     except KeyError:
         emit('Error', broadcast=True)
         return

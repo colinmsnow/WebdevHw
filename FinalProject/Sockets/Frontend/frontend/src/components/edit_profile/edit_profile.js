@@ -14,7 +14,11 @@ class edit_profile extends Component {
     constructor(props){
         super(props);
         this.state = {
-            success: null
+            success: null,
+            first_name: "nothing",
+            last_name: "nothing",
+            username: "nothing",
+            password: "nothing"
 
         };
     }
@@ -27,29 +31,18 @@ class edit_profile extends Component {
         // const [response, setResponse] = useState("");
         const socket = socketIOClient(ENDPOINT);
 
-        // socket.on("login", data => {
-        //       this.setState({success:data})
-        //       console.log(this.state.success);
-        //     //   const history = useHistory();
-        //     //   history.push("/chats");
-        //     });
-        // let enter;
+        socket.on("user", data => {
+            console.log("Received some data")
+            console.log(data)
+              this.setState({success:data.success, username:data.username, password:data.password, first_name:data.first_name, last_name:data.last_name})
+              console.log(this.state.success);
 
-        // socket.on("Error", data => {
-        //     console.log("Error in login: " + data);
-        //     // TODO: Create popup with error from data
-        // });
+            });
 
 
-        // if (this.state.success == 'success') {
-        //     return(<Redirect to="/chats" />)
-
-        // }
-        // else {
-        //     enter = 
-        //     <Purple_Button name = "Login" click = {()=>socket.emit("login", {"username": document.getElementById("Username").value, "password": document.getElementById("Password").value})} />
-        // }    
-        
+        if (this.state.success == null){
+            socket.emit("get_user", {username:this.props.user})
+        }
 
         return (
             <div>
@@ -68,7 +61,7 @@ class edit_profile extends Component {
                                 <h3>First Name:</h3>
                             </td>
                             <td>
-                                <Input_Field id = "First Name" placeholder = "test" disabled = "true"/>
+                                <Input_Field id = "First Name" placeholder = {this.state.first_name} disabled = "true"/>
                             </td>
                             <td>
                                 {/* <div className="in_table"> */}
@@ -81,7 +74,7 @@ class edit_profile extends Component {
                                 <h3>Last Name:</h3>
                             </td>
                             <td>
-                                <Input_Field id = "Last Name" placeholder = "test" disabled = "true"/>
+                                <Input_Field id = "Last Name" placeholder = {this.state.last_name} disabled = "true"/>
                             </td>
                             <td>
                                 {/* <div className="in_table"> */}
@@ -94,7 +87,7 @@ class edit_profile extends Component {
                                 <h3>Username:</h3>
                             </td>
                             <td>
-                                <Input_Field id = "Username" placeholder = "test" disabled = "true"/>
+                                <Input_Field id = "Username" placeholder = {this.state.username} disabled = "true"/>
                             </td>
                             <td>
                                 {/* <div className="in_table"> */}
@@ -107,7 +100,7 @@ class edit_profile extends Component {
                                 <h3>Password:</h3>
                             </td>
                             <td>
-                                <Input_Field id = "Password" placeholder = "test" disabled = "true"/>
+                                <Input_Field id = "Password" placeholder = {this.state.password} disabled = "true"/>
                             </td>
                             <td>
                                 {/* <div className="in_table"> */}
