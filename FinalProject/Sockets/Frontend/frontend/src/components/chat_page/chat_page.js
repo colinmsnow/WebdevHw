@@ -15,7 +15,10 @@ class chat_page extends Component {
     constructor(props){
         super(props);
         this.state = {
-            success: null
+            success: null,
+            chats:[],
+            messages:[]
+
 
         };
     }
@@ -36,19 +39,28 @@ class chat_page extends Component {
         // console.log()
         console.log(this.props)
         console.log(this.state)
-        
 
-        
+        const socket = socketIOClient(ENDPOINT);
 
-        // const [response, setResponse] = useState("");
-        // const socket = socketIOClient(ENDPOINT);
+        socket.on("chats", data => {
+            console.log("Received some data")
+            console.log(data)
+              this.setState({success:data.success, chats:data.chats, messages:data.messages})
+              console.log(this.state.success);
+            //   const history = useHistory();
+            //   history.push("/chats");
+            });
+        let enter;
 
-        // socket.on("login", data => {
-        //       this.setState({success:data})
-        //       console.log(this.state.success);
-        //     });
+        socket.on("Error", data => {
+            console.log("Error in chat_page: " + data);
+            // TODO: Create popup with error from data
+        });
 
-        
+
+        if (this.state.success == null){
+            socket.emit("get_chats", {username:this.props.user})
+        }
 
         return (
             // <div className="content">
@@ -56,26 +68,41 @@ class chat_page extends Component {
             // </div>
             <div>
              {/* <div className= "content"> */}
+            {/* <div className= "left_pane">
+            <Chat_in_list name="Maia Materman" last_time="10:05 PM" first_name="Maia" message="blah blah blah blah blah blah blah blah blah"/>
+            <Chat_in_list name="Maia Materman" last_time="10:05 PM" first_name="Maia" message="blah blah blah blah blah blah blah blah blah"/>
+            <Chat_in_list name="Maia Materman" last_time="10:05 PM" first_name="Maia" message="blah blah blah blah blah blah blah blah blah"/>
+            <Chat_in_list name="Maia Materman" last_time="10:05 PM" first_name="Maia" message="blah blah blah blah blah blah blah blah blah"/>
+            <Chat_in_list name="Maia Materman" last_time="10:05 PM" first_name="Maia" message="blah blah blah blah blah blah blah blah blah"/>
+            <Chat_in_list name="Maia Materman" last_time="10:05 PM" first_name="Maia" message="blah blah blah blah blah blah blah blah blah"/>
+            <Chat_in_list name="Maia Materman" last_time="10:05 PM" first_name="Maia" message="blah blah blah blah blah blah blah blah blah"/>
+            <Chat_in_list name="Maia Materman" last_time="10:05 PM" first_name="Maia" message="blah blah blah blah blah blah blah blah blah"/>
+            <Chat_in_list name="Maia Materman" last_time="10:05 PM" first_name="Maia" message="blah blah blah blah blah blah blah blah blah"/>
+            </div> */}
             <div className= "left_pane">
-            <Chat_in_list name="Maia Materman" last_time="10:05 PM" first_name="Maia" message="blah blah blah blah blah blah blah blah blah"/>
-            <Chat_in_list name="Maia Materman" last_time="10:05 PM" first_name="Maia" message="blah blah blah blah blah blah blah blah blah"/>
-            <Chat_in_list name="Maia Materman" last_time="10:05 PM" first_name="Maia" message="blah blah blah blah blah blah blah blah blah"/>
-            <Chat_in_list name="Maia Materman" last_time="10:05 PM" first_name="Maia" message="blah blah blah blah blah blah blah blah blah"/>
-            <Chat_in_list name="Maia Materman" last_time="10:05 PM" first_name="Maia" message="blah blah blah blah blah blah blah blah blah"/>
-            <Chat_in_list name="Maia Materman" last_time="10:05 PM" first_name="Maia" message="blah blah blah blah blah blah blah blah blah"/>
-            <Chat_in_list name="Maia Materman" last_time="10:05 PM" first_name="Maia" message="blah blah blah blah blah blah blah blah blah"/>
-            <Chat_in_list name="Maia Materman" last_time="10:05 PM" first_name="Maia" message="blah blah blah blah blah blah blah blah blah"/>
-            <Chat_in_list name="Maia Materman" last_time="10:05 PM" first_name="Maia" message="blah blah blah blah blah blah blah blah blah"/>
+                {this.state.chats.map((chat, index) => (
+                    <Chat_in_list name={chat.name} last_time={chat.last_time} first_name={chat.first_name} message={chat.message}/>
+
+                ))}
+            {/* <Chat_in_list name="Maia Materman" last_time="10:05 PM" first_name="Maia" message="blah blah blah blah blah blah blah blah blah"/> */}
             </div>
             <div className = "right_pane">
             {/* <CurrentUser.Consumer>
 //          {value => <div>It's Main component. Context value is ${value.name}</div>}
 //          </CurrentUser.Consumer> */}
             <h2>{this.props.user}</h2>
-            <Purple_Message message = "hello!" time = "9:15 AM"/>
+            {this.state.messages.map((message, index) => (
+                    (message.from == this.props.user)?
+                        (<Purple_Message message = {message.message} time={message.time} />)
+                        : (<Pink_Message message = {message.message} time={message.time} />)
+                    
+                    // <Chat_in_list name={chat.name} last_time={chat.last_time} first_name={chat.first_name} message={chat.message}/>
+
+                ))}
+            {/* <Purple_Message message = "hello!" time = "9:15 AM"/>
             <Pink_Message message = "hey, how's it going by you?" time="10:08 AM" />
             <Purple_Message message = "not too bad, web dev is super great!" time="10:12 AM" />
-            <Pink_Message message = "really? You must take it with Riccardo." time="10:23 AM" />
+            <Pink_Message message = "really? You must take it with Riccardo." time="10:23 AM" /> */}
             </div>
             </div>
         )

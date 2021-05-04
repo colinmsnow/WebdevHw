@@ -203,6 +203,11 @@ def get_chats(data):
         emit('Error', broadcast=True)
         return
 
+
+    response = {"success":"success", "chats": [{"name": "Maia Materman", "last_time": "10:05 PM", "first_name":"Maia", "message":"blah blah blah blah blah blah blah blah blah"}], "messages": [{"message":"hello", "time": "9:15 AM", "from": "hello"},{"message":"hey, how's it going by you?", "time": "10:08 AM", "from": "Maia Matterman"},{"message":"not too bad, web dev is super great!", "time": "10:12 AM", "from": "hello"}]}
+
+    emit("chats", response)
+
     # DATABASE: get all messages to the user and find only the last one
         # from each person
 

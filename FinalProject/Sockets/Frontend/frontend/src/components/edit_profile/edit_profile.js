@@ -27,28 +27,28 @@ class edit_profile extends Component {
         // const [response, setResponse] = useState("");
         const socket = socketIOClient(ENDPOINT);
 
-        socket.on("login", data => {
-              this.setState({success:data})
-              console.log(this.state.success);
-            //   const history = useHistory();
-            //   history.push("/chats");
-            });
-        let enter;
+        // socket.on("login", data => {
+        //       this.setState({success:data})
+        //       console.log(this.state.success);
+        //     //   const history = useHistory();
+        //     //   history.push("/chats");
+        //     });
+        // let enter;
 
-        socket.on("Error", data => {
-            console.log("Error in login: " + data);
-            // TODO: Create popup with error from data
-        });
+        // socket.on("Error", data => {
+        //     console.log("Error in login: " + data);
+        //     // TODO: Create popup with error from data
+        // });
 
 
-        if (this.state.success == 'success') {
-            return(<Redirect to="/chats" />)
+        // if (this.state.success == 'success') {
+        //     return(<Redirect to="/chats" />)
 
-        }
-        else {
-            enter = 
-            <Purple_Button name = "Login" click = {()=>socket.emit("login", {"username": document.getElementById("Username").value, "password": document.getElementById("Password").value})} />
-        }    
+        // }
+        // else {
+        //     enter = 
+        //     <Purple_Button name = "Login" click = {()=>socket.emit("login", {"username": document.getElementById("Username").value, "password": document.getElementById("Password").value})} />
+        // }    
         
 
         return (

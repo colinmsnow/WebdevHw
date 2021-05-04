@@ -27,7 +27,7 @@ class App extends Component {
   // const [response, setResponse] = useState("");
     super(props);
     this.handler = this.handler.bind(this)
-    this.state = {user: "joe"};
+    this.state = {user: "No One"};
   
   }
 
