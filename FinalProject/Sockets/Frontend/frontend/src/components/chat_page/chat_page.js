@@ -84,6 +84,10 @@ class chat_page extends Component {
             <Chat_in_list name="Maia Materman" last_time="10:05 PM" first_name="Maia" message="blah blah blah blah blah blah blah blah blah"/>
             </div> */}
             <div className= "left_pane">
+
+            <div>
+            <Top_bar/>
+            </div>
                 {this.state.chats.map((chat, index) => (
                     <Chat_in_list name={chat.name} last_time={chat.last_time} first_name={chat.first_name} message={chat.message}/>
 
@@ -91,6 +95,16 @@ class chat_page extends Component {
             {/* <Chat_in_list name="Maia Materman" last_time="10:05 PM" first_name="Maia" message="blah blah blah blah blah blah blah blah blah"/> */}
             </div>
             <div className = "right_pane">
+
+            <div>
+            <div className = "nam"><h2>test</h2></div>
+            <div className = "sig">
+            <Link to="/" style={{textDecoration:"none", marginRight:"1em"}}>
+            <Purple_Button_Right name = "Sign Out" />
+            </Link>  
+            </div>  
+            </div>  
+            {/* <div className = "messages">    */}
             {/* <CurrentUser.Consumer>
 //          {value => <div>It's Main component. Context value is ${value.name}</div>}
 //          </CurrentUser.Consumer> */}
@@ -103,6 +117,14 @@ class chat_page extends Component {
                     // <Chat_in_list name={chat.name} last_time={chat.last_time} first_name={chat.first_name} message={chat.message}/>
 
                 ))}
+
+            {/* </div> */}
+            <div className = "mess_bar">
+            <div className = "nam">
+            <Input_Field id = "Message" className= "nam" style = {{borderRadius: "40px"}} />
+            </div>
+            <button className="sig"><img src={require('../../assets/send_message.png')} onClick = {(console.log('new message, please!'))}/></button>
+            </div>
             {/* <Purple_Message message = "hello!" time = "9:15 AM"/>
             <Pink_Message message = "hey, how's it going by you?" time="10:08 AM" />
             <Purple_Message message = "not too bad, web dev is super great!" time="10:12 AM" />

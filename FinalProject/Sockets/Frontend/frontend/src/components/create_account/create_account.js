@@ -1,6 +1,8 @@
 import React, {Component,  useState, useEffect } from 'react';
-import {Link} from 'react-router-dom'
+// import {Link} from 'react-router-dom'
 import {Purple_Button, Purple_Button_Right} from '../buttons/buttons';
+import {BrowserRouter, Link, Route, useHistory, Redirect} from 'react-router-dom'
+
 import Input_Field from '../input_field/input_field';
 import '../login/login.css';
 
