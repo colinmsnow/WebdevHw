@@ -1,12 +1,17 @@
 from flask import Flask, render_template
 from flask_socketio import SocketIO, emit
 from flask_cors import CORS, cross_origin
-    
+import database as db
+
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'secret!'
 # app.config['CORS_HEADERS'] = 'Content-Type'
 # cors = CORS(app,resources={r"/*":{"origins":"*"}})
 socketio = SocketIO(app)
+
+db = db.Database()
+db.setup()
+
 
 # # we need this or else it shuts down post requests
 @app.after_request
@@ -86,22 +91,35 @@ def test_connect():
 
 """
 @socketio.on('create_user')
-def create_user(json_data):
-    data = json.loads(json_data)
+def create_user(data):
     try:
-        name = data["name"]
+        firstname = data["name"]
+        lastname = data["name"]
         username = data["username"]
         password = data["password"]
+        confirm_password = data["confirm_password"]
     except KeyError:
-        emit('Error', broadcast=True)
+        emit("Error","Fields are missing in create_user")
+        return
+    
+    if (password != confirm_password):
+        emit("Error","Passwords do not match")
         return
 
-    # DATABASE: create user in database
+
+    new_user = db.create_user(username,firstname,lastname,password)
+
+    if(new_user):
+        emit('create_user','success')
+        return
+    else:
+        emit('create_user','failure')
+        emit('Error', "Username already exists, try another username")
+        return
 
 
 @socketio.on('get_user')
-def get_user(json_data):
-    data = json.loads(json_data)
+def get_user(data):
     try:
         username = data["username"]
     except KeyError:
@@ -114,8 +132,10 @@ def get_user(json_data):
 
 
 @socketio.on('update_username')
-def update_username(json_data):
-    data = json.loads(json_data)
+def update_username(data):
+    #checks if current user exists -- doesn't exist, returns error
+    #does exist, checks if new_username exists -- does exists, returns error
+    #doesn't exist, changes current username to new username
     try:
         username = data["username"]
         new_username = data["new_username"]
@@ -123,28 +143,57 @@ def update_username(json_data):
         emit('Error', broadcast=True)
         return
 
+    works,message = db.update_username(username,new_username)
+
+    if(works):
+        emit('update_username',message)
+    else:
+        emit('update_username','failure')
+        emit('Error', message)
+
+
     # DATABASE: replace all instances of username with new username
 
 
 @socketio.on('update_password')
-def update_password(json_data):
-    data = json.loads(json_data)
+def update_password(data):
     try:
         username = data["username"]
         password = data["password"]
+        new_password = data["new_password"]
     except KeyError:
         emit('Error', broadcast=True)
         return
 
+    #check if user exists
+    if (not db.get_user(username)):
+        emit('update_password','failure')
+        emit('Error',"This user does not exist.")
+        return
+
     # DATABASE: replace password of user with new passowrd
+    db.update_password(username,new_password)
+    emit('update_password','success')
 
 
-@socketio.on('update_name')
-def update_name(json_data):
-    data = json.loads(json_data)
+@socketio.on('update_firstname')
+def update_Fisrtname(data):
     try:
         username = data["username"]
-        name = data["name"]
+        firstname = data["firstname"]
+
+    except KeyError:
+        emit('Error', broadcast=True)
+        return
+
+    # DATABASE: replace name of user with new name
+
+@socketio.on('update_lastname')
+def update_Fisrtname(data):
+    try:
+        username = data["username"]
+        lastname = data["lastname"]
+
     except KeyError:
         emit('Error', broadcast=True)
         return
@@ -152,46 +201,49 @@ def update_name(json_data):
     # DATABASE: replace name of user with new name
 
 @socketio.on('delete_account')
-def delete_account(json_data):
-    data = json.loads(json_data)
+def delete_account(data):
     try:
         username = data["username"]
     except KeyError:
         emit('Error', broadcast=True)
         return
 
-    # DATABASE: delete all rows with that username
-
-
-@socketio.on('login')
-def login(json_data):
-    # data = json.loads(json_data)
-    try:
-        username = json_data["username"]
-        password = json_data["password"]
-    except KeyError:
-        emit('Error', broadcast=True)
+    #check if user exists
+    if (not db.get_user(username)):
+        emit('update_password','failure')
+        emit('Error',"This user does not exist.")
         return
 
-    print("GOT CREDENTIALS: {0}, {1}", username, password)
+    # DATABASE: delete row with that username
+    db.delete_account(username)
 
-    if (username == "hello" and password == "world"):
-        emit("login", "success")
-    else:
-        emit("login", "failure")
+@socketio.on('login')
+def login(data):
+    try:
+        username = data["username"]
+        password = data["password"]
+    except KeyError:
+        emit('Error', "Login fields missing")
+        return
+    
+    #check if user exists
+    if (not db.get_user(username)):
+        emit('login','failure')
+        emit('Error',"This user does not exist.")
+        return
 
     # DATABASE: get password from username
+    correct_password = db.login(username)
 
-    # correct_password = password_from_database(username)
+    if(password == correct_password):
+        emit('login','success')
+    else:
+        emit('login','failure')
+        emit('Error', "Incorrect password")
 
-    # if(password == correct_password):
-    #     emit('success', broadcast=True)
-    # else:
-    #     emit('failure', broadcast=True)
 
 @socketio.on('get_chats')
-def get_chats(json_data):
-    data = json.loads(json_data)
+def get_chats(data):
     try:
         username = data["username"]
     except KeyError:
@@ -207,8 +259,7 @@ def get_chats(json_data):
 
 
 @socketio.on('get_messages')
-def get_messages(json_data):
-    data = json.loads(json_data)
+def get_messages(data):
     try:
         user1 = data["user1"]
         user2 = data["user2"]
@@ -226,8 +277,7 @@ def get_messages(json_data):
 
 
 @socketio.on('send_message')
-def send_message(json_data):
-    data = json.loads(json_data)
+def send_message(data):
     try:
         user1 = data["user1"]
         user2 = data["user2"]
