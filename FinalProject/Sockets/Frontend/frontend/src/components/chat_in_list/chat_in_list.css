@@ -1,1 +1,18 @@
+.col {
+    float: left;
+    width: 50%;
+    
+}
 
+.right_text {
+    text-align: right;
+    margin-right: 1em;
+}
+
+.full {
+    width: calc(100%);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    /* TODO: Fixme (...) */
+}

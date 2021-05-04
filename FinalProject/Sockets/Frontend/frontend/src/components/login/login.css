@@ -31,3 +31,11 @@
     }
 }
 
+.logo_style {
+    scale: 85%;
+    margin-bottom: 0em;
+    display: flex;
+    align-self: center;
+    margin-top:-20vh;
+
+}

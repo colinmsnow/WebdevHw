@@ -43,8 +43,9 @@
 .right_hover {
     padding-right: 3em;
     padding-left: 0em;
-    position: relative;
-    float: right;
+    /* position: relative;
+    float: right; */
+    text-align: right;
 }
 
 .right_message {
