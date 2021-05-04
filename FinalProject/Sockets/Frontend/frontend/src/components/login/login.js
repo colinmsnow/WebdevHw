@@ -14,7 +14,7 @@ class login extends Component {
     constructor(props){
         super(props);
         this.state = {
-            success: null
+            success: null,
 
         };
     }
@@ -41,7 +41,7 @@ class login extends Component {
         });
 
 
-        if (this.state.success == 'success') {
+        if (this.state.success != 'failure' && this.state.success != null) {
             // let history = useHistory();
             // history.push("/chats");
             // <BrowserRouter>
@@ -49,6 +49,7 @@ class login extends Component {
             // {/* </BrowserRouter>  */}
             // TODO: Get routing behavior
             // 
+            this.props.handler(this.state.success)
             return(<Redirect to="/chats" />)
 
             // <Link to="/chats" style={{textDecoration:'none'}}>
@@ -57,7 +58,10 @@ class login extends Component {
         }
         else {
             enter = 
-            <Purple_Button name = "Login" click = {()=>socket.emit("login", {"username": document.getElementById("Username").value, "password": document.getElementById("Password").value})} />
+            <Purple_Button name = "Login" click = {()=>{
+                socket.emit("login", {"username": document.getElementById("Username").value, "password": document.getElementById("Password").value})
+                
+        }} />
         }    
         
 

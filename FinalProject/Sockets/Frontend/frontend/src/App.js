@@ -1,5 +1,7 @@
 import React, { useState, useEffect, Component } from "react";
 import {BrowserRouter, Switch, Route, Link} from "react-router-dom"
+import { PropsRoute, PublicRoute, PrivateRoute } from 'react-router-with-props';
+
 import socketIOClient from "socket.io-client";
 import login from "./components/login";
 import create_account from "./components/create_account";
@@ -18,11 +20,21 @@ import { render } from "react-dom";
 
 const ENDPOINT = "http://127.0.0.1:5000";
 
+// const CurrentUser = React.createContext("None");
+
 class App extends Component {
   constructor(props){
   // const [response, setResponse] = useState("");
     super(props);
+    this.handler = this.handler.bind(this)
+    this.state = {user: "joe"};
   
+  }
+
+  handler(newname) {
+    this.setState({
+      user: newname
+    })
   }
 
   render(){
@@ -39,11 +51,25 @@ class App extends Component {
       // </div>
       <BrowserRouter>
       <Switch>
-        <Route exact path = "/" component = {login} />
-        <Route path = "/create" component = {create_account} />
-        <Route path = "/forgot" component = {forgot_password} />
-        <Route path = "/chats" component = {chat_page} />
-        <Route path = "/edit" component = {edit_profile} />
+        <Route exact path = "/">
+          <PropsRoute component={login} user={this.state.user} handler = {this.handler}/>
+        </Route>
+
+        {/* <Route path = "/create" component = {create_account} /> */}
+        <Route path = "/create">
+          <PropsRoute component={create_account} user={this.state.user} handler = {this.handler}/>
+        </Route>
+        {/* <Route path = "/forgot" component = {forgot_password} /> */}
+        <Route path = "/forgot">
+          <PropsRoute component={forgot_password} user={this.state.user} handler = {this.handler}/>
+        </Route>
+        <Route path = "/chats">
+          <PropsRoute component={chat_page} user={this.state.user} handler = {this.handler}/>
+        </Route>
+        {/* <Route path = "/edit" component = {edit_profile} /> */}
+        <Route path = "/edit">
+          <PropsRoute component={edit_profile} user={this.state.user} handler = {this.handler}/>
+        </Route>
     </Switch>
     </BrowserRouter>
       
