@@ -62,16 +62,56 @@ class edit_profile extends Component {
             <div class="content">
                 <table width = "100%">
                     <tbody>
-                        <tr>
+                        <tr> 
+                            {/* TODO: Onclick, change buttons to be submit and enable fields */}
                             <td>
-                                <h3>Name:</h3>
+                                <h3>First Name:</h3>
                             </td>
                             <td>
-                                <Input_Field id = "Name" placeholder = "test" disabled = "true"/>
+                                <Input_Field id = "First Name" placeholder = "test" disabled = "true"/>
                             </td>
                             <td>
                                 {/* <div className="in_table"> */}
                                 <Purple_Button name= "Edit" style = {{marginTop: '0em', marginLeft: '1em'}} />
+                                {/* </div> */}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <h3>Last Name:</h3>
+                            </td>
+                            <td>
+                                <Input_Field id = "Last Name" placeholder = "test" disabled = "true"/>
+                            </td>
+                            <td>
+                                {/* <div className="in_table"> */}
+                                <Purple_Button name= "Edit" style = {{marginTop: '0em', marginLeft: '1em'}} />
+                                {/* </div> */}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <h3>Username:</h3>
+                            </td>
+                            <td>
+                                <Input_Field id = "Username" placeholder = "test" disabled = "true"/>
+                            </td>
+                            <td>
+                                {/* <div className="in_table"> */}
+                                <Purple_Button name= "Edit" style = {{marginTop: '0em', marginLeft: '1em'}} />
+                                {/* </div> */}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <h3>Password:</h3>
+                            </td>
+                            <td>
+                                <Input_Field id = "Password" placeholder = "test" disabled = "true"/>
+                            </td>
+                            <td>
+                                {/* <div className="in_table"> */}
+                                <Purple_Button name= "Change" style = {{marginTop: '0em', marginLeft: '1em'}} />
                                 {/* </div> */}
                             </td>
                         </tr>

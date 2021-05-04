@@ -15,6 +15,7 @@ function Chat_in_list (props)
     </div>
     <div className="full">
     <p><b>{props.first_name}:</b> {props.message}</p>
+    <hr></hr>
     </div>
     </div>
 

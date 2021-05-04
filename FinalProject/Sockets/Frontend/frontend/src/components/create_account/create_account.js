@@ -39,7 +39,8 @@ class create_account extends Component {
             </Link>
             </div>
             <div class="content">
-                <Input_Field name = "Name" id = "new_name"/>
+                <Input_Field name = "First Name" id = "new_first_name"/>
+                <Input_Field name = "Last Name" id = "new_last_name"/>
                 <Input_Field name = "Username" id= "new_username"/>
                 <Input_Field name = "Password" id= "new_password"/>
                 <Input_Field name = "Confirm Password" id = "confirm_password"/>
