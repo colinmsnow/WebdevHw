@@ -1,0 +1,16 @@
+
+MySQL Basics:
+https://dev.mysql.com/doc/mysql-getting-started/en/
+
+Fixing the root user issue:
+https://stackoverflow.com/questions/39281594/error-1698-28000-access-denied-for-user-rootlocalhost
+
+MySQL Un-install/Re-install:
+https://www.cyberciti.biz/faq/linux-completely-reinstall-mysql-server/
+
+Python & MySQL:
+https://www.w3schools.com/python/python_mysql_getstarted.asp
+
+
+
+line 12 chats_in_list.css, inside the lowercase frontend folder
