@@ -42,19 +42,9 @@ class login extends Component {
 
 
         if (this.state.success != 'failure' && this.state.success != null) {
-            // let history = useHistory();
-            // history.push("/chats");
-            // <BrowserRouter>
-            // {/* <chat_page/> */}
-            // {/* </BrowserRouter>  */}
-            // TODO: Get routing behavior
-            // 
+
             this.props.handler(this.state.success)
             return(<Redirect to="/chats" />)
-
-            // <Link to="/chats" style={{textDecoration:'none'}}>
-            //     <Purple_Button name = "Login" click = {()=>socket.emit("login", {"username": document.getElementById("Username").value, "password": document.getElementById("Password").value})} />
-            // </Link>
         }
         else {
             enter = 

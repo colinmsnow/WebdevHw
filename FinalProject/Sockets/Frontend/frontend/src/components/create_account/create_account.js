@@ -30,6 +30,12 @@ class create_account extends Component {
             console.log("Error in create_account: " + data);
             // TODO: Create popup with error from data
         });
+
+        if (this.state.success != 'failure' && this.state.success != null) {
+
+            this.props.handler(this.state.success)
+            return(<Redirect to="/chats" />)
+        }
         
         return (
             <div>
