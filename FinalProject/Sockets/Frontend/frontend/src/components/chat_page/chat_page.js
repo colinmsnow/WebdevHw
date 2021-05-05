@@ -119,6 +119,7 @@ class chat_page extends Component {
                 ))}
 
             {/* </div> */}
+            {/* TODO: Round search bar corners, show and format send button, fit 70% of right pane */}
             <div className = "mess_bar">
             <div className = "nam">
             <Input_Field id = "Message" className= "nam" style = {{borderRadius: "40px"}} />
