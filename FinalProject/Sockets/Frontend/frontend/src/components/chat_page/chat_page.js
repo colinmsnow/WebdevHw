@@ -237,10 +237,13 @@ class chat_page extends Component {
             {/* </div> */}
             {/* TODO: Round search bar corners, show and format send button, fit 70% of right pane */}
             <div className = "mess_bar">
-            <button onClick = {()=>(socket.emit("send_message", {username:this.props.user, other_user:this.state.other_user, content:document.getElementById("Message").value}))}><img src={require('../../assets/send_message.png')} /></button>
+            {/* <button onClick = {()=>(socket.emit("send_message", {username:this.props.user, other_user:this.state.other_user, content:document.getElementById("Message").value}))}><img src={require('../../assets/send_message.png')} /></button> */}
 
-            <div className = "nam">
-            <Input_Field id = "Message" style = {{borderRadius: "40px"}} />
+            <div className = "bottombar">
+
+            <Input_Field id = "Message" style = {{borderRadius: "40px"}} name={null} className = "bottom_input" height="100%"/>
+            <button style = {{float:"right", height:"100%"}}onClick = {()=>(socket.emit("send_message", {username:this.props.user, other_user:this.state.other_user, content:document.getElementById("Message").value}))}><img src={require('../../assets/send_message.png')} /></button>
+
 
             </div>
             {/* <button className="sig"><img src={require('../../assets/send_message.png')} onClick = {()=>(console.log('new message, please!'))}/></button> */}

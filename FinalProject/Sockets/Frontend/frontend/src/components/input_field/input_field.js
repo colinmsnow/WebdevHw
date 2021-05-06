@@ -2,9 +2,13 @@ import React from 'react';
 import './input_field.css'
 
 const Input_Field = props =>{
+    let height = "2em"
+    if (props.height != null){
+        height = props.height
+    }
     return (
-        <div>
-            <p>{props.name}</p>
+        <div style={{width:"100%"}}>
+            {props.name != null && <p>{ props.name}</p>}
             <input 
                 className = "field"
                 id = {props.id}
@@ -13,6 +17,7 @@ const Input_Field = props =>{
                 value = {props.value}
                 placeholder = {props.placeholder}
                 disabled = {props.disabled}
+                style = { {height:height}}
                 // onChange={(e) => {this.setState({value: e.target.value })
             />
         </div>

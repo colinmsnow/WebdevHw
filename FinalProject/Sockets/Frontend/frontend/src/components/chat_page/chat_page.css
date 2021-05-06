@@ -59,8 +59,18 @@
     float: left;
 }
 
+.bottombar {
+    width: 55%;
+    float: left;
+    display:flex;
+}
+
+.bottominput {
+    height: 100%;
+}
+
 .mess_bar {
-    height: 5%;
+    height: 7%;
     position: fixed;
     bottom: 5%;
     padding-left: 2.5%;
