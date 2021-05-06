@@ -27,7 +27,34 @@ class chat_page extends Component {
         };
     }
 
-    // static contextType = CurrentUser;
+    update_other_user(newname){
+
+        const socket = socketIOClient(ENDPOINT);
+
+        console.log("Asking for a new user")
+
+
+        // let a = this.state;
+        // a.other_user = newname;
+        // a.success = null;
+        socket.emit("get_messages", {username:this.props.user, other_user:newname})
+        // this.setState(a);
+    }
+
+    update_messages(newmessages, newuser){
+
+
+
+
+
+        let a = this.state;
+        a.messages = newmessages;
+        a.other_user = newuser;
+        // a.success = null;
+        this.setState(a);
+    }
+
+
 
     
 
@@ -35,6 +62,8 @@ class chat_page extends Component {
 
     
     render () {
+
+        // this.update_other_user("erknjfl")
 
         // const value = useContext(CurrentUser);
         console.log("Logging stuff")
@@ -47,13 +76,25 @@ class chat_page extends Component {
         const socket = socketIOClient(ENDPOINT);
 
         socket.on("chats", data => {
-            console.log("Received some data")
+            console.log("Received some data for chats")
             console.log(data)
               this.setState({success:data.success, chats:data.chats, messages:data.messages})
               console.log(this.state.success);
             //   const history = useHistory();
             //   history.push("/chats");
             });
+
+        socket.on("messages", data => {
+                console.log("Received some data for messages")
+                console.log(data)
+
+                this.update_messages(data.messages, data.other_user)
+                // this.update_messages(data.messages)
+                //   this.setState({success:data.success, chats:data.chats, messages:data.messages})
+                //   console.log(this.state.success);
+                //   const history = useHistory();
+                //   history.push("/chats");
+                });
         let enter;
 
         socket.on("Error", data => {
@@ -72,32 +113,28 @@ class chat_page extends Component {
             // </div>
             <div>
              {/* <div className= "content"> */}
-            {/* <div className= "left_pane">
-            <Chat_in_list name="Maia Materman" last_time="10:05 PM" first_name="Maia" message="blah blah blah blah blah blah blah blah blah"/>
-            <Chat_in_list name="Maia Materman" last_time="10:05 PM" first_name="Maia" message="blah blah blah blah blah blah blah blah blah"/>
-            <Chat_in_list name="Maia Materman" last_time="10:05 PM" first_name="Maia" message="blah blah blah blah blah blah blah blah blah"/>
-            <Chat_in_list name="Maia Materman" last_time="10:05 PM" first_name="Maia" message="blah blah blah blah blah blah blah blah blah"/>
-            <Chat_in_list name="Maia Materman" last_time="10:05 PM" first_name="Maia" message="blah blah blah blah blah blah blah blah blah"/>
-            <Chat_in_list name="Maia Materman" last_time="10:05 PM" first_name="Maia" message="blah blah blah blah blah blah blah blah blah"/>
-            <Chat_in_list name="Maia Materman" last_time="10:05 PM" first_name="Maia" message="blah blah blah blah blah blah blah blah blah"/>
-            <Chat_in_list name="Maia Materman" last_time="10:05 PM" first_name="Maia" message="blah blah blah blah blah blah blah blah blah"/>
-            <Chat_in_list name="Maia Materman" last_time="10:05 PM" first_name="Maia" message="blah blah blah blah blah blah blah blah blah"/>
-            </div> */}
+           
             <div className= "left_pane">
 
             <div>
             <Top_bar/>
             </div>
                 {this.state.chats.map((chat, index) => (
+                    <button onClick = {()=>this.update_other_user(chat.username)} className = "chat_list">
                     <Chat_in_list name={chat.name} last_time={chat.last_time} first_name={chat.first_name} message={chat.message}/>
+                    </button>
 
                 ))}
             {/* <Chat_in_list name="Maia Materman" last_time="10:05 PM" first_name="Maia" message="blah blah blah blah blah blah blah blah blah"/> */}
             </div>
             <div className = "right_pane">
-
             <div>
-            <div className = "nam"><h2>{this.props.user}</h2></div>
+            <div className = "nam">
+                <h2>{this.props.other_user}</h2> 
+                {/* TODO: Make this display user you are talking to */}
+            <Input_Field id = "new_user" className = "nam"/>
+            <button className= "sig">GO</button>
+            </div>
             <div className = "sig">
             <Link to="/" style={{textDecoration:"none", marginRight:"1em"}}>
             <Purple_Button_Right name = "Sign Out" />
@@ -121,7 +158,7 @@ class chat_page extends Component {
             {/* </div> */}
             <div className = "mess_bar">
             <div className = "nam">
-            <Input_Field id = "Message" className= "nam" style = {{borderRadius: "40px"}} />
+            <Input_Field id = "Message" style = {{borderRadius: "40px"}} />
             </div>
             <button className="sig"><img src={require('../../assets/send_message.png')} onClick = {(console.log('new message, please!'))}/></button>
             </div>

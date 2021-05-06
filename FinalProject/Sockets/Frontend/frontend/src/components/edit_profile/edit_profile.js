@@ -61,11 +61,11 @@ class edit_profile extends Component {
                                 <h3>First Name:</h3>
                             </td>
                             <td>
-                                <Input_Field id = "First Name" placeholder = {this.state.first_name} disabled = "true"/>
+                                <Input_Field id = "First Name" placeholder = {this.state.first_name} />
                             </td>
                             <td>
                                 {/* <div className="in_table"> */}
-                                <Purple_Button name= "Edit" style = {{marginTop: '0em', marginLeft: '1em'}} />
+                                <Purple_Button name= "Update" style = {{marginTop: '0em', marginLeft: '1em'}} />
                                 {/* </div> */}
                             </td>
                         </tr>
@@ -74,11 +74,11 @@ class edit_profile extends Component {
                                 <h3>Last Name:</h3>
                             </td>
                             <td>
-                                <Input_Field id = "Last Name" placeholder = {this.state.last_name} disabled = "true"/>
+                                <Input_Field id = "Last Name" placeholder = {this.state.last_name}/>
                             </td>
                             <td>
                                 {/* <div className="in_table"> */}
-                                <Purple_Button name= "Edit" style = {{marginTop: '0em', marginLeft: '1em'}} />
+                                <Purple_Button name= "Update" style = {{marginTop: '0em', marginLeft: '1em'}} />
                                 {/* </div> */}
                             </td>
                         </tr>
@@ -87,11 +87,11 @@ class edit_profile extends Component {
                                 <h3>Username:</h3>
                             </td>
                             <td>
-                                <Input_Field id = "Username" placeholder = {this.state.username} disabled = "true"/>
+                                <Input_Field id = "Username" placeholder = {this.state.username} />
                             </td>
                             <td>
                                 {/* <div className="in_table"> */}
-                                <Purple_Button name= "Edit" style = {{marginTop: '0em', marginLeft: '1em'}} />
+                                <Purple_Button name= "Update" style = {{marginTop: '0em', marginLeft: '1em'}} />
                                 {/* </div> */}
                             </td>
                         </tr>
@@ -100,7 +100,7 @@ class edit_profile extends Component {
                                 <h3>Password:</h3>
                             </td>
                             <td>
-                                <Input_Field id = "Password" placeholder = {this.state.password} disabled = "true"/>
+                                <Input_Field id = "Password" placeholder = {this.state.password} />
                             </td>
                             <td>
                                 {/* <div className="in_table"> */}

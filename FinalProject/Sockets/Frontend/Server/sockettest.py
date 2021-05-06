@@ -28,7 +28,7 @@ def index():
     return render_template('index.html', flask_token="Hello world")
 
 @socketio.on("FromFrontend")
-def handle_message(data):
+def handcle_message(data):
     print('received message: ' + data)
 
 
@@ -206,11 +206,22 @@ def get_chats(data):
         username = data["username"]
         other_user = data["other_user"]
     except KeyError:
-        emit('Error', broadcast=True)
+        emit('Error')
         return
 
+    print("Other user:")
+    print(other_user)
 
-    response = {"success":"success", "chats": [{"name": "Maia Materman", "last_time": "10:05 PM", "first_name":"Maia", "message":"blah blah blah blah blah blah blah blah blah"}], "messages": [{"message":"hello", "time": "9:15 AM", "from": "hello"},{"message":"hey, how's it going by you?", "time": "10:08 AM", "from": "Maia Matterman"},{"message":"not too bad, web dev is super great!", "time": "10:12 AM", "from": "hello"}]}
+    if other_user == "maia":
+        response = {"success":"success", "chats": [{"username":"maia", "name": "Maia Materman", "last_time": "10:05 PM", "first_name":"Maia", "message":"blah blah blah blah blah blah blah blah blah"}, {"username":"colin", "name": "Colin Snow", "last_time": "10:05 PM", "first_name":"Colin", "message":"This is a message"}], "messages": [{"message":"hiiiiiiiiiiiiiiii", "time": "9:15 AM", "from": "hello"},{"message":"hey, what? Hello", "time": "10:08 AM", "from": "maia"},{"message":"not too bad myself", "time": "10:12 AM", "from": "hello"}]}
+    
+    elif other_user == "colin":
+        response = {"success":"success", "chats": [{"username":"maia", "name": "Maia Materman", "last_time": "10:05 PM", "first_name":"Maia", "message":"blah blah blah blah blah blah blah blah blah"}, {"username":"colin", "name": "Colin Snow", "last_time": "10:05 PM", "first_name":"Colin", "message":"This is a message"}], "messages": [{"message":"hiiii", "time": "9:15 AM", "from": "hello"},{"message":"hey, what?", "time": "10:08 AM", "from": "colin"},{"message":"not too bad", "time": "10:12 AM", "from": "hello"}]}
+
+    else:
+        response = {"success":"success", "chats": [{"username":"maia", "name": "Maia Materman", "last_time": "10:05 PM", "first_name":"Maia", "message":"blah blah blah blah blah blah blah blah blah"}, {"username":"colin", "name": "Colin Snow", "last_time": "10:05 PM", "first_name":"Colin", "message":"This is a message"}], "messages": []}
+
+
 
     emit("chats", response)
 
@@ -225,11 +236,27 @@ def get_chats(data):
 @socketio.on('get_messages')
 def get_messages(data):
     try:
-        user1 = data["user1"]
-        user2 = data["user2"]
+        username = data["username"]
+        other_user = data["other_user"]
     except KeyError:
-        emit('Error', broadcast=True)
+        emit('Error')
         return
+
+    print("Get messages other user:")
+    print(other_user)
+
+    if other_user == "maia":
+        response = {"success":"success", "other_user": "maia","messages": [{"message":"hiiiiiiiiiiiiiiii", "time": "9:15 AM", "from": "hello"},{"message":"hey, what? Hello", "time": "10:08 AM", "from": "maia"},{"message":"not too bad myself", "time": "10:12 AM", "from": "hello"}]}
+    
+    elif other_user == "colin":
+        response = {"success":"success", "other_user": "colin","messages": [{"message":"hiiii", "time": "9:15 AM", "from": "hello"},{"message":"hey, what?", "time": "10:08 AM", "from": "colin"},{"message":"not too bad", "time": "10:12 AM", "from": "hello"}]}
+
+    else:
+        response = {"success":"success", "other_user": "null","messages": []}
+
+    emit("messages", response)
+
+
 
     # DATABASE: get all messages between users 1 and 2
         # from each person
