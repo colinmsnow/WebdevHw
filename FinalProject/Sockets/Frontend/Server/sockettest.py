@@ -278,7 +278,7 @@ def get_messages(data):
         response = {"success":"success", "other_user": "colin","messages": [{"message":"hiiii", "time": "9:15 AM", "from": "hello"},{"message":"hey, what?", "time": "10:08 AM", "from": "colin"},{"message":"not too bad", "time": "10:12 AM", "from": "hello"}]}
 
     else:
-        response = {"success":"success", "other_user": "null","messages": []}
+        response = {"success":"success", "other_user": other_user,"messages": []}
 
 
     print("Sending message back from get_messages")
