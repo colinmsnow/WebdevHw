@@ -1,15 +1,8 @@
 {
   "js/0.60567162.chunk.js": "js/0.60567162.chunk.js",
   "js/0.60567162.chunk.js.map": "js/0.60567162.chunk.js.map",
-<<<<<<< HEAD
-  "main.css": "css/main.458b9f2c.css",
-  "main.css.map": "css/main.458b9f2c.css.map",
-  "main.js": "js/main.29abb3c4.js",
-  "main.js.map": "js/main.29abb3c4.js.map"
-=======
-  "main.css": "css/main.9780a12f.css",
-  "main.css.map": "css/main.9780a12f.css.map",
-  "main.js": "js/main.9d005617.js",
-  "main.js.map": "js/main.9d005617.js.map"
->>>>>>> 7d87046ab47b7b6e4c7a58a252c0f0e685d42119
+  "main.css": "css/main.a89b3ae5.css",
+  "main.css.map": "css/main.a89b3ae5.css.map",
+  "main.js": "js/main.f60cd6a1.js",
+  "main.js.map": "js/main.f60cd6a1.js.map"
 }

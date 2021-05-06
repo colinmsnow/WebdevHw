@@ -81,6 +81,9 @@ def test_connect():
     send_message(sendingUser, receivingUser, content)
         returns: nothing
 
+    new_chat(sendingUser, receivingUser)
+        returns: the new chat
+
     new_message_incoming()
         returns: that there was a new message
 
@@ -124,6 +127,24 @@ def get_user(data):
     # DATABASE: get the user by username
 
     # emit("get_user", json.dumps(username, name, password), broadcast=true)
+
+
+# @socketio.on('new_chat')
+# def new_chat(data):
+#     # Create a new empty chat and add it to the list of chats. Return chats
+#     try:
+#         username = data["username"]
+#         other_user = data["other_user"]
+#     except KeyError:
+#         emit('Error', broadcast=True)
+#         return
+
+#     # user_info = {"success":"success", "username": "A user", "password": "*********", "first_name": "joseph", "last_name": "joe"}
+#     response = {"success":"success", "chats": [{"username":"maia", "name": "Maia Materman", "last_time": "10:05 PM", "first_name":"Maia", "message":"blah blah blah blah blah blah blah blah blah"}, {"username":"colin", "name": "Colin Snow", "last_time": "10:05 PM", "first_name":"Colin", "message":"This is a message"}, {"username":"shirin", "name": "Shirin Kuppusamy", "last_time": "null", "first_name":"null", "message":"null"}], "messages": []}
+
+
+
+    # emit("chats", response)
 
 
 @socketio.on('update_username')
@@ -201,7 +222,8 @@ def login(data):
 @socketio.on('get_chats')
 def get_chats(data):
     # This function gets all info needed to display the chat page
-    # Should return a response with a success value, list of chats, and list of messages
+    # Should return a response with a success value, list of chats
+    # if other user is not in the database then create an empty chat and return chats
     try:
         username = data["username"]
         other_user = data["other_user"]
@@ -213,13 +235,17 @@ def get_chats(data):
     print(other_user)
 
     if other_user == "maia":
-        response = {"success":"success", "chats": [{"username":"maia", "name": "Maia Materman", "last_time": "10:05 PM", "first_name":"Maia", "message":"blah blah blah blah blah blah blah blah blah"}, {"username":"colin", "name": "Colin Snow", "last_time": "10:05 PM", "first_name":"Colin", "message":"This is a message"}], "messages": [{"message":"hiiiiiiiiiiiiiiii", "time": "9:15 AM", "from": "hello"},{"message":"hey, what? Hello", "time": "10:08 AM", "from": "maia"},{"message":"not too bad myself", "time": "10:12 AM", "from": "hello"}]}
+        response = {"success":"success", "other_user": "null","chats": [{"username":"maia", "name": "Maia Materman", "last_time": "10:05 PM", "first_name":"Maia", "message":"blah blah blah blah blah blah blah blah blah"}, {"username":"colin", "name": "Colin Snow", "last_time": "10:05 PM", "first_name":"Colin", "message":"This is a message"}], "messages": [{"message":"hiiiiiiiiiiiiiiii", "time": "9:15 AM", "from": "hello"},{"message":"hey, what? Hello", "time": "10:08 AM", "from": "maia"},{"message":"not too bad myself", "time": "10:12 AM", "from": "hello"}]}
     
     elif other_user == "colin":
-        response = {"success":"success", "chats": [{"username":"maia", "name": "Maia Materman", "last_time": "10:05 PM", "first_name":"Maia", "message":"blah blah blah blah blah blah blah blah blah"}, {"username":"colin", "name": "Colin Snow", "last_time": "10:05 PM", "first_name":"Colin", "message":"This is a message"}], "messages": [{"message":"hiiii", "time": "9:15 AM", "from": "hello"},{"message":"hey, what?", "time": "10:08 AM", "from": "colin"},{"message":"not too bad", "time": "10:12 AM", "from": "hello"}]}
+        response = {"success":"success", "other_user": "null","chats": [{"username":"maia", "name": "Maia Materman", "last_time": "10:05 PM", "first_name":"Maia", "message":"blah blah blah blah blah blah blah blah blah"}, {"username":"colin", "name": "Colin Snow", "last_time": "10:05 PM", "first_name":"Colin", "message":"This is a message"}], "messages": [{"message":"hiiii", "time": "9:15 AM", "from": "hello"},{"message":"hey, what?", "time": "10:08 AM", "from": "colin"},{"message":"not too bad", "time": "10:12 AM", "from": "hello"}]}
 
-    else:
-        response = {"success":"success", "chats": [{"username":"maia", "name": "Maia Materman", "last_time": "10:05 PM", "first_name":"Maia", "message":"blah blah blah blah blah blah blah blah blah"}, {"username":"colin", "name": "Colin Snow", "last_time": "10:05 PM", "first_name":"Colin", "message":"This is a message"}], "messages": []}
+    elif other_user == "null":
+        response = {"success":"success", "other_user": "null","chats": [{"username":"maia", "name": "Maia Materman", "last_time": "10:05 PM", "first_name":"Maia", "message":"blah blah blah blah blah blah blah blah blah"}, {"username":"colin", "name": "Colin Snow", "last_time": "10:05 PM", "first_name":"Colin", "message":"This is a message"}], "messages": []}
+
+    else: 
+        response = {"success":"success", "other_user": other_user, "chats": [{"username":"maia", "name": "Maia Materman", "last_time": "10:05 PM", "first_name":"Maia", "message":"blah blah blah blah blah blah blah blah blah"}, {"username":"colin", "name": "Colin Snow", "last_time": "10:05 PM", "first_name":"Colin", "message":"This is a message"}, {"username":"shirin", "name": "Shirin Kuppusamy", "last_time": "null", "first_name":"null", "message":"null"}], "messages": []}
+
 
 
 
@@ -239,7 +265,7 @@ def get_messages(data):
         username = data["username"]
         other_user = data["other_user"]
     except KeyError:
-        emit('Error')
+        emit('Error', "Invalid keys in get_messages")
         return
 
     print("Get messages other user:")
@@ -253,6 +279,11 @@ def get_messages(data):
 
     else:
         response = {"success":"success", "other_user": "null","messages": []}
+
+
+    print("Sending message back from get_messages")
+
+
 
     emit("messages", response)
 

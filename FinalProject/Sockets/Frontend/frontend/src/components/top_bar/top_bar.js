@@ -2,7 +2,7 @@ import React, { Component }  from "react";
 import './top_bar.css'
 import '../../assets/new_message.png'
 
-function Top_bar(){
+function Top_bar(props){
     let state = {
         new_mess: false
     };
@@ -12,7 +12,7 @@ function Top_bar(){
         <div className="titl">
         <h2>Conversations</h2>
         </div>
-        <img className='icon_message' src={require('../../assets/new_message.png')} onClick = {(console.log('new message, please!'))}/>
+        <img className='icon_message' src={require('../../assets/new_message.png')} onClick = {()=>props.handler()}/>
         </div>
     )
     
