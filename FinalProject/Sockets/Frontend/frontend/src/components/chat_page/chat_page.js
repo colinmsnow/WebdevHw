@@ -117,18 +117,23 @@ class chat_page extends Component {
             //   history.push("/chats");
             });
 
-        socket.on("messages", data => {
-                console.log("Received some data for messages")
-                console.log(data)
+        socket.on("new_message", () => {
+                console.log("There was a new message somewhere")
 
-                this.update_messages(data.messages, data.other_user)
-                // this.update_messages(data.messages)
-                //   this.setState({success:data.success, chats:data.chats, messages:data.messages})
-                //   console.log(this.state.success);
-                //   const history = useHistory();
-                //   history.push("/chats");
+                socket.emit("get_chats", {username:this.props.user, other_user:this.props.other_user})
+                socket.emit("get_messages", {username:this.props.user, other_user:this.props.other_user})
                 });
-        let enter;
+                socket.on("messages", data => {
+                    console.log("Received some data for messages")
+                    console.log(data)
+    
+                    this.update_messages(data.messages, data.other_user)
+                    // this.update_messages(data.messages)
+                    //   this.setState({success:data.success, chats:data.chats, messages:data.messages})
+                    //   console.log(this.state.success);
+                    //   const history = useHistory();
+                    //   history.push("/chats");
+                    });
 
         socket.on("Error", data => {
             console.log("Error in chat_page: " + data);
@@ -161,7 +166,9 @@ class chat_page extends Component {
             </div>
                 {this.state.chats.map((chat, index) => (
                     // <button onClick = {()=>this.update_other_user(chat.username)} className = "chat_list">
-                    <button onClick = {()=>socket.emit("get_messages", {username:this.props.user, other_user:chat.username})} className = "chat_list">
+                    <button onClick = {()=>{
+                        socket.emit("get_messages", {username:this.props.user, other_user:chat.username})
+                        }} className = "chat_list">
 
                     <Chat_in_list name={chat.name} last_time={chat.last_time} first_name={chat.first_name} message={chat.message}/>
                     </button>
@@ -208,10 +215,13 @@ class chat_page extends Component {
             {/* </div> */}
             {/* TODO: Round search bar corners, show and format send button, fit 70% of right pane */}
             <div className = "mess_bar">
+            <button onClick = {()=>(socket.emit("send_message", {username:this.props.user, other_user:this.state.other_user, content:document.getElementById("Message").value}))}><img src={require('../../assets/send_message.png')} /></button>
+
             <div className = "nam">
             <Input_Field id = "Message" style = {{borderRadius: "40px"}} />
+
             </div>
-            <button className="sig"><img src={require('../../assets/send_message.png')} onClick = {()=>(console.log('new message, please!'))}/></button>
+            {/* <button className="sig"><img src={require('../../assets/send_message.png')} onClick = {()=>(console.log('new message, please!'))}/></button> */}
             </div>
             {/* <Purple_Message message = "hello!" time = "9:15 AM"/>
             <Pink_Message message = "hey, how's it going by you?" time="10:08 AM" />

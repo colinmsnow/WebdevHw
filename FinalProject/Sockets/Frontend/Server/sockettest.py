@@ -153,7 +153,7 @@ def update_username(data):
         username = data["username"]
         new_username = data["new_username"]
     except KeyError:
-        emit('Error', broadcast=True)
+        emit('Error', "Invalid key in username")
         return
 
     # DATABASE: replace all instances of username with new username
@@ -165,7 +165,7 @@ def update_password(data):
         username = data["username"]
         password = data["password"]
     except KeyError:
-        emit('Error', broadcast=True)
+        emit('Error', "invalid key in update_password")
         return
 
     # DATABASE: replace password of user with new passowrd
@@ -177,7 +177,7 @@ def update_name(data):
         username = data["username"]
         name = data["name"]
     except KeyError:
-        emit('Error', broadcast=True)
+        emit('Error', "invalid key in update_name")
         return
 
     # DATABASE: replace name of user with new name
@@ -187,7 +187,7 @@ def delete_account(data):
     try:
         username = data["username"]
     except KeyError:
-        emit('Error', broadcast=True)
+        emit('Error', "invalid key in delete_account")
         return
 
     # DATABASE: delete all rows with that username
@@ -199,7 +199,7 @@ def login(data):
         username = data["username"]
         password = data["password"]
     except KeyError:
-        emit('Error', "Login fields missing")
+        emit('Error', "Invalid key in login")
         return
 
     print("GOT CREDENTIALS: {0}, {1}", username, password)
@@ -228,7 +228,7 @@ def get_chats(data):
         username = data["username"]
         other_user = data["other_user"]
     except KeyError:
-        emit('Error')
+        emit('Error', "invalid key in get_chats")
         return
 
     print("Other user:")
@@ -301,11 +301,24 @@ def get_messages(data):
 @socketio.on('send_message')
 def send_message(data):
     try:
-        user1 = data["user1"]
-        user2 = data["user2"]
+        username = data["username"]
+        other_user = data["other_user"]
+        content = data["content"]
     except KeyError:
-        emit('Error', broadcast=True)
+        emit('Error', "invalid key in send_message")
         return
+
+    print("got a new message")
+    print(data)
+
+    # add it to the database
+
+
+
+    # send a message to all clients saying there is a new message and asking to reload
+    emit("new_message", broadcast=True)
+
+
 
     # DATABASE: add a message from 1 to 2
 
