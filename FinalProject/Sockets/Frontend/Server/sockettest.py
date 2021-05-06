@@ -235,16 +235,16 @@ def get_chats(data):
     print(other_user)
 
     if other_user == "maia":
-        response = {"success":"success", "other_user": "null","chats": [{"username":"maia", "name": "Maia Materman", "last_time": "10:05 PM", "first_name":"Maia", "message":"blah blah blah blah blah blah blah blah blah"}, {"username":"colin", "name": "Colin Snow", "last_time": "10:05 PM", "first_name":"Colin", "message":"This is a message"}], "messages": [{"message":"hiiiiiiiiiiiiiiii", "time": "9:15 AM", "from": "hello"},{"message":"hey, what? Hello", "time": "10:08 AM", "from": "maia"},{"message":"not too bad myself", "time": "10:12 AM", "from": "hello"}]}
+        response = {"success":"success", "other_user": "null","chats": [{"username":"maia", "name": "Maia Materman", "last_time": "10:05 PM", "first_name":"Maia", "message":"blah blah blah blah blah blah blah blah blah"}, {"username":"colin", "name": "Colin Snow", "last_time": "10:05 PM", "first_name":"Colin", "message":"This is a message"}]}
     
     elif other_user == "colin":
-        response = {"success":"success", "other_user": "null","chats": [{"username":"maia", "name": "Maia Materman", "last_time": "10:05 PM", "first_name":"Maia", "message":"blah blah blah blah blah blah blah blah blah"}, {"username":"colin", "name": "Colin Snow", "last_time": "10:05 PM", "first_name":"Colin", "message":"This is a message"}], "messages": [{"message":"hiiii", "time": "9:15 AM", "from": "hello"},{"message":"hey, what?", "time": "10:08 AM", "from": "colin"},{"message":"not too bad", "time": "10:12 AM", "from": "hello"}]}
+        response = {"success":"success", "other_user": "null","chats": [{"username":"maia", "name": "Maia Materman", "last_time": "10:05 PM", "first_name":"Maia", "message":"blah blah blah blah blah blah blah blah blah"}, {"username":"colin", "name": "Colin Snow", "last_time": "10:05 PM", "first_name":"Colin", "message":"This is a message"}]}
 
     elif other_user == "null":
-        response = {"success":"success", "other_user": "null","chats": [{"username":"maia", "name": "Maia Materman", "last_time": "10:05 PM", "first_name":"Maia", "message":"blah blah blah blah blah blah blah blah blah"}, {"username":"colin", "name": "Colin Snow", "last_time": "10:05 PM", "first_name":"Colin", "message":"This is a message"}], "messages": []}
+        response = {"success":"success", "other_user": "null","chats": [{"username":"maia", "name": "Maia Materman", "last_time": "10:05 PM", "first_name":"Maia", "message":"blah blah blah blah blah blah blah blah blah"}, {"username":"colin", "name": "Colin Snow", "last_time": "10:05 PM", "first_name":"Colin", "message":"This is a message"}]}
 
     else: 
-        response = {"success":"success", "other_user": other_user, "chats": [{"username":"maia", "name": "Maia Materman", "last_time": "10:05 PM", "first_name":"Maia", "message":"blah blah blah blah blah blah blah blah blah"}, {"username":"colin", "name": "Colin Snow", "last_time": "10:05 PM", "first_name":"Colin", "message":"This is a message"}, {"username":"shirin", "name": "Shirin Kuppusamy", "last_time": "null", "first_name":"null", "message":"null"}], "messages": []}
+        response = {"success":"success", "other_user": other_user, "chats": [{"username":"maia", "name": "Maia Materman", "last_time": "10:05 PM", "first_name":"Maia", "message":"blah blah blah blah blah blah blah blah blah"}, {"username":"colin", "name": "Colin Snow", "last_time": "10:05 PM", "first_name":"Colin", "message":"This is a message"}, {"username":"shirin", "name": "Shirin Kuppusamy", "last_time": "null", "first_name":"null", "message":"null"}]}
 
 
 
