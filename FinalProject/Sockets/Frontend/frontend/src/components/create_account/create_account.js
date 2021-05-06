@@ -16,12 +16,12 @@ class create_account extends Component {
             success: null
 
         };
-    }
-    
-    render () {
+        this.socket =  socketIOClient(ENDPOINT);
 
-        // const [response, setResponse] = useState("");
-        const socket = socketIOClient(ENDPOINT);
+    }
+
+    componentDidMount(){
+        let socket = this.socket;
 
         socket.on("create_user", data => {
                 this.setState({success:data})
@@ -32,6 +32,24 @@ class create_account extends Component {
             console.log("Error in create_account: " + data);
             // TODO: Create popup with error from data
         });
+        
+    }
+    
+    render () {
+
+        // const [response, setResponse] = useState("");
+        // const socket = socketIOClient(ENDPOINT);
+        let socket = this.socket;
+
+        // socket.on("create_user", data => {
+        //         this.setState({success:data})
+        //         console.log(this.state.success);
+        //     });
+
+        // socket.on("Error", data => {
+        //     console.log("Error in create_account: " + data);
+        //     // TODO: Create popup with error from data
+        // });
 
         if (this.state.success != 'failure' && this.state.success != null) {
 

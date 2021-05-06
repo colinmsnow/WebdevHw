@@ -17,28 +17,46 @@ class login extends Component {
             success: null,
 
         };
+        this.socket =  socketIOClient(ENDPOINT);
     }
 
+
+    componentDidMount(){
+        let socket = this.socket
+
+        socket.on("login", data => {
+            this.setState({success:data})
+            console.log(this.state.success);
+          //   const history = useHistory();
+          //   history.push("/chats");
+          });
+
+        socket.on("Error", data => {
+          console.log("Error in login: " + data);
+          // TODO: Create popup with error from data
+      });
+    }
    
 
     
     render () {
 
         // const [response, setResponse] = useState("");
-        const socket = socketIOClient(ENDPOINT);
-
-        socket.on("login", data => {
-              this.setState({success:data})
-              console.log(this.state.success);
-            //   const history = useHistory();
-            //   history.push("/chats");
-            });
+        // const socket = socketIOClient(ENDPOINT);
+        let socket = this.socket
         let enter;
 
-        socket.on("Error", data => {
-            console.log("Error in login: " + data);
-            // TODO: Create popup with error from data
-        });
+        // socket.on("login", data => {
+        //       this.setState({success:data})
+        //       console.log(this.state.success);
+        //     //   const history = useHistory();
+        //     //   history.push("/chats");
+        //     });
+
+        // socket.on("Error", data => {
+        //     console.log("Error in login: " + data);
+        //     // TODO: Create popup with error from data
+        // });
 
 
         if (this.state.success != 'failure' && this.state.success != null) {

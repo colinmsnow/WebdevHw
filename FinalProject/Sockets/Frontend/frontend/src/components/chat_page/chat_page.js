@@ -25,11 +25,13 @@ class chat_page extends Component {
 
 
         };
+        this.socket =  socketIOClient(ENDPOINT);
     }
 
     update_other_user(newname){
 
-        const socket = socketIOClient(ENDPOINT);
+        // const socket = socketIOClient(ENDPOINT);
+        let socket = this.socket;
 
         console.log("Asking for a new user")
 
@@ -83,6 +85,35 @@ class chat_page extends Component {
 
 
     }
+    componentDidMount(){
+
+        // const socket = socketIOClient(ENDPOINT);
+        let socket = this.socket;
+
+        socket.on("new_message", () => {
+        console.log("There was a new message somewhere")
+
+        socket.emit("get_chats", {username:this.props.user, other_user:this.props.other_user})
+        socket.emit("get_messages", {username:this.props.user, other_user:this.props.other_user})
+        });
+        socket.on("messages", data => {
+            console.log("Received some data for messages")
+            console.log(data)
+            this.update_messages(data.messages, data.other_user)
+            });
+
+        socket.on("Error", data => {
+            console.log("Error in chat_page: " + data);
+            // TODO: Create popup with error from data
+        });
+        socket.on("chats", data => {
+            console.log("Received some data for chats")
+            console.log(data)
+            this.update_chats(data)
+            });
+    }
+
+    
 
 
 
@@ -102,43 +133,34 @@ class chat_page extends Component {
         // console.log()
         console.log(this.props)
         console.log(this.state)
+        let socket = this.socket;
 
-        const socket = socketIOClient(ENDPOINT);
+        // const socket = socketIOClient(ENDPOINT);
 
         socket.emit("get_messages", {username:this.props.user, other_user:this.props.other_user})
 
-        socket.on("chats", data => {
-            console.log("Received some data for chats")
-            console.log(data)
-            //   this.setState({success:data.success, chats:data.chats, messages:data.messages, other_user:})
-            this.update_chats(data)
-            //   console.log(this.state.success);
-            //   const history = useHistory();
-            //   history.push("/chats");
-            });
+        // socket.on("chats", data => {
+        //     console.log("Received some data for chats")
+        //     console.log(data)
+        //     this.update_chats(data)
+        //     });
 
-        socket.on("new_message", () => {
-                console.log("There was a new message somewhere")
+        // socket.on("new_message", () => {
+        //         console.log("There was a new message somewhere")
 
-                socket.emit("get_chats", {username:this.props.user, other_user:this.props.other_user})
-                socket.emit("get_messages", {username:this.props.user, other_user:this.props.other_user})
-                });
-                socket.on("messages", data => {
-                    console.log("Received some data for messages")
-                    console.log(data)
-    
-                    this.update_messages(data.messages, data.other_user)
-                    // this.update_messages(data.messages)
-                    //   this.setState({success:data.success, chats:data.chats, messages:data.messages})
-                    //   console.log(this.state.success);
-                    //   const history = useHistory();
-                    //   history.push("/chats");
-                    });
+        //         socket.emit("get_chats", {username:this.props.user, other_user:this.props.other_user})
+        //         socket.emit("get_messages", {username:this.props.user, other_user:this.props.other_user})
+        //         });
+        //         socket.on("messages", data => {
+        //             console.log("Received some data for messages")
+        //             console.log(data)
+        //             this.update_messages(data.messages, data.other_user)
+        //             });
 
-        socket.on("Error", data => {
-            console.log("Error in chat_page: " + data);
-            // TODO: Create popup with error from data
-        });
+        // socket.on("Error", data => {
+        //     console.log("Error in chat_page: " + data);
+        //     // TODO: Create popup with error from data
+        // });
 
 
         if (this.state.success == null){

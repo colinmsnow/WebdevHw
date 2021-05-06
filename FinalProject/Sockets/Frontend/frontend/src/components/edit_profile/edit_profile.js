@@ -21,15 +21,11 @@ class edit_profile extends Component {
             password: "nothing"
 
         };
+        this.socket =  socketIOClient(ENDPOINT);
     }
 
-   
-
-    
-    render () {
-
-        // const [response, setResponse] = useState("");
-        const socket = socketIOClient(ENDPOINT);
+    componentDidMount(){
+        let socket = this.socket
 
         socket.on("user", data => {
             console.log("Received some data")
@@ -38,6 +34,28 @@ class edit_profile extends Component {
               console.log(this.state.success);
 
             });
+        socket.on("Error", data => {
+                console.log("Error in edit_profile: " + data);
+                // TODO: Create popup with error from data
+            });
+    }
+
+   
+
+    
+    render () {
+
+        // const [response, setResponse] = useState("");
+        // const socket = socketIOClient(ENDPOINT);
+        let socket = this.socket
+
+        // socket.on("user", data => {
+        //     console.log("Received some data")
+        //     console.log(data)
+        //       this.setState({success:data.success, username:data.username, password:data.password, first_name:data.first_name, last_name:data.last_name})
+        //       console.log(this.state.success);
+
+        //     });
 
 
         if (this.state.success == null){
