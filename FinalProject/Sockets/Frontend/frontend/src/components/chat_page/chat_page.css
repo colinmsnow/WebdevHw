@@ -59,6 +59,13 @@
     float: left;
 }
 
+.newchatbar {
+    width: 55%;
+    float: left;
+    display:flex;
+    margin-top:1em;
+}
+
 .bottombar {
     width: 55%;
     float: left;

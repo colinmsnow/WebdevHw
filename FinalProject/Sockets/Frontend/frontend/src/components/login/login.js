@@ -77,7 +77,7 @@ class login extends Component {
             <div>
             <div class="nav">
                 {/* TODO: Change path back to create */}
-            <Link to="/edit" style={{textDecoration:'none'}}>
+            <Link to="/create" style={{textDecoration:'none'}}>
                 <White_Button_Right name = "Create Account" />
             </Link>
             </div>

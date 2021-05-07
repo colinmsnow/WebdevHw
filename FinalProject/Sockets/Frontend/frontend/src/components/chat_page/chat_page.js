@@ -190,7 +190,7 @@ class chat_page extends Component {
                     // <button onClick = {()=>this.update_other_user(chat.username)} className = "chat_list">
                     <button onClick = {()=>{
                         socket.emit("get_messages", {username:this.props.user, other_user:chat.username})
-                        }} className = "chat_list">
+                        }} className = "chat_list" style={{width:"100%"}}>
 
                     <Chat_in_list name={chat.name} last_time={chat.last_time} first_name={chat.first_name} message={chat.message}/>
                     </button>
@@ -200,13 +200,13 @@ class chat_page extends Component {
             </div>
             <div className = "right_pane">
             <div>
-            <div className = "nam">
+            <div className = "newchatbar">
              {this.state.other_user != null &&   <h2>{this.state.other_user}</h2> }
                 {/* TODO: Make this display user you are talking to */}
 
             
             {this.state.other_user == null && <Input_Field id = "new_user" className = "nam"/>}
-            {this.state.other_user == null && <button className= "sig" onClick = {()=>{
+            {this.state.other_user == null && <button className= "sig" style = {{height:"3.7em", marginLeft:"1em"}} onClick = {()=>{
                 socket.emit("get_chats", {username:this.props.user, other_user:document.getElementById("new_user").value})
                 socket.emit("get_messages", {username:this.props.user, other_user:document.getElementById("new_user").value})
 
@@ -214,9 +214,12 @@ class chat_page extends Component {
 
             
             </div>
-            <div className = "sig">
+            <div className = "sig" style={{display:"flex"}}>
             <Link to="/" style={{textDecoration:"none", marginRight:"1em"}}>
             <Purple_Button_Right name = "Sign Out" />
+            </Link>
+            <Link to="/edit" style={{textDecoration:"none", marginRight:"1em"}}>
+            <Purple_Button_Right name = "Edit Account" />
             </Link>  
             </div>  
             </div>  

@@ -6,7 +6,7 @@ function Chat_in_list (props)
     return (
     // if props.isUnread === false
     // TODO: Implement read or unread conditional
-    <div>
+    <div style={{width:"100%"}}>
     <div class="col">
     <h3 style = {{marginBlockEnd:"0"}}>{props.name}</h3>
     </div>
