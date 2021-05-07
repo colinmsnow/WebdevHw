@@ -37,7 +37,7 @@
     flex-direction: column;
     padding-left: 1%;
     height: 100vh;
-    overflow: scroll;
+    /* overflow: scroll; */
 }
 
 .sig {
@@ -67,27 +67,28 @@
 }
 
 .bottombar {
-    width: 55%;
+    width: 65%;
     float: left;
     display:flex;
 }
 
 .bottominput {
     height: 100%;
+    border-radius: 40px;
 }
 
 .mess_bar {
-    height: 7%;
+    height: 5%;
     position: fixed;
-    bottom: 5%;
+    bottom: 3%;
     padding-left: 2.5%;
-    width: 100%;
+    width: 97.5%;
     
 }
 
 .messages {
     width: 100%;
-    overflow-y: scroll;
+    /* overflow-y: scroll; */
 }
 
 @media (max-width: 480px){

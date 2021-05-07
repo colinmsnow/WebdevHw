@@ -215,12 +215,12 @@ class chat_page extends Component {
             
             </div>
             <div className = "sig" style={{display:"flex", width:"44%"}}>
-            <Link to="/" style={{textDecoration:"none", marginRight:"1em"}}>
-            <Purple_Button_Right name = "Sign Out" />
-            </Link>
             <Link to="/edit" style={{textDecoration:"none", marginRight:"1em"}}>
             <Purple_Button_Right name = "Edit Account" />
             </Link>  
+            <Link to="/" style={{textDecoration:"none", marginRight:"1em"}}>
+            <Purple_Button_Right name = "Sign Out" />
+            </Link>
             </div>  
             </div>  
             {/* <div className = "messages">    */}
@@ -244,8 +244,9 @@ class chat_page extends Component {
 
             <div className = "bottombar">
 
-            <Input_Field id = "Message" style = {{borderRadius: "40px"}} name={null} className = "bottom_input" height="100%"/>
-            <button style = {{float:"right", height:"100%"}}onClick = {()=>(socket.emit("send_message", {username:this.props.user, other_user:this.state.other_user, content:document.getElementById("Message").value}))}><img src={require('../../assets/send_message.png')} /></button>
+            <Input_Field id = "Message" borderRadius = "40px" name={null} className = "bottom_input" height = "75%" />
+            {/* TODO: Why did we do this all inline?? */}
+            <button style = {{backgroundColor:"#D0BBE6", borderRadius: "40px", border: "none", paddingLeft: "1em", paddingRight: "1em", marginLeft: "5%", cursor: "pointer", height: "75%", marginRight:"2.5%"}} onClick = {()=>(socket.emit("send_message", {username:this.props.user, other_user:this.state.other_user, content:document.getElementById("Message").value}))}><img src={require('../../assets/send_message.png')}/></button>
 
 
             </div>
