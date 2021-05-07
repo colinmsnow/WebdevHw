@@ -214,7 +214,7 @@ class chat_page extends Component {
 
             
             </div>
-            <div className = "sig" style={{display:"flex"}}>
+            <div className = "sig" style={{display:"flex", width:"44%"}}>
             <Link to="/" style={{textDecoration:"none", marginRight:"1em"}}>
             <Purple_Button_Right name = "Sign Out" />
             </Link>
