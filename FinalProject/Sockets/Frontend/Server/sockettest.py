@@ -4,15 +4,15 @@ from flask_cors import CORS, cross_origin
     
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'secret!'
-# app.config['CORS_HEADERS'] = 'Content-Type'
-# cors = CORS(app,resources={r"/*":{"origins":"*"}})
+app.config['CORS_HEADERS'] = 'Content-Type'
+cors = CORS(app,resources={r"/*":{"origins":"*"}})
 socketio = SocketIO(app)
 
 # # we need this or else it shuts down post requests
 @app.after_request
 def add_header(response):
-    response.headers['Access-Control-Allow-Origin'] = '*'
-    response.headers['Access-Control-Allow-Headers'] = '*'
+    # response.headers['Access-Control-Allow-Origin'] = '*'
+    # response.headers['Access-Control-Allow-Headers'] = '*'
     return response     
 
 # @app.after_request
@@ -121,7 +121,7 @@ def get_user(data):
         emit('Error', broadcast=True)
         return
 
-    user_info = {"success":"success", "username": "A user", "password": "*********", "first_name": "joseph", "last_name": "joe"}
+    user_info = {"success":"success", "username": "A user", "password": "*********", "first_name": "joseph", "name": "joseph joe"}
     emit("user", user_info)
 
     # DATABASE: get the user by username
@@ -151,10 +151,12 @@ def get_user(data):
 def update_username(data):
     try:
         username = data["username"]
-        new_username = data["new_username"]
+        new_username = data["newname"]
     except KeyError:
         emit('Error', "Invalid key in username")
         return
+
+    print("Updating to new username: " + str(new_username))
 
     # DATABASE: replace all instances of username with new username
 
@@ -163,22 +165,41 @@ def update_username(data):
 def update_password(data):
     try:
         username = data["username"]
-        password = data["password"]
+        password = data["newpassword"]
     except KeyError:
         emit('Error', "invalid key in update_password")
         return
 
+    print("Updating to new password: " + str(password))
+
     # DATABASE: replace password of user with new passowrd
+
+@socketio.on('update_firstname')
+def update_firstname(data):
+    try:
+        username = data["username"]
+        name = data["newname"]
+    except KeyError:
+        emit('Error', "invalid key in update_name")
+        return
+
+    
+    print("Updating to new firstname: " + str(name))
+
+    # DATABASE: replace name of user with new name
+
 
 
 @socketio.on('update_name')
 def update_name(data):
     try:
         username = data["username"]
-        name = data["name"]
+        name = data["newname"]
     except KeyError:
         emit('Error', "invalid key in update_name")
         return
+
+    print("Updating to new name: " + str(name))
 
     # DATABASE: replace name of user with new name
 
@@ -189,6 +210,8 @@ def delete_account(data):
     except KeyError:
         emit('Error', "invalid key in delete_account")
         return
+
+    print("deleting account")
 
     # DATABASE: delete all rows with that username
 
