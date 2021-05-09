@@ -14,50 +14,62 @@ class login extends Component {
     constructor(props){
         super(props);
         this.state = {
-            success: null
+            success: null,
 
         };
+        this.socket =  socketIOClient(ENDPOINT);
     }
 
+
+    componentDidMount(){
+        let socket = this.socket
+
+        socket.on("login", data => {
+            this.setState({success:data})
+            console.log(this.state.success);
+          //   const history = useHistory();
+          //   history.push("/chats");
+          });
+
+        socket.on("Error", data => {
+          console.log("Error in login: " + data);
+          // TODO: Create popup with error from data
+      });
+    }
    
 
     
     render () {
 
         // const [response, setResponse] = useState("");
-        const socket = socketIOClient(ENDPOINT);
-
-        socket.on("login", data => {
-              this.setState({success:data})
-              console.log(this.state.success);
-            //   const history = useHistory();
-            //   history.push("/chats");
-            });
+        // const socket = socketIOClient(ENDPOINT);
+        let socket = this.socket
         let enter;
 
-        socket.on("Error", data => {
-            console.log("Error in login: " + data);
-            // TODO: Create popup with error from data
-        });
+        // socket.on("login", data => {
+        //       this.setState({success:data})
+        //       console.log(this.state.success);
+        //     //   const history = useHistory();
+        //     //   history.push("/chats");
+        //     });
+
+        // socket.on("Error", data => {
+        //     console.log("Error in login: " + data);
+        //     // TODO: Create popup with error from data
+        // });
 
 
-        if (this.state.success == 'success') {
-            // let history = useHistory();
-            // history.push("/chats");
-            // <BrowserRouter>
-            // {/* <chat_page/> */}
-            // {/* </BrowserRouter>  */}
-            // TODO: Get routing behavior
-            // 
+        if (this.state.success != 'failure' && this.state.success != null) {
+
+            this.props.handler(this.state.success)
             return(<Redirect to="/chats" />)
-
-            // <Link to="/chats" style={{textDecoration:'none'}}>
-            //     <Purple_Button name = "Login" click = {()=>socket.emit("login", {"username": document.getElementById("Username").value, "password": document.getElementById("Password").value})} />
-            // </Link>
         }
         else {
             enter = 
-            <Purple_Button name = "Login" click = {()=>socket.emit("login", {"username": document.getElementById("Username").value, "password": document.getElementById("Password").value})} />
+            <Purple_Button name = "Login" click = {()=>{
+                socket.emit("login", {"username": document.getElementById("Username").value, "password": document.getElementById("Password").value})
+                
+        }} />
         }    
         
 
@@ -65,7 +77,7 @@ class login extends Component {
             <div>
             <div class="nav">
                 {/* TODO: Change path back to create */}
-            <Link to="/edit" style={{textDecoration:'none'}}>
+            <Link to="/create" style={{textDecoration:'none'}}>
                 <White_Button_Right name = "Create Account" />
             </Link>
             </div>

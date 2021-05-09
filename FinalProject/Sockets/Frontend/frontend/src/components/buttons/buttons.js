@@ -3,7 +3,7 @@ import './buttons.css'
 
 
 function Purple_Button(props) {
-    return <button className= "purple_button" onClick={props.click}>{props.name}</button>
+    return <button className= "purple_button" onClick={props.click} style={props.style}>{props.name}</button>
 }
 
 function White_Button(props) {

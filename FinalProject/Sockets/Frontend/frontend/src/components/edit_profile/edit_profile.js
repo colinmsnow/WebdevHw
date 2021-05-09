@@ -14,9 +14,30 @@ class edit_profile extends Component {
     constructor(props){
         super(props);
         this.state = {
-            success: null
+            success: null,
+            first_name: "nothing",
+            name: "nothing",
+            username: "nothing",
+            password: "nothing"
 
         };
+        this.socket =  socketIOClient(ENDPOINT);
+    }
+
+    componentDidMount(){
+        let socket = this.socket
+
+        socket.on("user", data => {
+            console.log("Received some data")
+            console.log(data)
+              this.setState({success:data.success, username:data.username, password:data.password, first_name:data.first_name, name:data.name})
+              console.log(this.state.success);
+
+            });
+        socket.on("Error", data => {
+                console.log("Error in edit_profile: " + data);
+                // TODO: Create popup with error from data
+            });
     }
 
    
@@ -25,31 +46,27 @@ class edit_profile extends Component {
     render () {
 
         // const [response, setResponse] = useState("");
-        const socket = socketIOClient(ENDPOINT);
+        // const socket = socketIOClient(ENDPOINT);
+        let socket = this.socket
 
-        socket.on("login", data => {
-              this.setState({success:data})
-              console.log(this.state.success);
-            //   const history = useHistory();
-            //   history.push("/chats");
-            });
-        let enter;
+        // socket.on("user", data => {
+        //     console.log("Received some data")
+        //     console.log(data)
+        //       this.setState({success:data.success, username:data.username, password:data.password, first_name:data.first_name, last_name:data.last_name})
+        //       console.log(this.state.success);
 
-        socket.on("Error", data => {
-            console.log("Error in login: " + data);
-            // TODO: Create popup with error from data
-        });
+        //     });
 
 
-        if (this.state.success == 'success') {
-            return(<Redirect to="/chats" />)
-
+        if (this.state.success == null){
+            socket.emit("get_user", {username:this.props.user})
         }
-        else {
-            enter = 
-            <Purple_Button name = "Login" click = {()=>socket.emit("login", {"username": document.getElementById("Username").value, "password": document.getElementById("Password").value})} />
-        }    
-        
+
+        if (this.state.success == 'deleted') {
+
+            // this.props.handler(this.state.success)
+            return(<Redirect to="/" />)
+        }
 
         return (
             <div>
@@ -68,24 +85,32 @@ class edit_profile extends Component {
                                 <h3>First Name:</h3>
                             </td>
                             <td>
-                                <Input_Field id = "First Name" placeholder = "test" disabled = "true"/>
+                                <Input_Field id = "First Name" placeholder = {this.state.first_name} />
                             </td>
                             <td>
                                 {/* <div className="in_table"> */}
-                                <Purple_Button name= "Edit" style = {{marginTop: '0em', marginLeft: '1em'}} />
+                                <Purple_Button name= "Update" style = {{marginTop: '0em', marginLeft: '1em'}} click = {()=> {
+                                    console.log("pressed update button")
+                                    socket.emit("update_firstname", {username:this.props.user, newname:document.getElementById("First Name").value})
+                                    this.setState({success:null})
+                                }}  />
                                 {/* </div> */}
                             </td>
                         </tr>
                         <tr>
                             <td>
-                                <h3>Last Name:</h3>
+                                <h3>Name:</h3>
                             </td>
                             <td>
-                                <Input_Field id = "Last Name" placeholder = "test" disabled = "true"/>
+                                <Input_Field id = "Name" placeholder = {this.state.name}/>
                             </td>
                             <td>
                                 {/* <div className="in_table"> */}
-                                <Purple_Button name= "Edit" style = {{marginTop: '0em', marginLeft: '1em'}} />
+                                <Purple_Button name= "Update" style = {{marginTop: '0em', marginLeft: '1em'}}  click = {()=> {
+                                    console.log("pressed update button")
+                                    socket.emit("update_name", {username:this.props.user, newname:document.getElementById("Name").value})
+                                    this.setState({success:null})
+                                }}  />
                                 {/* </div> */}
                             </td>
                         </tr>
@@ -94,11 +119,15 @@ class edit_profile extends Component {
                                 <h3>Username:</h3>
                             </td>
                             <td>
-                                <Input_Field id = "Username" placeholder = "test" disabled = "true"/>
+                                <Input_Field id = "Username" placeholder = {this.state.username} />
                             </td>
                             <td>
                                 {/* <div className="in_table"> */}
-                                <Purple_Button name= "Edit" style = {{marginTop: '0em', marginLeft: '1em'}} />
+                                <Purple_Button name= "Update" style = {{marginTop: '0em', marginLeft: '1em'}}  click = {()=> {
+                                    console.log("pressed update button")
+                                    socket.emit("update_username", {username:this.props.user, newname:document.getElementById("Username").value})
+                                    this.setState({success:null})
+                                }}  />
                                 {/* </div> */}
                             </td>
                         </tr>
@@ -107,11 +136,15 @@ class edit_profile extends Component {
                                 <h3>Password:</h3>
                             </td>
                             <td>
-                                <Input_Field id = "Password" placeholder = "test" disabled = "true"/>
+                                <Input_Field id = "Password" placeholder = {this.state.password} />
                             </td>
                             <td>
                                 {/* <div className="in_table"> */}
-                                <Purple_Button name= "Change" style = {{marginTop: '0em', marginLeft: '1em'}} />
+                                <Purple_Button name= "Change" style = {{marginTop: '0em', marginLeft: '1em'}}  click = {()=> {
+                                    console.log("pressed update button")
+                                    socket.emit("update_password", {username:this.props.user, newpassword:document.getElementById("Password").value})
+                                    this.setState({success:null})
+                                }}  />
                                 {/* </div> */}
                             </td>
                         </tr>
@@ -124,7 +157,11 @@ class edit_profile extends Component {
                     <White_Button name = "Forgot Password?" />
                 </Link>
             </div> */}
-            <Red_Button name = "Delete Account" />   
+            <Red_Button name = "Delete Account"  click = {()=> {
+                console.log("Deleting account")
+                socket.emit("delete_account", {username:this.props.user})
+                this.setState({success:"deleted"})
+            }}  />
             </div>
             </div>
         )

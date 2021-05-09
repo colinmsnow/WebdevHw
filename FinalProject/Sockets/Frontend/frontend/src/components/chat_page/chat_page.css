@@ -1,4 +1,6 @@
-
+* {
+    box-sizing: border-box
+} 
 .content {
     width: 30vw;
     height: 100vh;
@@ -23,7 +25,7 @@
     background-color: #E5E5E5;
     float: left;
     padding-left: 1%;
-    overflow: scroll;
+    overflow-y: scroll;
     height: 100vh;
 }
 
@@ -35,7 +37,58 @@
     flex-direction: column;
     padding-left: 1%;
     height: 100vh;
-    overflow: scroll;
+    /* overflow: scroll; */
+}
+
+.sig {
+    /* width: 30%; */
+    float: right;
+}
+.chat_list {
+    cursor: pointer;
+    background-color: inherit;
+    border: none;
+    border-width: 0px;
+    color: black;
+    text-align: left;
+    display: flex;
+    /* TODO: GEt button to size to container */
+}
+.nam {
+    width: 55%;
+    float: left;
+}
+
+.newchatbar {
+    width: 55%;
+    float: left;
+    display:flex;
+    margin-top:1em;
+}
+
+.bottombar {
+    width: 65%;
+    float: left;
+    display:flex;
+}
+
+.bottominput {
+    height: 100%;
+    border-radius: 40px;
+}
+
+.mess_bar {
+    height: 5%;
+    position: fixed;
+    bottom: 3%;
+    padding-left: 2.5%;
+    width: 97.5%;
+    
+}
+
+.messages {
+    width: 100%;
+    /* overflow-y: scroll; */
 }
 
 @media (max-width: 480px){

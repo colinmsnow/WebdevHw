@@ -5,8 +5,8 @@ import database as db
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'secret!'
-# app.config['CORS_HEADERS'] = 'Content-Type'
-# cors = CORS(app,resources={r"/*":{"origins":"*"}})
+app.config['CORS_HEADERS'] = 'Content-Type'
+cors = CORS(app,resources={r"/*":{"origins":"*"}})
 socketio = SocketIO(app)
 
 db = db.Database()
@@ -16,8 +16,8 @@ db.setup()
 # # we need this or else it shuts down post requests
 @app.after_request
 def add_header(response):
-    response.headers['Access-Control-Allow-Origin'] = '*'
-    response.headers['Access-Control-Allow-Headers'] = '*'
+    # response.headers['Access-Control-Allow-Origin'] = '*'
+    # response.headers['Access-Control-Allow-Headers'] = '*'
     return response     
 
 # @app.after_request
@@ -33,7 +33,7 @@ def index():
     return render_template('index.html', flask_token="Hello world")
 
 @socketio.on("FromFrontend")
-def handle_message(data):
+def handcle_message(data):
     print('received message: ' + data)
 
 
@@ -86,6 +86,9 @@ def test_connect():
     send_message(sendingUser, receivingUser, content)
         returns: nothing
 
+    new_chat(sendingUser, receivingUser)
+        returns: the new chat
+
     new_message_incoming()
         returns: that there was a new message
 
@@ -101,7 +104,6 @@ def create_user(data):
     except KeyError:
         emit("Error","Fields are missing in create_user")
         return
-<<<<<<< HEAD
     
     if (password != confirm_password):
         emit("Error","Passwords do not match")
@@ -117,17 +119,6 @@ def create_user(data):
         emit('create_user','failure')
         emit('Error', "Username already exists, try another username")
         return
-=======
-
-    
-    if (password != confirm_password):
-        # Not really sure what should happen if passwords dont match
-        emit("Error", "Passwords do not match")
-        return
-
-
-    # DATABASE: create user in database
->>>>>>> 4d8c75867f878fd694e4d1e5b79f0c759f9bfd21
 
     emit("create_user", "success")
 
@@ -142,24 +133,42 @@ def get_user(data):
         emit('Error', broadcast=True)
         return
 
+    user_info = {"success":"success", "username": "A user", "password": "*********", "first_name": "joseph", "name": "joseph joe"}
+    emit("user", user_info)
+
     # DATABASE: get the user by username
 
     # emit("get_user", json.dumps(username, name, password), broadcast=true)
 
 
+# @socketio.on('new_chat')
+# def new_chat(data):
+#     # Create a new empty chat and add it to the list of chats. Return chats
+#     try:
+#         username = data["username"]
+#         other_user = data["other_user"]
+#     except KeyError:
+#         emit('Error', broadcast=True)
+#         return
+
+#     # user_info = {"success":"success", "username": "A user", "password": "*********", "first_name": "joseph", "last_name": "joe"}
+#     response = {"success":"success", "chats": [{"username":"maia", "name": "Maia Materman", "last_time": "10:05 PM", "first_name":"Maia", "message":"blah blah blah blah blah blah blah blah blah"}, {"username":"colin", "name": "Colin Snow", "last_time": "10:05 PM", "first_name":"Colin", "message":"This is a message"}, {"username":"shirin", "name": "Shirin Kuppusamy", "last_time": "null", "first_name":"null", "message":"null"}], "messages": []}
+
+
+
+    # emit("chats", response)
+
+
 @socketio.on('update_username')
 def update_username(data):
-<<<<<<< HEAD
     #checks if current user exists -- doesn't exist, returns error
     #does exist, checks if new_username exists -- does exists, returns error
     #doesn't exist, changes current username to new username
-=======
->>>>>>> 4d8c75867f878fd694e4d1e5b79f0c759f9bfd21
     try:
         username = data["username"]
-        new_username = data["new_username"]
+        new_username = data["newname"]
     except KeyError:
-        emit('Error', broadcast=True)
+        emit('Error', "Invalid key in username")
         return
 
     works,message = db.update_username(username,new_username)
@@ -178,10 +187,9 @@ def update_username(data):
 def update_password(data):
     try:
         username = data["username"]
-        password = data["password"]
-        new_password = data["new_password"]
+        new_password = data["newpassword"]
     except KeyError:
-        emit('Error', broadcast=True)
+        emit('Error', "invalid key in update_password")
         return
 
     #check if user exists
@@ -196,31 +204,33 @@ def update_password(data):
 
 
 @socketio.on('update_firstname')
-def update_Fisrtname(data):
+def update_firstname(data):
     try:
         username = data["username"]
-        firstname = data["firstname"]
-
+        firstname = data["newname"]
     except KeyError:
-        emit('Error', broadcast=True)
+        emit('Error', "invalid key in update_name")
         return
+
+    
+    print("Updating to new firstname: " + str(name))
 
     # DATABASE: replace name of user with new name
 
-<<<<<<< HEAD
-@socketio.on('update_lastname')
-def update_Fisrtname(data):
-=======
+
+
+    # DATABASE: replace name of user with new name
+
 @socketio.on('update_name')
 def update_name(data):
->>>>>>> 4d8c75867f878fd694e4d1e5b79f0c759f9bfd21
     try:
         username = data["username"]
-        lastname = data["lastname"]
-
+        name = data["newname"]
     except KeyError:
-        emit('Error', broadcast=True)
+        emit('Error', "invalid key in update_name")
         return
+
+    print("Updating to new name: " + str(name))
 
     # DATABASE: replace name of user with new name
 
@@ -229,7 +239,7 @@ def delete_account(data):
     try:
         username = data["username"]
     except KeyError:
-        emit('Error', broadcast=True)
+        emit('Error', "invalid key in delete_account")
         return
 
     #check if user exists
@@ -248,7 +258,6 @@ def login(data):
         password = data["password"]
     except KeyError:
         emit('Error', "Login fields missing")
-<<<<<<< HEAD
         return
     
     #check if user exists
@@ -256,17 +265,7 @@ def login(data):
         emit('login','failure')
         emit('Error',"This user does not exist.")
         return
-=======
         return
-
-    print("GOT CREDENTIALS: {0}, {1}", username, password)
-
-    if (username == "hello" and password == "world"):
-        emit("login", "success")
-    else:
-        emit("login", "failure")
-        emit('Error', "Incorrect username or passowrd")
->>>>>>> 4d8c75867f878fd694e4d1e5b79f0c759f9bfd21
 
     # DATABASE: get password from username
     correct_password = db.login(username)
@@ -280,11 +279,35 @@ def login(data):
 
 @socketio.on('get_chats')
 def get_chats(data):
+    # This function gets all info needed to display the chat page
+    # Should return a response with a success value, list of chats
+    # if other user is not in the database then create an empty chat and return chats
     try:
         username = data["username"]
+        other_user = data["other_user"]
     except KeyError:
-        emit('Error', broadcast=True)
+        emit('Error', "invalid key in get_chats")
         return
+
+    print("Other user:")
+    print(other_user)
+
+    if other_user == "maia":
+        response = {"success":"success", "other_user": "null","chats": [{"username":"maia", "name": "Maia Materman", "last_time": "10:05 PM", "first_name":"Maia", "message":"blah blah blah blah blah blah blah blah blah"}, {"username":"colin", "name": "Colin Snow", "last_time": "10:05 PM", "first_name":"Colin", "message":"This is a message"}]}
+    
+    elif other_user == "colin":
+        response = {"success":"success", "other_user": "null","chats": [{"username":"maia", "name": "Maia Materman", "last_time": "10:05 PM", "first_name":"Maia", "message":"blah blah blah blah blah blah blah blah blah"}, {"username":"colin", "name": "Colin Snow", "last_time": "10:05 PM", "first_name":"Colin", "message":"This is a message"}]}
+
+    elif other_user == "null":
+        response = {"success":"success", "other_user": "null","chats": [{"username":"maia", "name": "Maia Materman", "last_time": "10:05 PM", "first_name":"Maia", "message":"blah blah blah blah blah blah blah blah blah"}, {"username":"colin", "name": "Colin Snow", "last_time": "10:05 PM", "first_name":"Colin", "message":"This is a message"}]}
+
+    else: 
+        response = {"success":"success", "other_user": other_user, "chats": [{"username":"maia", "name": "Maia Materman", "last_time": "10:05 PM", "first_name":"Maia", "message":"blah blah blah blah blah blah blah blah blah"}, {"username":"colin", "name": "Colin Snow", "last_time": "10:05 PM", "first_name":"Colin", "message":"This is a message"}, {"username":"shirin", "name": "Shirin Kuppusamy", "last_time": "null", "first_name":"null", "message":"null"}]}
+
+
+
+
+    emit("chats", response)
 
     # DATABASE: get all messages to the user and find only the last one
         # from each person
@@ -297,11 +320,32 @@ def get_chats(data):
 @socketio.on('get_messages')
 def get_messages(data):
     try:
-        user1 = data["user1"]
-        user2 = data["user2"]
+        username = data["username"]
+        other_user = data["other_user"]
     except KeyError:
-        emit('Error', broadcast=True)
+        emit('Error', "Invalid keys in get_messages")
         return
+
+    print("Get messages other user:")
+    print(other_user)
+
+    if other_user == "maia":
+        response = {"success":"success", "other_user": "maia","messages": [{"message":"hiiiiiiiiiiiiiiii", "time": "9:15 AM", "from": "hello"},{"message":"hey, what? Hello", "time": "10:08 AM", "from": "maia"},{"message":"not too bad myself", "time": "10:12 AM", "from": "hello"}]}
+    
+    elif other_user == "colin":
+        response = {"success":"success", "other_user": "colin","messages": [{"message":"hiiii", "time": "9:15 AM", "from": "hello"},{"message":"hey, what?", "time": "10:08 AM", "from": "colin"},{"message":"not too bad", "time": "10:12 AM", "from": "hello"}]}
+
+    else:
+        response = {"success":"success", "other_user": other_user,"messages": []}
+
+
+    print("Sending message back from get_messages")
+
+
+
+    emit("messages", response)
+
+
 
     # DATABASE: get all messages between users 1 and 2
         # from each person
@@ -315,11 +359,24 @@ def get_messages(data):
 @socketio.on('send_message')
 def send_message(data):
     try:
-        user1 = data["user1"]
-        user2 = data["user2"]
+        username = data["username"]
+        other_user = data["other_user"]
+        content = data["content"]
     except KeyError:
-        emit('Error', broadcast=True)
+        emit('Error', "invalid key in send_message")
         return
+
+    print("got a new message")
+    print(data)
+
+    # add it to the database
+
+
+
+    # send a message to all clients saying there is a new message and asking to reload
+    emit("new_message", broadcast=True)
+
+
 
     # DATABASE: add a message from 1 to 2
 
