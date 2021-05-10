@@ -3,6 +3,9 @@ import './chat_in_list.css'
 
 function Chat_in_list (props)
 {
+    /* A chat item displayed in the left bar in the messages page.
+    Displays name, forst name, timestamp, and last message   */
+
     return (
     // if props.isUnread === false
     // TODO: Implement read or unread conditional

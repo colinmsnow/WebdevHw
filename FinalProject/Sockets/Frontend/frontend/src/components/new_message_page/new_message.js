@@ -1,8 +1,6 @@
 
 import React, {Component,  useState, useEffect, Fragment} from 'react';
 import {Link} from 'react-router-dom'
-// import {Purple_Button, White_Button, White_Button_Right} from '../buttons/buttons';
-// import Input_Field from '../input_field/input_field';
 import '../chat_page/chat_page.css';
 import {top_bar} from '../top_bar/top_bar'
 import socketIOClient from "socket.io-client";
@@ -11,6 +9,7 @@ import Chat_in_list from '../chat_in_list/chat_in_list';
 const ENDPOINT = "http://127.0.0.1:5000";
 
 class new_message_page extends Component {
+    // This is unused. For testing only
     constructor(props){
         super(props);
         this.state = {

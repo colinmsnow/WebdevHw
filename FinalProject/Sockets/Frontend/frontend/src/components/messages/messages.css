@@ -5,7 +5,6 @@
     padding-right: 2em;
     padding-top: 0em;
     display: flex;
-    /* max-width: 50%; */
 }
 
 .message p {
@@ -43,8 +42,6 @@
 .right_hover {
     padding-right: 3em;
     padding-left: 0em;
-    /* position: relative;
-    float: right; */
     text-align: right;
 }
 

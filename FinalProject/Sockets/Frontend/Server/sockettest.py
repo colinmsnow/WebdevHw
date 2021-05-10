@@ -228,9 +228,9 @@ def login(data):
     print("GOT CREDENTIALS: {0}, {1}", username, password)
 
     if (username == "hello" and password == "world"):
-        emit("login", username)
+        emit("login_response", username)
     else:
-        emit("login", "failure")
+        emit("login_response", "failure")
         emit('Error', "Incorrect username or passowrd")
 
     # DATABASE: get password from username

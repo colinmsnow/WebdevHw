@@ -1,6 +1,8 @@
 import React  from "react";
 import './buttons.css'
 
+/* Button classes for different colored buttons. */
+
 
 function Purple_Button(props) {
     return <button className= "purple_button" onClick={props.click} style={props.style}>{props.name}</button>
