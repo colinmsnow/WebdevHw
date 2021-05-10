@@ -18,6 +18,16 @@
     cursor:pointer;
 }
 
+.edit_profile {
+    border-radius: 50%;
+    background-color: #E5E5E5;
+    color: #6F4698;
+    padding:1em;
+    width: 2em;
+    height: 2em;
+    
+}
+
 .white_button {
     color: black;
     background-color: white;
@@ -62,3 +72,4 @@
     padding-right: 3em;
     font-size: unset;
 }
+
