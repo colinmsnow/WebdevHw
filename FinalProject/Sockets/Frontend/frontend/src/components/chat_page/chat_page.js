@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 import './chat_page.css';
 import socketIOClient from "socket.io-client";
 import Input_Field from '../input_field/input_field'
-import { Purple_Button_Right } from '../buttons/buttons';
+import { Purple_Button_Right, Edit_Profile} from '../buttons/buttons';
 import { Purple_Message, Pink_Message } from '../messages/messages';
 import Chat_in_list from '../chat_in_list/chat_in_list';
 // import {CurrentUser} from "../../Currentuser";
@@ -179,12 +179,12 @@ class chat_page extends Component {
 
 
                         </div>
-                        <div className="sig" style={{ display: "flex", width: "44%" }}>
-                            <Link to="/edit" style={{ textDecoration: "none", marginRight: "1em" }}>
-                                <Purple_Button_Right name="Edit Account" />
+                        <div className="sig" style={{ display: "flex" }}>
+                            <Link to="/edit"  style={{ textDecoration: "none", marginRight: "1em" }}>
+                                <Edit_Profile name= {this.state.initials}/>
                             </Link>
-                            <Link to="/" style={{ textDecoration: "none", marginRight: "1em" }}>
-                                <Purple_Button_Right name="Sign Out" />
+                            <Link to="/" style={{ textDecoration: "none", marginRight: "1em"}}>
+                                <Purple_Button_Right name="Sign Out"/>
                             </Link>
                         </div>
                     </div>
@@ -198,7 +198,7 @@ class chat_page extends Component {
                     {/* TODO: Round search bar corners, show and format send button, fit 70% of right pane */}
                     <div className="mess_bar">
                         <div className="bottombar">
-                            <Input_Field id="Message" borderRadius="40px" name={null} className="bottom_input" height="75%" />
+                            <Input_Field id="Message" borderRadius="40px" name={null} className="bottom_input" height="100%" />
                             {/* TODO: Why did we do this all inline?? */}
                             <button style={{ backgroundColor: "#D0BBE6", borderRadius: "40px", border: "none", paddingLeft: "1em", paddingRight: "1em", marginLeft: "5%", cursor: "pointer", height: "75%", marginRight: "2.5%" }} onClick={() => (socket.emit("send_message", { username: this.props.user, other_user: this.state.other_user, content: document.getElementById("Message").value }))}><img src={require('../../assets/send_message.png')} /></button>
                         </div>

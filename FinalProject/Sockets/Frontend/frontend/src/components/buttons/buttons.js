@@ -22,6 +22,8 @@ function White_Button_Right(props) {
 function Purple_Button_Right(props) {
     return <button className= "purple_button right" onClick={props.click}>{props.name}</button>
 }
+function Edit_Profile(props) {
+    return <button className= "edit_profile purple_button" onClick={props.click}>{props.name}</button>
+}
 
-
-export {Purple_Button, White_Button, White_Button_Right, Purple_Button_Right, Red_Button};
+export {Purple_Button, White_Button, White_Button_Right, Purple_Button_Right, Red_Button, Edit_Profile};

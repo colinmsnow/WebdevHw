@@ -5,7 +5,7 @@
     text-transform: uppercase;
     border: none;
     border-radius: 0%;
-    margin-top: 1em;   
+    margin-top: 1rem;   
     width: 100%;
     height: 2em;
     font-size: 3vh;
@@ -16,6 +16,16 @@
     align-items: center;
     justify-content: center;
     cursor:pointer;
+}
+
+.edit_profile {
+    border-radius: 50% !important;
+    background-color: #E5E5E5 !important;
+    color: #6F4698 !important;
+    padding: 1em !important;
+    width: 2em !important;
+    height: 2em !important;
+    
 }
 
 .white_button {
@@ -62,3 +72,4 @@
     padding-right: 3em;
     font-size: unset;
 }
+
