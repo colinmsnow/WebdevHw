@@ -82,6 +82,14 @@
     width: 100%;
 }
 
+.messagesClass{
+    width:67vw;
+    height:77vh;
+    overflow:auto;
+    display:flex;
+    flex-direction: column-reverse;
+}
+
 @media (max-width: 480px){
     .content{
         width: 90vw;

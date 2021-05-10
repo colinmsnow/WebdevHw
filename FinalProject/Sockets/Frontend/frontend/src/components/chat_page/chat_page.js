@@ -188,12 +188,13 @@ class chat_page extends Component {
                             </Link>
                         </div>
                     </div>
-
+                    <div className="messagesClass">
                     {this.state.messages.map((message, index) => (
                         (message.from == this.props.user) ?
                             (<Purple_Message message={message.message} time={message.time} />)
                             : (<Pink_Message message={message.message} time={message.time} />)
                     ))}
+                    </div>
                     {/* TODO: Round search bar corners, show and format send button, fit 70% of right pane */}
                     <div className="mess_bar">
                         <div className="bottombar">
