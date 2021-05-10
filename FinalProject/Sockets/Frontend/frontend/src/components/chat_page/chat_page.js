@@ -90,7 +90,7 @@ class chat_page extends Component {
         // const socket = socketIOClient(ENDPOINT);
         let socket = this.socket;
 
-        socket.on("new_message", (data) => {
+        socket.on("new_message", data => {
         console.log("There was a new message somewhere")
 
         if (data.other_user == this.props.user){
