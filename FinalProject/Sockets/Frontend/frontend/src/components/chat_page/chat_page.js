@@ -179,12 +179,12 @@ class chat_page extends Component {
 
 
                         </div>
-                        <div className="sig" style={{ display: "flex", width: "44%" }}>
+                        <div className="sig" style={{ display: "flex" }}>
                             <Link to="/edit"  style={{ textDecoration: "none", marginRight: "1em" }}>
-                                <Edit_Profile name="Edit Account"/>
+                                <Edit_Profile name= {this.state.initials}/>
                             </Link>
-                            <Link to="/" style={{ textDecoration: "none", marginRight: "1em" }}>
-                                <Purple_Button_Right name="Sign Out" />
+                            <Link to="/" style={{ textDecoration: "none", marginRight: "1em"}}>
+                                <Purple_Button_Right name="Sign Out"/>
                             </Link>
                         </div>
                     </div>
