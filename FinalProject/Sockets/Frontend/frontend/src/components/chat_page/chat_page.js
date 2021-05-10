@@ -90,11 +90,18 @@ class chat_page extends Component {
         // const socket = socketIOClient(ENDPOINT);
         let socket = this.socket;
 
-        socket.on("new_message", () => {
+        socket.on("new_message", (data) => {
         console.log("There was a new message somewhere")
 
-        socket.emit("get_chats", {username:this.props.user, other_user:this.state.other_user})
-        socket.emit("get_messages", {username:this.props.user, other_user:this.state.other_user})
+        if (data.other_user == this.props.user){
+
+            socket.emit("get_chats", {username:this.props.user, other_user:this.state.other_user})
+            socket.emit("get_messages", {username:this.props.user, other_user:this.state.other_user})
+
+        }
+
+        // socket.emit("get_chats", {username:this.props.user, other_user:this.state.other_user})
+        // socket.emit("get_messages", {username:this.props.user, other_user:this.state.other_user})
         });
         socket.on("messages", data => {
             console.log("Received some data for messages")
