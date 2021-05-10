@@ -23,7 +23,8 @@ class chat_page extends Component {
             success: null,
             chats: [],
             messages: [],
-            other_user: null
+            other_user: null,
+            initials: null
         };
         this.socket = socketIOClient(ENDPOINT);
     }
@@ -43,6 +44,20 @@ class chat_page extends Component {
         a.other_user = newuser;
         this.setState(a);
     }
+
+    update_initials(username) {
+        // Updates initials for edit profile page
+
+        // var str = "Java Script Object Notation";
+        var matches = username.match(/\b(\w)/g);
+        var acronym = matches.join('');
+
+        let a = this.state;
+        a.initials = acronym;
+        this.setState(a);
+    }
+
+    
 
 
     new_chat() {
@@ -99,6 +114,15 @@ class chat_page extends Component {
             console.log(data)
             this.update_chats(data)
         });
+
+        socket.on("user", data => {
+            // Get user info and update state
+            console.log("Received some data for user")
+            console.log(data)
+            this.update_initials(data.name)
+
+            // console.log(this.state.success);
+        });
     }
 
     render() {
@@ -114,6 +138,8 @@ class chat_page extends Component {
         if (this.state.success == null) {
             // Get the chats if this is the first load of the page
             socket.emit("get_chats", { username: this.props.user, other_user: this.state.other_user })
+            socket.emit("get_user", { username: this.props.user })
+
         }
 
         return (
