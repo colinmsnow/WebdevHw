@@ -257,19 +257,41 @@ def get_chats(data):
     print("Other user:")
     print(other_user)
 
-    if other_user == "maia":
-        response = {"success":"success", "other_user": "null","chats": [{"username":"maia", "name": "Maia Materman", "last_time": "10:05 PM", "first_name":"Maia", "message":"blah blah blah blah blah blah blah blah blah"}, {"username":"colin", "name": "Colin Snow", "last_time": "10:05 PM", "first_name":"Colin", "message":"This is a message"}]}
+    # if other_user == "maia" or other_user == "colin" or other_user == "null":
+    #     # response = {"success":"success", "other_user": "null","chats": [{"username":"maia", "name": "Maia Materman", "last_time": "10:05 PM", "first_name":"Maia", "message":"blah blah blah blah blah blah blah blah blah"}, {"username":"colin", "name": "Colin Snow", "last_time": "10:05 PM", "first_name":"Colin", "message":"This is a message"}]}
+    #     # response = {"success":"success", "other_user": "null","chats": [{"username":"maia", "name": "Maia Materman", "last_time": "10:05 PM", "first_name":"Maia", "message":"blah blah blah blah blah blah blah blah blah"},\
+    #     #      {"username":"colin", "name": "Colin Snow", "last_time": "10:05 PM", "first_name":"Colin", "message":"This is a message"},\
+    #     #          {"username":"colin", "name": "Colin Snow", "last_time": "10:05 PM", "first_name":"Colin", "message":"This is a message"},\
+    #     #              {"username":"colin", "name": "Colin Snow", "last_time": "10:05 PM", "first_name":"Colin", "message":"This is a message"},\
+    #     #                  {"username":"colin", "name": "Colin Snow", "last_time": "10:05 PM", "first_name":"Colin", "message":"This is a message"},\
+    #     #                      {"username":"colin", "name": "Colin Snow", "last_time": "10:05 PM", "first_name":"Colin", "message":"This is a message"},\
+    #     #                          {"username":"colin", "name": "Colin Snow", "last_time": "10:05 PM", "first_name":"Colin", "message":"This is a message"},\
+    #     #                              {"username":"colin", "name": "Colin Snow", "last_time": "10:05 PM", "first_name":"Colin", "message":"This is a message"},\
+    #     #                                  {"username":"colin", "name": "Colin Snow", "last_time": "10:05 PM", "first_name":"Colin", "message":"This is a message"},\
+    #     #                                      {"username":"colin", "name": "Colin Snow", "last_time": "10:05 PM", "first_name":"Colin", "message":"This is a message"},\
+    #     #          ]}
+
     
-    elif other_user == "colin":
-        response = {"success":"success", "other_user": "null","chats": [{"username":"maia", "name": "Maia Materman", "last_time": "10:05 PM", "first_name":"Maia", "message":"blah blah blah blah blah blah blah blah blah"}, {"username":"colin", "name": "Colin Snow", "last_time": "10:05 PM", "first_name":"Colin", "message":"This is a message"}]}
+    # # elif other_user == "colin":
+    # #     response = {"success":"success", "other_user": "null","chats": [{"username":"maia", "name": "Maia Materman", "last_time": "10:05 PM", "first_name":"Maia", "message":"blah blah blah blah blah blah blah blah blah"}, {"username":"colin", "name": "Colin Snow", "last_time": "10:05 PM", "first_name":"Colin", "message":"This is a message"}]}
 
-    elif other_user == "null":
-        response = {"success":"success", "other_user": "null","chats": [{"username":"maia", "name": "Maia Materman", "last_time": "10:05 PM", "first_name":"Maia", "message":"blah blah blah blah blah blah blah blah blah"}, {"username":"colin", "name": "Colin Snow", "last_time": "10:05 PM", "first_name":"Colin", "message":"This is a message"}]}
+    # # elif other_user == "null":
+    # #     response = {"success":"success", "other_user": "null","chats": [{"username":"maia", "name": "Maia Materman", "last_time": "10:05 PM", "first_name":"Maia", "message":"blah blah blah blah blah blah blah blah blah"}, {"username":"colin", "name": "Colin Snow", "last_time": "10:05 PM", "first_name":"Colin", "message":"This is a message"}]}
 
-    else: 
-        response = {"success":"success", "other_user": other_user, "chats": [{"username":"maia", "name": "Maia Materman", "last_time": "10:05 PM", "first_name":"Maia", "message":"blah blah blah blah blah blah blah blah blah"}, {"username":"colin", "name": "Colin Snow", "last_time": "10:05 PM", "first_name":"Colin", "message":"This is a message"}, {"username":"shirin", "name": "Shirin Kuppusamy", "last_time": "null", "first_name":"null", "message":"null"}]}
+    # else: 
+    #     response = {"success":"success", "other_user": other_user, "chats": [{"username":"maia", "name": "Maia Materman", "last_time": "10:05 PM", "first_name":"Maia", "message":"blah blah blah blah blah blah blah blah blah"}, {"username":"colin", "name": "Colin Snow", "last_time": "10:05 PM", "first_name":"Colin", "message":"This is a message"}, {"username":"shirin", "name": "Shirin Kuppusamy", "last_time": "null", "first_name":"null", "message":"null"}]}
 
-
+    response = {"success":"success", "other_user": "null","chats": [{"username":"maia", "name": "Maia Materman", "last_time": "10:05 PM", "first_name":"Maia", "message":"blah blah blah blah blah blah blah blah blah"},\
+             {"username":"colin", "name": "Colin Snow", "last_time": "10:05 PM", "first_name":"Colin", "message":"This is a message"},\
+                 {"username":"colin", "name": "Colin Snow", "last_time": "10:05 PM", "first_name":"Colin", "message":"This is a message"},\
+                     {"username":"colin", "name": "Colin Snow", "last_time": "10:05 PM", "first_name":"Colin", "message":"This is a message"},\
+                         {"username":"colin", "name": "Colin Snow", "last_time": "10:05 PM", "first_name":"Colin", "message":"This is a message"},\
+                             {"username":"colin", "name": "Colin Snow", "last_time": "10:05 PM", "first_name":"Colin", "message":"This is a message"},\
+                                 {"username":"colin", "name": "Colin Snow", "last_time": "10:05 PM", "first_name":"Colin", "message":"This is a message"},\
+                                     {"username":"colin", "name": "Colin Snow", "last_time": "10:05 PM", "first_name":"Colin", "message":"This is a message"},\
+                                         {"username":"colin", "name": "Colin Snow", "last_time": "10:05 PM", "first_name":"Colin", "message":"This is a message"},\
+                                             {"username":"colin", "name": "Colin Snow", "last_time": "10:05 PM", "first_name":"Colin", "message":"This is a message"},\
+                 ]}
 
 
     emit("chats", response)
