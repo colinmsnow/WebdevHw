@@ -1,5 +1,10 @@
-td{
+/* td{
     vertical-align: baseline;
+} */
+
+
+td{
+    vertical-align: middle;
 }
 
 .content {
