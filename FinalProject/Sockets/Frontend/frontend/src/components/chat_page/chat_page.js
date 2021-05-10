@@ -93,8 +93,8 @@ class chat_page extends Component {
         socket.on("new_message", () => {
         console.log("There was a new message somewhere")
 
-        socket.emit("get_chats", {username:this.props.user, other_user:this.props.other_user})
-        socket.emit("get_messages", {username:this.props.user, other_user:this.props.other_user})
+        socket.emit("get_chats", {username:this.props.user, other_user:this.state.other_user})
+        socket.emit("get_messages", {username:this.props.user, other_user:this.state.other_user})
         });
         socket.on("messages", data => {
             console.log("Received some data for messages")
