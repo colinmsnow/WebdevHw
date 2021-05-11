@@ -12,7 +12,6 @@ socketio = SocketIO(app)
 db = db.Database()
 db.setup()
 
-
 # # we need this or else it shuts down post requests
 @app.after_request
 def add_header(response):
@@ -97,7 +96,7 @@ def test_connect():
 def create_user(data):
     try:
         firstname = data["name"]
-        lastname = data["name"]
+        name = data["name"]
         username = data["username"]
         password = data["password"]
         confirm_password = data["confirm_password"]
@@ -110,7 +109,7 @@ def create_user(data):
         return
 
 
-    new_user = db.create_user(username,firstname,lastname,password)
+    new_user = db.create_user(username,firstname,name,password)
 
     if(new_user):
         emit('create_user','success')
@@ -133,8 +132,12 @@ def get_user(data):
         emit('Error', broadcast=True)
         return
 
-    user_info = {"success":"success", "username": "A user", "password": "*********", "first_name": "joseph", "name": "joseph joe"}
-    emit("user", user_info)
+    if(db.get_user(username)):
+        password,first_name,name = db.get_user_info(username)
+        user_info = {"success":"success", "username": username, "password": password, "first_name": first_name , "name": name}
+        emit("user", user_info)
+    else:
+        emit('Error',"this user doesn't exist")
 
     # DATABASE: get the user by username
 
@@ -207,32 +210,36 @@ def update_password(data):
 def update_firstname(data):
     try:
         username = data["username"]
-        firstname = data["newname"]
+        new_firstname = data["newname"]
     except KeyError:
         emit('Error', "invalid key in update_name")
         return
 
-    
-    print("Updating to new firstname: " + str(name))
+    if (not db.get_user(username)):
+        emit('update_firstname','failure')
+        emit('Error',"This user does not exist.")
+        return
 
-    # DATABASE: replace name of user with new name
+    db.update_firstname(username,new_firstname)
+    emit('update_firstname','success')
 
-
-
-    # DATABASE: replace name of user with new name
 
 @socketio.on('update_name')
 def update_name(data):
     try:
         username = data["username"]
-        name = data["newname"]
+        new_name = data["newname"]
     except KeyError:
         emit('Error', "invalid key in update_name")
         return
 
-    print("Updating to new name: " + str(name))
+    if (not db.get_user(username)):
+        emit('update_name','failure')
+        emit('Error',"This user does not exist.")
+        return
 
-    # DATABASE: replace name of user with new name
+    db.update_name(username,new_name)
+    emit('update_name','success')
 
 @socketio.on('delete_account')
 def delete_account(data):
@@ -244,12 +251,13 @@ def delete_account(data):
 
     #check if user exists
     if (not db.get_user(username)):
-        emit('update_password','failure')
+        emit('delete_account','failure')
         emit('Error',"This user does not exist.")
         return
 
     # DATABASE: delete row with that username
     db.delete_account(username)
+    emit('delete_account','success')
 
 @socketio.on('login')
 def login(data):
@@ -271,9 +279,9 @@ def login(data):
     correct_password = db.login(username)
 
     if(password == correct_password):
-        emit('login','success')
+        emit('login_response',username)
     else:
-        emit('login','failure')
+        emit('login_response','failure')
         emit('Error', "Incorrect password")
 
 
@@ -289,32 +297,27 @@ def get_chats(data):
         emit('Error', "invalid key in get_chats")
         return
 
-    print("Other user:")
-    print(other_user)
+    # print("User:")
+    # print(username)
+    # print("Other user:")
+    # print(other_user)
 
-    if other_user == "maia":
-        response = {"success":"success", "other_user": "null","chats": [{"username":"maia", "name": "Maia Materman", "last_time": "10:05 PM", "first_name":"Maia", "message":"blah blah blah blah blah blah blah blah blah"}, {"username":"colin", "name": "Colin Snow", "last_time": "10:05 PM", "first_name":"Colin", "message":"This is a message"}]}
-    
-    elif other_user == "colin":
-        response = {"success":"success", "other_user": "null","chats": [{"username":"maia", "name": "Maia Materman", "last_time": "10:05 PM", "first_name":"Maia", "message":"blah blah blah blah blah blah blah blah blah"}, {"username":"colin", "name": "Colin Snow", "last_time": "10:05 PM", "first_name":"Colin", "message":"This is a message"}]}
+    uname,name,timestamp,firstname,message = db.get_chats(username)
+    print(uname)
+    print(name)
+    print(firstname)
+    print(message)
 
-    elif other_user == "null":
-        response = {"success":"success", "other_user": "null","chats": [{"username":"maia", "name": "Maia Materman", "last_time": "10:05 PM", "first_name":"Maia", "message":"blah blah blah blah blah blah blah blah blah"}, {"username":"colin", "name": "Colin Snow", "last_time": "10:05 PM", "first_name":"Colin", "message":"This is a message"}]}
+    chats = []   
+    for i in range(len(uname)):
+        chats.append({"username":uname[i], "name": name[i], "last_time": timestamp[i].strftime("%H:%M:%S"), "first_name": firstname[i], "message":message[i]})
 
-    else: 
-        response = {"success":"success", "other_user": other_user, "chats": [{"username":"maia", "name": "Maia Materman", "last_time": "10:05 PM", "first_name":"Maia", "message":"blah blah blah blah blah blah blah blah blah"}, {"username":"colin", "name": "Colin Snow", "last_time": "10:05 PM", "first_name":"Colin", "message":"This is a message"}, {"username":"shirin", "name": "Shirin Kuppusamy", "last_time": "null", "first_name":"null", "message":"null"}]}
+    response = {"success":"success", "other_user": "null","chats": chats}
 
-
-
+    print(response)
 
     emit("chats", response)
 
-    # DATABASE: get all messages to the user and find only the last one
-        # from each person
-
-    # chats = chats_from_database
-
-    # emit("get_chats", json.dumps(chats), broadcast=true)
 
 
 @socketio.on('get_messages')
@@ -326,34 +329,23 @@ def get_messages(data):
         emit('Error', "Invalid keys in get_messages")
         return
 
-    print("Get messages other user:")
-    print(other_user)
+    # print("User:")
+    # print(username)
+    # print("Get messages other user:")
+    # print(other_user)
 
-    if other_user == "maia":
-        response = {"success":"success", "other_user": "maia","messages": [{"message":"hiiiiiiiiiiiiiiii", "time": "9:15 AM", "from": "hello"},{"message":"hey, what? Hello", "time": "10:08 AM", "from": "maia"},{"message":"not too bad myself", "time": "10:12 AM", "from": "hello"}]}
+
+    message,timestamp,from_user = db.get_messages(username,other_user)
+    # print(message)
+    # print(from_user)
+    messages = []
+    for i in range(len(message)):
+        print(i)
+        messages.append({"message":message[i],"time":timestamp[i].strftime("%H:%M:%S"),"from":from_user[i]})
+
+    response = {"success":"success", "other_user": other_user,"messages": messages} 
     
-    elif other_user == "colin":
-        response = {"success":"success", "other_user": "colin","messages": [{"message":"hiiii", "time": "9:15 AM", "from": "hello"},{"message":"hey, what?", "time": "10:08 AM", "from": "colin"},{"message":"not too bad", "time": "10:12 AM", "from": "hello"}]}
-
-    else:
-        response = {"success":"success", "other_user": other_user,"messages": []}
-
-
-    print("Sending message back from get_messages")
-
-
-
     emit("messages", response)
-
-
-
-    # DATABASE: get all messages between users 1 and 2
-        # from each person
-
-    # messages = messages_from_database
-
-    # emit("get_messages", json.dumps(messages), broadcast=true)
-
 
 
 @socketio.on('send_message')
@@ -366,21 +358,17 @@ def send_message(data):
         emit('Error', "invalid key in send_message")
         return
 
-    print("got a new message")
-    print(data)
 
-    # add it to the database
+    if (not db.get_user(other_user)):
+        emit('Error',"This user does not exist. Please ask them to make an account.")
+        return
 
+    db.send_message(username,other_user,content)
 
+    get_chats(data)
+    get_messages(data)
 
-    # send a message to all clients saying there is a new message and asking to reload
-    emit("new_message", broadcast=True)
-
-
-
-    # DATABASE: add a message from 1 to 2
-
-    # TODO: Find a way to update person 2 if they are online when this happens
+    emit("new_message",{"other_user": other_user},broadcast=True)
 
 
 if __name__ == '__main__':
