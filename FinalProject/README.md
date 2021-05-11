@@ -14,4 +14,6 @@ A few notes include, with the caveat that for the system user and password, you 
    * Instead of using 'YOUR_SYSTEM_USER' use 'dbuser' \
    * Instead of using 'YOUR_PASSWD' use '1234' \
    * Instead of using SET plugin='auth_socket' use SET plugin='mysql_native_password' \
-3. 
+3. In case, you run into any issues, here is a guide on how to uninstall and reinstall mySQL: https://www.cyberciti.biz/faq/linux-completely-reinstall-mysql-server/
+
+Part 2: Set Up the Frontend:
