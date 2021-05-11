@@ -169,9 +169,9 @@ class chat_page extends Component {
                     <div>
                         <div className="newchatbar">
                             {this.state.other_user != null && <h2>{this.state.other_user}</h2>}
-                            {this.state.other_user == null && <p style={{width:"20%", height:"100%", marginTop:"2%", marginBottom:"0em"}}>New Chat:</p>}
+                            {this.state.other_user == null && <p style={{width:"20%", height:"100%!important", marginTop:"2%", marginBottom:"0em"}}>New Chat:</p>}
                             {this.state.other_user == null && <Input_Field id="new_user" className="nam"/>}
-                            {this.state.other_user == null && <button className="sig" style={{ marginLeft: "1em" }} onClick={() => {
+                            {this.state.other_user == null && <button className="sig go" style={{ marginLeft: "1em" }} onClick={() => {
                                 socket.emit("get_chats", { username: this.props.user, other_user: document.getElementById("new_user").value })
                                 socket.emit("get_messages", { username: this.props.user, other_user: document.getElementById("new_user").value })
 

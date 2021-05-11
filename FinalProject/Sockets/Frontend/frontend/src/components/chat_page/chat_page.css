@@ -36,6 +36,14 @@
 .sig {
     float: right;
 }
+
+.go {
+    background-color: #EFB1A7;
+    border: none;
+    cursor: pointer;
+    text-align: center;
+}
+
 .chat_list {
     cursor: pointer;
     background-color: inherit;
