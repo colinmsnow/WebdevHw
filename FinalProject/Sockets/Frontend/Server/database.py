@@ -97,6 +97,8 @@ class Database:
         self.cursor.execute("USE Chats")
         self.cursor.execute("DELETE FROM Users WHERE id=%s",(username,))
         self.db.commit()
+        self.cursor.execute("DELETE FROM Messages WHERE fromUser=%s OR toUser=%s",(username,username))
+        self.db.commit()
     
     def get_chats(self,username):
         uname = []
@@ -144,15 +146,15 @@ class Database:
         from_user = []
 
         self.cursor.execute("USE Chats")
-        self.cursor.execute("SELECT content FROM Messages WHERE fromUser = %s AND toUser = %s OR fromUser = %s AND toUser = %s ORDER BY seqNum",(username,other_user,other_user,username))
+        self.cursor.execute("SELECT content FROM Messages WHERE fromUser = %s AND toUser = %s OR fromUser = %s AND toUser = %s ORDER BY seqNum DESC",(username,other_user,other_user,username))
         for x in self.cursor:
             message.append(x[0])
 
-        self.cursor.execute("SELECT timestamp FROM Messages WHERE fromUser = %s AND toUser = %s OR fromUser = %s AND toUser = %s ORDER BY seqNum",(username,other_user,other_user,username))
+        self.cursor.execute("SELECT timestamp FROM Messages WHERE fromUser = %s AND toUser = %s OR fromUser = %s AND toUser = %s ORDER BY seqNum DESC",(username,other_user,other_user,username))
         for x in self.cursor:
             timestamp.append(x[0])
 
-        self.cursor.execute("SELECT fromUser FROM Messages WHERE fromUser = %s AND toUser = %s OR fromUser = %s AND toUser = %s ORDER BY seqNum",(username,other_user,other_user,username))
+        self.cursor.execute("SELECT fromUser FROM Messages WHERE fromUser = %s AND toUser = %s OR fromUser = %s AND toUser = %s ORDER BY seqNum DESC",(username,other_user,other_user,username))
         for x in self.cursor:
             from_user.append(x[0])
 

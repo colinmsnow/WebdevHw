@@ -2,6 +2,7 @@ from flask import Flask, render_template
 from flask_socketio import SocketIO, emit
 from flask_cors import CORS, cross_origin
 import database as db
+import hashlib
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'secret!'
@@ -108,18 +109,19 @@ def create_user(data):
         emit("Error","Passwords do not match")
         return
 
-
+    password = hashlib.md5(bytes(password,'utf-8'))
+    password = password.hexdigest()
     new_user = db.create_user(username,firstname,name,password)
 
     if(new_user):
-        emit('create_user','success')
+        emit('new_user','success')
         return
     else:
-        emit('create_user','failure')
+        emit('new_user','failure')
         emit('Error', "Username already exists, try another username")
         return
 
-    emit("create_user", "success")
+    emit("new_user", "success")
 
 
 
@@ -139,28 +141,6 @@ def get_user(data):
     else:
         emit('Error',"this user doesn't exist")
 
-    # DATABASE: get the user by username
-
-    # emit("get_user", json.dumps(username, name, password), broadcast=true)
-
-
-# @socketio.on('new_chat')
-# def new_chat(data):
-#     # Create a new empty chat and add it to the list of chats. Return chats
-#     try:
-#         username = data["username"]
-#         other_user = data["other_user"]
-#     except KeyError:
-#         emit('Error', broadcast=True)
-#         return
-
-#     # user_info = {"success":"success", "username": "A user", "password": "*********", "first_name": "joseph", "last_name": "joe"}
-#     response = {"success":"success", "chats": [{"username":"maia", "name": "Maia Materman", "last_time": "10:05 PM", "first_name":"Maia", "message":"blah blah blah blah blah blah blah blah blah"}, {"username":"colin", "name": "Colin Snow", "last_time": "10:05 PM", "first_name":"Colin", "message":"This is a message"}, {"username":"shirin", "name": "Shirin Kuppusamy", "last_time": "null", "first_name":"null", "message":"null"}], "messages": []}
-
-
-
-    # emit("chats", response)
-
 
 @socketio.on('update_username')
 def update_username(data):
@@ -177,13 +157,11 @@ def update_username(data):
     works,message = db.update_username(username,new_username)
 
     if(works):
-        emit('update_username',message)
+        emit('change_username',message)
     else:
-        emit('update_username','failure')
+        emit('change_username','failure')
         emit('Error', message)
 
-
-    # DATABASE: replace all instances of username with new username
 
 
 @socketio.on('update_password')
@@ -197,13 +175,15 @@ def update_password(data):
 
     #check if user exists
     if (not db.get_user(username)):
-        emit('update_password','failure')
+        emit('change_password','failure')
         emit('Error',"This user does not exist.")
         return
 
+    new_password = hashlib.md5(bytes(new_password,'utf-8'))
+    new_password = new_password.hexdigest()
     # DATABASE: replace password of user with new passowrd
     db.update_password(username,new_password)
-    emit('update_password','success')
+    emit('change_password','success')
 
 
 @socketio.on('update_firstname')
@@ -216,12 +196,12 @@ def update_firstname(data):
         return
 
     if (not db.get_user(username)):
-        emit('update_firstname','failure')
+        emit('change_firstname','failure')
         emit('Error',"This user does not exist.")
         return
 
     db.update_firstname(username,new_firstname)
-    emit('update_firstname','success')
+    emit('change_firstname','success')
 
 
 @socketio.on('update_name')
@@ -234,12 +214,12 @@ def update_name(data):
         return
 
     if (not db.get_user(username)):
-        emit('update_name','failure')
+        emit('change_name','failure')
         emit('Error',"This user does not exist.")
         return
 
     db.update_name(username,new_name)
-    emit('update_name','success')
+    emit('change_name','success')
 
 @socketio.on('delete_account')
 def delete_account(data):
@@ -251,13 +231,13 @@ def delete_account(data):
 
     #check if user exists
     if (not db.get_user(username)):
-        emit('delete_account','failure')
+        emit('delete','failure')
         emit('Error',"This user does not exist.")
         return
 
     # DATABASE: delete row with that username
     db.delete_account(username)
-    emit('delete_account','success')
+    emit('delete','success')
 
 @socketio.on('login')
 def login(data):
@@ -270,11 +250,13 @@ def login(data):
     
     #check if user exists
     if (not db.get_user(username)):
-        emit('login','failure')
+        emit('login_response','failure')
         emit('Error',"This user does not exist.")
         return
         return
 
+    password = hashlib.md5(bytes(password,'utf-8'))
+    password = password.hexdigest()
     # DATABASE: get password from username
     correct_password = db.login(username)
 
@@ -308,9 +290,11 @@ def get_chats(data):
     print(firstname)
     print(message)
 
+    
     chats = []   
-    for i in range(len(uname)):
-        chats.append({"username":uname[i], "name": name[i], "last_time": timestamp[i].strftime("%H:%M:%S"), "first_name": firstname[i], "message":message[i]})
+    if uname != []:
+        for i in range(len(uname)):
+            chats.append({"username":uname[i], "name": name[i], "last_time": timestamp[i].strftime("%A, %B %-d, %-I:%-M%p"), "first_name": firstname[i], "message":message[i]})
 
     response = {"success":"success", "other_user": "null","chats": chats}
 
@@ -336,12 +320,15 @@ def get_messages(data):
 
 
     message,timestamp,from_user = db.get_messages(username,other_user)
-    # print(message)
+    print(message)
+    print(from_user)
     # print(from_user)
+
     messages = []
-    for i in range(len(message)):
-        print(i)
-        messages.append({"message":message[i],"time":timestamp[i].strftime("%H:%M:%S"),"from":from_user[i]})
+    if message != []:
+        for i in range(len(message)):
+            print(i)
+            messages.append({"message":message[i],"time":timestamp[i].strftime("%A, %B %-d, %-I:%-M%p"),"from":from_user[i]})
 
     response = {"success":"success", "other_user": other_user,"messages": messages} 
     

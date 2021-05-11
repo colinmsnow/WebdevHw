@@ -5,7 +5,7 @@
     text-transform: uppercase;
     border: none;
     border-radius: 0%;
-    margin-top: 1em;   
+    margin-top: 1rem;   
     width: 100%;
     height: 2em;
     font-size: 3vh;
@@ -18,6 +18,16 @@
     cursor:pointer;
 }
 
+.edit_profile {
+    border-radius: 50% !important;
+    background-color: #E5E5E5 !important;
+    color: #6F4698 !important;
+    padding: 1em !important;
+    width: 2em !important;
+    height: 2em !important;
+    
+}
+
 .white_button {
     color: black;
     background-color: white;
@@ -27,7 +37,6 @@
     margin-top: 1em;   
     width: 100%;
     height: 2em;
-    /* font-size: 3vh; */
     font-style: normal;
     font-weight: normal;
     display: flex;
@@ -61,6 +70,6 @@
     width: fit-content;
     padding-left: 3em;
     padding-right: 3em;
-    /* font-size: 1.75vh; */
     font-size: unset;
 }
+

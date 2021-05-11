@@ -16,12 +16,7 @@
 }
 
 .left_pane {
-    /* display: flex;
-    flex-direction: row;
-    justify-content: flex-start; */
-    /* position: relative; */
     width: 29%;
-    /* height: 100%; */
     background-color: #E5E5E5;
     float: left;
     padding-left: 1%;
@@ -31,19 +26,24 @@
 
 .right_pane {
     width: 69%;
-    /* height:100%; */
     float: right;
     display: flex;
     flex-direction: column;
     padding-left: 1%;
     height: 100vh;
-    /* overflow: scroll; */
 }
 
 .sig {
-    /* width: 30%; */
     float: right;
 }
+
+.go {
+    background-color: #EFB1A7;
+    border: none;
+    cursor: pointer;
+    text-align: center;
+}
+
 .chat_list {
     cursor: pointer;
     background-color: inherit;
@@ -52,8 +52,8 @@
     color: black;
     text-align: left;
     display: flex;
-    /* TODO: GEt button to size to container */
 }
+
 .nam {
     width: 55%;
     float: left;
@@ -88,7 +88,14 @@
 
 .messages {
     width: 100%;
-    /* overflow-y: scroll; */
+}
+
+.messagesClass{
+    width:67vw;
+    height:77vh;
+    overflow:auto;
+    display:flex;
+    flex-direction: column-reverse;
 }
 
 @media (max-width: 480px){
@@ -109,4 +116,3 @@
         margin: auto;
     }
 }
-
