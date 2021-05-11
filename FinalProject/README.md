@@ -7,7 +7,7 @@
 
 **Node**
 
-If you don't have nodejs installed, install the latest version. If you don't know, do node --version in your terminal/command prompt. If you don't get a number, you don't have it.
+If you don't have nodejs installed, [install the latest version](https://nodejs.org/en/download/). If you don't know, write `node --version` in your terminal/command prompt. If you don't get a number, you don't have it.
 
 **Flask**
 
@@ -16,7 +16,7 @@ If you don't have nodejs installed, install the latest version. If you don't kno
 
 **Part 1: Create a mySQL Server:**
 
-1. Install mySQL if you don't already have it installed. An installation guide is located at this link: https://dev.mysql.com/doc/mysql-installation-excerpt/5.7/en/installing.html \
+1. Install mySQL if you don't already have it installed. An installation guide is located at https://dev.mysql.com/doc/mysql-installation-excerpt/5.7/en/installing.html \
 For Ubuntu/Debian, you can either download the repo from the following link: https://dev.mysql.com/downloads/repo/apt/ or run the following command ```sudo apt-get install mysql-client mysql-server mysql-common```
 2. Now, you will have to create a new server that doesn't use root. Follow the instructions at this link provided in Option 2 of the first answer:
 https://stackoverflow.com/questions/39281594/error-1698-28000-access-denied-for-user-rootlocalhost \
