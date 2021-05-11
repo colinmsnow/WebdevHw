@@ -138,7 +138,7 @@ def update_username(data):
         emit('change_username',message)
     else:
         emit('change_username','failure')
-        emit('Error', {"message" : message, "show" : "false"})
+        emit('Error', {"message" : message, "show" : "true"})
 
 
 
@@ -304,7 +304,7 @@ def send_message(data):
         return
 
     if (not db.get_user(other_user)):
-        emit('Error',{"message" : "This user does not exist. Please ask them to make an account.", "show" : "false"})
+        emit('Error',{"message" : "This user does not exist. Please ask them to make an account.", "show" : "true"})
         return
 
     db.send_message(username,other_user,content)

@@ -91,7 +91,7 @@ class edit_profile extends Component {
                             </tr>
                             <tr>
                                 <td>
-                                    <h3>Name:</h3>
+                                    <h3>Last Name:</h3>
                                 </td>
                                 <td>
                                     <Input_Field id="Last Name" placeholder={this.state.name.split(' ')[1]} />
