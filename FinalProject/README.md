@@ -11,7 +11,17 @@ For more information about this project, please see the [final presentation](htt
 If you don't have nodejs installed, [install the latest version](https://nodejs.org/en/download/ "Node Download"). If you don't know, write `node --version` in your terminal/command prompt. If you don't get a number, you don't have it.
 
 **Flask**
-//TODO: COLIN SNOW WRITE ME
+  Install Python >= 3.9 and the following libraries:
+  
+    python-engineio==3.2.0
+    python-socketio==4.0.0
+    Flask==1.1.2
+    Flask-Cors==3.0.10
+    Flask-SocketIO==4.0.0
+    eventlet==0.30.2
+    Werkzeug==1.0.1
+    urllib3==1.26.3
+    requests==2.25.1
 
 ### Running the App: 
 
@@ -33,6 +43,7 @@ A few notes include, with the caveat that for the system user and password, you 
 2. Once you have successfully installed npm, in the same folder, run ```npm run build```
 
 **Part 3: Run the Actual Chat Server:**
+
 
 1. ```cd Sockets/Frontend/Server``` folder and then run ```python3 sockettest.py```
 2. Then, open the localhost link provided. Now, you can engage with our chat server! 
