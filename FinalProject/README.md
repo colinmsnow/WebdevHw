@@ -1,18 +1,19 @@
-# 'Chit Chat' Chat Server Web Development Project
-## Colin Snow, Maia Materman, Shirin Kuppusamy
-### *csnow@olin.edu, mmmaterman@olin.edu, skuppusamy@olin.edu*
+![logo](https://github.com/colinmsnow/WebdevHw/blob/master/FinalProject/Brainstorming/logo.png "Logo for Chit Chat")
 
+## Chit Chat is a chat app for synchronous chatting and communication among friends. 
+
+For more information about this project, please see the [final presentation](https://docs.google.com/presentation/d/1Ir9iXyc3bBUrgabB1uxFhfBT7Qp4qMCr5gDDLabsLD0/edit?usp=sharing "Final Presentation Deck") our team gave for our final in Web Development in Spring 2021. 
 
 ### Set Up:
 
 **Node**
 
-If you don't have nodejs installed, [install the latest version](https://nodejs.org/en/download/). If you don't know, write `node --version` in your terminal/command prompt. If you don't get a number, you don't have it.
+If you don't have nodejs installed, [install the latest version](https://nodejs.org/en/download/ "Node Download"). If you don't know, write `node --version` in your terminal/command prompt. If you don't get a number, you don't have it.
 
 **Flask**
+//TODO: COLIN SNOW WRITE ME
 
-
-### How to Run Our Code: 
+### Running the App: 
 
 **Part 1: Create a mySQL Server:**
 
@@ -35,3 +36,10 @@ A few notes include, with the caveat that for the system user and password, you 
 
 1. ```cd Sockets/Frontend/Server``` folder and then run ```python3 sockettest.py```
 2. Then, open the localhost link provided. Now, you can engage with our chat server! 
+
+
+### The Team:
+- [Colin Snow](mailto:csnow@olin.edu "csnow@olin.edu")
+- [Maia Materman](mailto:mmaterman@olin.edu "mmaterman@olin.edu")
+- [Shirin Kuppusamy](mailto:skuppusamy@olin.edu "skuppusamy@olin.edu")
+
