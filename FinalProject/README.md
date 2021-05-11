@@ -17,3 +17,6 @@ A few notes include, with the caveat that for the system user and password, you 
 3. In case, you run into any issues, here is a guide on how to uninstall and reinstall mySQL: https://www.cyberciti.biz/faq/linux-completely-reinstall-mysql-server/
 
 Part 2: Set Up the Frontend:
+
+1. ``` cd Sockets/Frontend/frontend/src/components``` folder and then run ```npm install```
+2. Once you have successfully installed npm, in the same folder, run ```npm run build``` 
