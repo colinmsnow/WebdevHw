@@ -85,6 +85,7 @@ class edit_profile extends Component {
                                     <Purple_Button name="Update" style={{ marginTop: '0em', marginLeft: '1em' }} click={() => {
                                         console.log("pressed update button")
                                         socket.emit("update_firstname", { username: this.props.user, newname: document.getElementById("First Name").value })
+                                        socket.emit("update_name", { username: this.props.user, newname: (document.getElementById("First Name").value + " " + this.state.name.split(' ')[1])})
                                         this.setState({ success: null })
                                     }} />
                                 </td>
@@ -99,7 +100,7 @@ class edit_profile extends Component {
                                 <td>
                                     <Purple_Button name="Update" style={{ marginTop: '0em', marginLeft: '1em' }} click={() => {
                                         console.log("pressed update button")
-                                        socket.emit("update_name", { username: this.props.user, newname: (document.getElementById("First Name").value + " " + document.getElementById("Last Name").value) })
+                                        socket.emit("update_name", { username: this.props.user, newname: (this.state.first_name + " " + document.getElementById("Last Name").value) })
                                         this.setState({ success: null })
                                     }} />
                                 </td>
