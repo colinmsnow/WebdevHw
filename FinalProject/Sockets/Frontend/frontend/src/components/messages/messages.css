@@ -1,5 +1,5 @@
 .message {
-    border-radius: 40px; /* TODO: Change me*/
+    border-radius: 40px; 
     min-width: fit-content;
     padding-left: 2em;
     padding-right: 2em;
@@ -31,7 +31,6 @@
     align-self: flex-start;
 }
 .time_label {
-    /* TODO: Look into making this bigger */
     font-size: .75rem;
     color: #646464;
     padding-left: 3em;

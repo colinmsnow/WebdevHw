@@ -6,7 +6,6 @@ import Input_Field from '../input_field/input_field';
 import './login.css';
 import logo from '../logo.png'
 import chat_page from '../chat_page/chat_page'
-// TODO: Make this App.css instead!
 import socketIOClient from "socket.io-client";
 const ENDPOINT = "http://127.0.0.1:5000";
 
@@ -66,7 +65,6 @@ class login extends Component {
         return (
             <div>
                 <div class="nav">
-                    {/* TODO: Change path back to create */}
                     <Link to="/create" style={{ textDecoration: 'none' }}>
                         <White_Button_Right name="Create Account" />
                     </Link>

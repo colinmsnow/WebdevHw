@@ -4,7 +4,6 @@ import { BrowserRouter, Link, Route, useHistory, Redirect } from 'react-router-d
 import { Purple_Button, White_Button, Purple_Button_Right, Red_Button } from '../buttons/buttons';
 import Input_Field from '../input_field/input_field';
 import './edit_profile.css';
-// TODO: Make this App.css instead!
 import socketIOClient from "socket.io-client";
 const ENDPOINT = "http://127.0.0.1:5000";
 
@@ -68,7 +67,6 @@ class edit_profile extends Component {
         return (
             <div>
                 <div class="nav">
-                    {/* TODO: Make this actually go back using router history */}
                     <Link to="/chats" style={{ textDecoration: 'none' }}>
                         <Purple_Button_Right name="Back" />
                     </Link>

@@ -7,8 +7,6 @@ function Chat_in_list (props)
     Displays name, forst name, timestamp, and last message   */
 
     return (
-    // if props.isUnread === false
-    // TODO: Implement read or unread conditional
     <div style={{width:"100%"}}>
     <div class="col">
     <h3 style = {{marginBlockEnd:"0"}}>{props.name}</h3>

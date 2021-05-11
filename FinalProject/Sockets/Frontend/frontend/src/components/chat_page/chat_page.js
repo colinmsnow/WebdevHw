@@ -205,11 +205,9 @@ class chat_page extends Component {
                             : (<Pink_Message message={message.message} time={message.time} />)
                     ))}
                     </div>
-                    {/* TODO: Round search bar corners, show and format send button, fit 70% of right pane */}
                     <div className="mess_bar">
                         <div className="bottombar">
                             <Input_Field id="Message" borderRadius="40px" name={null} className="bottom_input" height="100%" />
-                            {/* TODO: Why did we do this all inline?? */}
                             <button style={{ backgroundColor: "#D0BBE6", borderRadius: "40px", border: "none", paddingLeft: "1em", paddingRight: "1em", marginLeft: "5%", cursor: "pointer", height: "75%", marginRight: "2.5%" }}
                             onClick={() => {
                                 socket.emit("send_message", { username: this.props.user, other_user: this.state.other_user, content: document.getElementById("Message").value })

@@ -6,7 +6,6 @@ function Top_bar(props){
     let state = {
         new_mess: false
     };
-    // TODO: On new message icon click, re render conversation side to have input for new message
     return (
         <div className = "cont">
         <div className="titl">

@@ -20,14 +20,6 @@ def add_header(response):
     # response.headers['Access-Control-Allow-Headers'] = '*'
     return response     
 
-# @app.after_request
-# def after_request(response):
-#   response.headers.add('Access-Control-Allow-Origin', '*')
-#   response.headers.add('Access-Control-Allow-Headers', 'Content-Type,Authorization')
-#   response.headers.add('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS')
-#   return response
-
-
 @app.route('/')
 def index():
     return render_template('index.html', flask_token="Hello world")
@@ -35,11 +27,6 @@ def index():
 @socketio.on("FromFrontend")
 def handcle_message(data):
     print('received message: ' + data)
-
-
-# @socketio.event
-# def my_event(message):
-#     emit('my response', {'data': 'got it!'})
 
 def some_function():
     socketio.emit('some event', "Hello")
@@ -55,22 +42,19 @@ def test_connect():
         returns: nothing or error if already used
 
     get_user(username)
-        returns: (username, name, password, picture)
+        returns: (username, name, password)
 
     update_username(username, new_username):
-        returns: nothing
+        returns: nothing or error
     
     update_password(username, newPassword):
-        returns: nothing
+        returns: nothing or error
 
     update_name(username, new_name):
-        returns: nothing
-
-    update_picture(username, new_picture): Dont implement yet
-        returns: nothing
+        returns: nothing or error
 
     delete_account(username):
-        returns: nothing
+        returns: nothing or error
     
     login(user, password)
         returns: success/failure
@@ -80,17 +64,11 @@ def test_connect():
             [(toUser, userProfile, lastMessage, timestamp), (), ...]
 
     get_messages(user1, user2)
-        returns: Array of messages in order
+        returns: Array of messages in descending order
             [(from, messageText, timestamp), (), ...]
 
     send_message(sendingUser, receivingUser, content)
-        returns: nothing
-
-    new_chat(sendingUser, receivingUser)
-        returns: the new chat
-
-    new_message_incoming()
-        returns: that there was a new message
+        returns: nothing or error
 
 """
 @socketio.on('create_user')
@@ -279,16 +257,7 @@ def get_chats(data):
         emit('Error', {"message" : "invalid key in get_chats", "show" : "false"})
         return
 
-    # print("User:")
-    # print(username)
-    # print("Other user:")
-    # print(other_user)
-
     uname,name,timestamp,firstname,message = db.get_chats(username)
-    print(uname)
-    print(name)
-    print(firstname)
-    print(message)
 
     
     chats = []   
@@ -297,8 +266,6 @@ def get_chats(data):
             chats.append({"username":uname[i], "name": name[i], "last_time": timestamp[i].strftime("%B %-d, %-I:%-M%p"), "first_name": firstname[i], "message":message[i]})
 
     response = {"success":"success", "other_user": "null","chats": chats}
-
-    print(response)
 
     emit("chats", response)
 
@@ -313,16 +280,7 @@ def get_messages(data):
         emit('Error', {"message" : "Invalid keys in get_messages", "show" : "false"})
         return
 
-    # print("User:")
-    # print(username)
-    # print("Get messages other user:")
-    # print(other_user)
-
-
     message,timestamp,from_user = db.get_messages(username,other_user)
-    print(message)
-    print(from_user)
-    # print(from_user)
 
     messages = []
     if message != []:
@@ -359,4 +317,3 @@ def send_message(data):
 
 if __name__ == '__main__':
     socketio.run(app, debug=True)
-    # app.run()

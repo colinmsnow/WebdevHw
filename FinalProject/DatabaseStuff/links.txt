@@ -11,6 +11,3 @@ https://www.cyberciti.biz/faq/linux-completely-reinstall-mysql-server/
 Python & MySQL:
 https://www.w3schools.com/python/python_mysql_getstarted.asp
 
-
-
-line 12 chats_in_list.css, inside the lowercase frontend folder
