@@ -18,5 +18,10 @@ A few notes include, with the caveat that for the system user and password, you 
 
 Part 2: Set Up the Frontend:
 
-1. ``` cd Sockets/Frontend/frontend/src/components``` folder and then run ```npm install```
-2. Once you have successfully installed npm, in the same folder, run ```npm run build``` 
+1. ```cd Sockets/Frontend/frontend/src/components``` folder and then run ```npm install```
+2. Once you have successfully installed npm, in the same folder, run ```npm run build```
+
+Part 3: Run the Actual Chat Server:
+
+1. ```cd Sockets/Frontend/Server``` folder and then run ```python sockettest.py```
+2. Then, open the localhost link provided. Now, you can engage with our chat server! 
