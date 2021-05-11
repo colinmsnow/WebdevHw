@@ -11,6 +11,7 @@ For more information about this project, please see the [final presentation](htt
 If you don't have nodejs installed, [install the latest version](https://nodejs.org/en/download/ "Node Download"). If you don't know, write `node --version` in your terminal/command prompt. If you don't get a number, you don't have it.
 
 **Flask**
+
   Install Python >= 3.9 and the following libraries:
   
     python-engineio==3.2.0
