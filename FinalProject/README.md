@@ -1,6 +1,14 @@
 # 'Chit Chat' Chat Server Web Development Project
 ## Colin Snow, Maia Materman, Shirin Kuppusamy
-### Emails: csnow@olin.edu, mmmaterman@olin.edu,skuppusamy@olin.edu
+### Emails: csnow@olin.edu, mmmaterman@olin.edu, skuppusamy@olin.edu
+
+Set Up:
+
+Node
+If you don't have nodejs installed, install the latest version. If you don't know, do node --version in your terminal/command prompt. If you don't get a number, you don't have it.
+
+Flask
+
 
 How to Run Our Code: 
 
@@ -23,5 +31,5 @@ Part 2: Set Up the Frontend:
 
 Part 3: Run the Actual Chat Server:
 
-1. ```cd Sockets/Frontend/Server``` folder and then run ```python sockettest.py```
+1. ```cd Sockets/Frontend/Server``` folder and then run ```python3 sockettest.py```
 2. Then, open the localhost link provided. Now, you can engage with our chat server! 
