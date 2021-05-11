@@ -21,6 +21,7 @@ class edit_profile extends Component {
             password: "nothing"
 
         };
+        this.username_changed = false;
         this.socket = socketIOClient(ENDPOINT);
     }
 
@@ -36,9 +37,12 @@ class edit_profile extends Component {
         });
 
         socket.on("Error", data => {
-            // Error handler. Prints message to console
-            console.log("Error in edit_profile: " + data);
-            // TODO: Create popup with error from data
+            // Error handler. Prints error message to console
+            console.log("Error in chat_page: " + data.message);
+            if (data.show == "true"){
+                alert(data.message)
+            }
+            
         });
     }
 
@@ -53,6 +57,11 @@ class edit_profile extends Component {
 
         if (this.state.success == 'deleted') {
             // Account was deleted, redirect to login
+            return (<Redirect to="/" />)
+        }
+
+        if (this.username_changed){
+            // If the username changes you need to re login
             return (<Redirect to="/" />)
         }
 
@@ -87,12 +96,12 @@ class edit_profile extends Component {
                                     <h3>Name:</h3>
                                 </td>
                                 <td>
-                                    <Input_Field id="Name" placeholder={this.state.name} />
+                                    <Input_Field id="Last Name" placeholder={this.state.name.split(' ')[1]} />
                                 </td>
                                 <td>
                                     <Purple_Button name="Update" style={{ marginTop: '0em', marginLeft: '1em' }} click={() => {
                                         console.log("pressed update button")
-                                        socket.emit("update_name", { username: this.props.user, newname: document.getElementById("Name").value })
+                                        socket.emit("update_name", { username: this.props.user, newname: (document.getElementById("First Name").value + " " + document.getElementById("Last Name").value) })
                                         this.setState({ success: null })
                                     }} />
                                 </td>
@@ -108,6 +117,8 @@ class edit_profile extends Component {
                                     <Purple_Button name="Update" style={{ marginTop: '0em', marginLeft: '1em' }} click={() => {
                                         console.log("pressed update button")
                                         socket.emit("update_username", { username: this.props.user, newname: document.getElementById("Username").value })
+                                        this.props.handler(document.getElementById("Username").value)
+                                        this.username_changed = true
                                         this.setState({ success: null })
                                     }} />
                                 </td>

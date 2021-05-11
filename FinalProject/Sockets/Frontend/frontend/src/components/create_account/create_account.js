@@ -25,16 +25,19 @@ class create_account extends Component {
     componentDidMount() {
         let socket = this.socket;
 
-        socket.on("create_user", data => {
+        socket.on("new_user", data => {
             // Create a new user
             this.setState({ success: data })
             console.log(this.state.success);
         });
 
         socket.on("Error", data => {
-            // Error handler. Prints message to console
-            console.log("Error in create_account: " + data);
-            // TODO: Create popup with error from data
+            // Error handler. Prints error message to console
+            console.log("Error in chat_page: " + data.message);
+            if (data.show == "true"){
+                alert(data.message)
+            }
+            
         });
 
     }
@@ -47,7 +50,7 @@ class create_account extends Component {
             // If login returns a username and not failure move to chat page
 
             this.props.handler(this.state.success)
-            return (<Redirect to="/chats" />)
+            return (<Redirect to="/" />)
         }
 
         return (
@@ -63,7 +66,7 @@ class create_account extends Component {
                     <Input_Field name="Username" id="new_username" />
                     <Input_Field name="Password" id="new_password" />
                     <Input_Field name="Confirm Password" id="confirm_password" />
-                    <Purple_Button name="Create Account" click={() => socket.emit("create_user", { "username": document.getElementById("new_username").value, "password": document.getElementById("new_password").value, "name": document.getElementById("new_name").value, "confirm_password": document.getElementById("confirm_password").value })} />
+                    <Purple_Button name="Create Account" click={() => socket.emit("create_user", { "username": document.getElementById("new_username").value, "password": document.getElementById("new_password").value, "name": (document.getElementById("new_first_name").value + " " + document.getElementById("new_last_name").value), "confirm_password": document.getElementById("confirm_password").value })} />
                 </div>
             </div>
         )

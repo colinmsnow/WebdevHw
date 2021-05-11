@@ -102,11 +102,11 @@ def create_user(data):
         password = data["password"]
         confirm_password = data["confirm_password"]
     except KeyError:
-        emit("Error","Fields are missing in create_user")
+        emit("Error",{"message" : "Fields are missing in create_user", "show" : "false"})
         return
     
     if (password != confirm_password):
-        emit("Error","Passwords do not match")
+        emit("Error",{"message" : "Passwords do not match", "show" : "true"})
         return
 
     password = hashlib.md5(bytes(password,'utf-8'))
@@ -118,7 +118,7 @@ def create_user(data):
         return
     else:
         emit('new_user','failure')
-        emit('Error', "Username already exists, try another username")
+        emit('Error', {"message" : "Username already exists, try another username", "show" : "true"})
         return
 
     emit("new_user", "success")
@@ -136,10 +136,10 @@ def get_user(data):
 
     if(db.get_user(username)):
         password,first_name,name = db.get_user_info(username)
-        user_info = {"success":"success", "username": username, "password": password, "first_name": first_name , "name": name}
+        user_info = {"success":"success", "username": username, "password": '********', "first_name": first_name , "name": name}
         emit("user", user_info)
     else:
-        emit('Error',"this user doesn't exist")
+        emit('Error',{"message" : "this user doesn't exist", "show" : "true"})
 
 
 @socketio.on('update_username')
@@ -151,7 +151,7 @@ def update_username(data):
         username = data["username"]
         new_username = data["newname"]
     except KeyError:
-        emit('Error', "Invalid key in username")
+        emit('Error', {"message" : "Invalid key in username", "show" : "false"})
         return
 
     works,message = db.update_username(username,new_username)
@@ -160,7 +160,7 @@ def update_username(data):
         emit('change_username',message)
     else:
         emit('change_username','failure')
-        emit('Error', message)
+        emit('Error', {"message" : message, "show" : "false"})
 
 
 
@@ -170,13 +170,13 @@ def update_password(data):
         username = data["username"]
         new_password = data["newpassword"]
     except KeyError:
-        emit('Error', "invalid key in update_password")
+        emit('Error', {"message" : "invalid key in update_password", "show" : "false"})
         return
 
     #check if user exists
     if (not db.get_user(username)):
         emit('change_password','failure')
-        emit('Error',"This user does not exist.")
+        emit('Error',{"message" : "This user does not exist.", "show" : "false"})
         return
 
     new_password = hashlib.md5(bytes(new_password,'utf-8'))
@@ -192,12 +192,12 @@ def update_firstname(data):
         username = data["username"]
         new_firstname = data["newname"]
     except KeyError:
-        emit('Error', "invalid key in update_name")
+        emit('Error', {"message" : "invalid key in update_name", "show" : "false"})
         return
 
     if (not db.get_user(username)):
         emit('change_firstname','failure')
-        emit('Error',"This user does not exist.")
+        emit('Error',{"message" : "This user does not exist.", "show" : "false"})
         return
 
     db.update_firstname(username,new_firstname)
@@ -210,12 +210,12 @@ def update_name(data):
         username = data["username"]
         new_name = data["newname"]
     except KeyError:
-        emit('Error', "invalid key in update_name")
+        emit('Error', {"message" : "invalid key in update_name", "show" : "false"})
         return
 
     if (not db.get_user(username)):
         emit('change_name','failure')
-        emit('Error',"This user does not exist.")
+        emit('Error',{"message" : "This user does not exist.", "show" : "false"})
         return
 
     db.update_name(username,new_name)
@@ -226,13 +226,13 @@ def delete_account(data):
     try:
         username = data["username"]
     except KeyError:
-        emit('Error', "invalid key in delete_account")
+        emit('Error', {"message" : "invalid key in delete_account", "show" : "false"})
         return
 
     #check if user exists
     if (not db.get_user(username)):
         emit('delete','failure')
-        emit('Error',"This user does not exist.")
+        emit('Error',{"message" : "This user does not exist.", "show" : "false"})
         return
 
     # DATABASE: delete row with that username
@@ -245,13 +245,13 @@ def login(data):
         username = data["username"]
         password = data["password"]
     except KeyError:
-        emit('Error', "Login fields missing")
+        emit('Error', {"message" : "Login fields missing", "show" : "true"})
         return
     
     #check if user exists
     if (not db.get_user(username)):
         emit('login_response','failure')
-        emit('Error',"This user does not exist.")
+        emit('Error',{"message" : "This user does not exist.", "show" : "true"})
         return
         return
 
@@ -264,7 +264,7 @@ def login(data):
         emit('login_response',username)
     else:
         emit('login_response','failure')
-        emit('Error', "Incorrect password")
+        emit('Error', {"message" : "Incorrect password", "show" : "true"})
 
 
 @socketio.on('get_chats')
@@ -276,7 +276,7 @@ def get_chats(data):
         username = data["username"]
         other_user = data["other_user"]
     except KeyError:
-        emit('Error', "invalid key in get_chats")
+        emit('Error', {"message" : "invalid key in get_chats", "show" : "false"})
         return
 
     # print("User:")
@@ -294,7 +294,7 @@ def get_chats(data):
     chats = []   
     if uname != []:
         for i in range(len(uname)):
-            chats.append({"username":uname[i], "name": name[i], "last_time": timestamp[i].strftime("%A, %B %-d, %-I:%-M%p"), "first_name": firstname[i], "message":message[i]})
+            chats.append({"username":uname[i], "name": name[i], "last_time": timestamp[i].strftime("%B %-d, %-I:%-M%p"), "first_name": firstname[i], "message":message[i]})
 
     response = {"success":"success", "other_user": "null","chats": chats}
 
@@ -310,7 +310,7 @@ def get_messages(data):
         username = data["username"]
         other_user = data["other_user"]
     except KeyError:
-        emit('Error', "Invalid keys in get_messages")
+        emit('Error', {"message" : "Invalid keys in get_messages", "show" : "false"})
         return
 
     # print("User:")
@@ -328,7 +328,7 @@ def get_messages(data):
     if message != []:
         for i in range(len(message)):
             print(i)
-            messages.append({"message":message[i],"time":timestamp[i].strftime("%A, %B %-d, %-I:%-M%p"),"from":from_user[i]})
+            messages.append({"message":message[i],"time":timestamp[i].strftime("%B %-d, %-I:%-M%p"),"from":from_user[i]})
 
     response = {"success":"success", "other_user": other_user,"messages": messages} 
     
@@ -342,12 +342,11 @@ def send_message(data):
         other_user = data["other_user"]
         content = data["content"]
     except KeyError:
-        emit('Error', "invalid key in send_message")
+        emit('Error', {"message" : "invalid key in send_message", "show" : "false"})
         return
 
-
     if (not db.get_user(other_user)):
-        emit('Error',"This user does not exist. Please ask them to make an account.")
+        emit('Error',{"message" : "This user does not exist. Please ask them to make an account.", "show" : "false"})
         return
 
     db.send_message(username,other_user,content)

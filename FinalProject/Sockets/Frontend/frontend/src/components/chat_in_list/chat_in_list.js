@@ -17,7 +17,7 @@ function Chat_in_list (props)
     <h4 className="right_text" style = {{marginBlockEnd:"0"}}>{props.last_time}</h4>
     </div>
     <div className="full">
-    <p><b>{props.first_name}:</b> {props.message}</p>
+    <p className="full"><b>{props.first_name}:</b> {props.message}</p>
     <hr></hr>
     </div>
     </div>

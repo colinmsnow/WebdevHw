@@ -57,7 +57,12 @@ class chat_page extends Component {
         this.setState(a);
     }
 
-    
+    render_blank () {
+        console.log("rendering messages blank")
+        let a = this.state;
+        a.messages = [];
+        this.setState(a);
+    }
 
 
     new_chat() {
@@ -104,8 +109,11 @@ class chat_page extends Component {
 
         socket.on("Error", data => {
             // Error handler. Prints error message to console
-            console.log("Error in chat_page: " + data);
-            // TODO: Create popup with error from data
+            console.log("Error in chat_page: " + data.message);
+            if (data.show == "true"){
+                alert(data.message)
+            }
+            
         });
 
         socket.on("chats", data => {
@@ -168,9 +176,9 @@ class chat_page extends Component {
                 <div className="right_pane">
                     <div>
                         <div className="newchatbar">
-                            {this.state.other_user != null && <h2>{this.state.other_user}</h2>}
-                            {this.state.other_user == null && <p style={{width:"20%", height:"100%!important", marginTop:"2%", marginBottom:"0em"}}>New Chat:</p>}
-                            {this.state.other_user == null && <Input_Field id="new_user" className="nam"/>}
+                            {this.state.other_user != null && <h2 style = {{marginTop:"0"}}>{this.state.other_user}</h2>}
+                            {this.state.other_user == null && <p style={{width:"20%", height:"2em", marginTop:"0", marginBottom:"0em", lineHeight:"30px"}}>New Chat:</p>}
+                            {this.state.other_user == null && <Input_Field id="new_user" className="nam" height="100%"/>}
                             {this.state.other_user == null && <button className="sig go" style={{ marginLeft: "1em" }} onClick={() => {
                                 socket.emit("get_chats", { username: this.props.user, other_user: document.getElementById("new_user").value })
                                 socket.emit("get_messages", { username: this.props.user, other_user: document.getElementById("new_user").value })
@@ -188,8 +196,10 @@ class chat_page extends Component {
                             </Link>
                         </div>
                     </div>
+
+                    
                     <div className="messagesClass">
-                    {this.state.messages.map((message, index) => (
+                    {this.state.other_user != null && this.state.messages.map((message, index) => (
                         (message.from == this.props.user) ?
                             (<Purple_Message message={message.message} time={message.time} />)
                             : (<Pink_Message message={message.message} time={message.time} />)
@@ -200,7 +210,12 @@ class chat_page extends Component {
                         <div className="bottombar">
                             <Input_Field id="Message" borderRadius="40px" name={null} className="bottom_input" height="100%" />
                             {/* TODO: Why did we do this all inline?? */}
-                            <button style={{ backgroundColor: "#D0BBE6", borderRadius: "40px", border: "none", paddingLeft: "1em", paddingRight: "1em", marginLeft: "5%", cursor: "pointer", height: "75%", marginRight: "2.5%" }} onClick={() => (socket.emit("send_message", { username: this.props.user, other_user: this.state.other_user, content: document.getElementById("Message").value }))}><img src={require('../../assets/send_message.png')} /></button>
+                            <button style={{ backgroundColor: "#D0BBE6", borderRadius: "40px", border: "none", paddingLeft: "1em", paddingRight: "1em", marginLeft: "5%", cursor: "pointer", height: "75%", marginRight: "2.5%" }}
+                            onClick={() => {
+                                socket.emit("send_message", { username: this.props.user, other_user: this.state.other_user, content: document.getElementById("Message").value })
+                                document.getElementById("Message").value = ""
+                                
+                            }}><img src={require('../../assets/send_message.png')} /></button>
                         </div>
                     </div>
                 </div>

@@ -19,12 +19,14 @@
 }
 
 .edit_profile {
+    font-size: 1em;
+    /* margin-top: 0;  */
     border-radius: 50% !important;
     background-color: #E5E5E5 !important;
     color: #6F4698 !important;
-    padding: 1em !important;
-    width: 2em !important;
-    height: 2em !important;
+    padding: 0 !important;
+    width: 32px !important;
+    height:32px !important;
     
 }
 

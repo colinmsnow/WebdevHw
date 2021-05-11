@@ -31,9 +31,12 @@ class login extends Component {
         });
 
         socket.on("Error", data => {
-            // Print error message to console
-            console.log("Error in login: " + data);
-            // TODO: Create popup with error from data
+            // Error handler. Prints error message to console
+            console.log("Error in chat_page: " + data.message);
+            if (data.show == "true"){
+                alert(data.message)
+            }
+            
         });
     }
 
@@ -53,6 +56,7 @@ class login extends Component {
             // Button to login. Sends login socket request
             enter =
                 <Purple_Button name="Login" click={() => {
+                    console.log("Clicked login button")
                     socket.emit("login", { "username": document.getElementById("Username").value, "password": document.getElementById("Password").value })
 
                 }} />
